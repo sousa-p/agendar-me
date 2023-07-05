@@ -1,0 +1,30 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-img routerLink="/" id="logo" src="../../../assets/images/logo.png" alt="Agendar.Me"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-row class="ion-align-items-center ion-justify-content-center section">
+    <div id="wrapper_login">
+      <ion-text class="ion-text-center">
+        <h1>
+          Entre agora!
+        </h1>
+      </ion-text>
+      <form action="" method="post">
+        <ion-input label="Email" label-placement="floating" fill="outline" type="email"></ion-input>
+        <ion-input label="Senha" label-placement="floating" fill="outline" type="password"></ion-input>
+      </form>
+      <ion-button>
+        Entrar
+      </ion-button>
+      <ion-text color="primary" class="ion-text-center">
+        <p>
+          <b>Sem uma conta? </b>
+          <a routerLink="/cadastrar">Crie uma agora!</a>
+        </p>
+      </ion-text>
+    </div>
+  </ion-row>
+</ion-content>
