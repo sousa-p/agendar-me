@@ -12,12 +12,12 @@
           Crie sua conta!
         </h1>
       </ion-text>
-      <form #cadastrarForm="ngForm">
+      <form #cadastrarForm="ngForm" (ngSubmit)="cadastrar()">
         <ion-input ngModel required clearInput="true" name="nome" label="Nome" label-placement="floating" fill="outline" type="text"></ion-input>
-        <ion-input ngModel required pattern="[0-9]{3} [0-9]{3} [0-9]{4}" maxlength="12"clearInput="true" name="telefone" label="Telefone" autocomplete="tel" label-placement="floating" fill="outline" type="tel"></ion-input>
+        <ion-input ngModel required pattern="^[1-9]{2}9?[0-9]{8}$" maxlength="11"clearInput="true" name="telefone" label="Telefone" autocomplete="tel" label-placement="floating" fill="outline" type="tel"></ion-input>
         <ion-input ngModel required email clearInput="true" name="email" label="Email" autocomplete="email" label-placement="floating" fill="outline" type="email"></ion-input>
         <ion-input ngModel required name="senha" label="Senha" label-placement="floating" fill="outline" type="password"></ion-input>
-        <ion-input ngModel required name="senhaConfirmar" label="Confirmar Senha" label-placement="floating" fill="outline" type="password"></ion-input>
+        <ion-input ngModel required pattern="{{ this.cadastrarForm.form.value.senha }}" name="senhaConfirmar" label="Confirmar Senha" label-placement="floating" fill="outline" type="password"></ion-input>
         <ion-button id="cadastrar" type="submit" [disabled]="!cadastrarForm.valid">
           Cadastre-se
         </ion-button>
@@ -30,11 +30,6 @@
       </ion-text>
     </div>
   </ion-row>
-  <ion-toast
-    class="error-toast"
-    message="As senhas não conferem"
-    [duration]="5000"
-  ></ion-toast>
   <ion-toast
     class="success-toast"
     trigger="cadastrar"

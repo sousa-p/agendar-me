@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ServerService } from 'src/app/core/service/server.service';
 
 @Component({
   selector: 'app-cadastrar',
@@ -6,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cadastrar.page.scss'],
 })
 export class CadastrarPage implements OnInit {
+  constructor(private Server: ServerService) {}
+  @ViewChild('cadastrarForm') cadastrarForm!: NgForm;
 
-  constructor() { }
-
-  ngOnInit() {
+  ngOnInit() {}
+  cadastrar() {
+    const data = this.cadastrarForm.form.value;
+    console.log(this.Server.request(data));
+    this.Server.request(data).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 }
