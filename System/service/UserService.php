@@ -1,7 +1,8 @@
 <?php
-    namespace System\Controller\UserService;
+    namespace System\Service;
 
     class UserService {
-  
+      private $conn;
+      private $model;
     }
 ?>

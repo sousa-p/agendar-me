@@ -1,7 +1,8 @@
 <?php
-  namespace System\Controller\UserController;
+  namespace System\Controller;
 
   class UserController {
-
+    private $model;
+    private $service;
   }
 ?>
