@@ -7,9 +7,14 @@ class UserService
   private $conn;
   private $model;
 
+  public function __construct($conn, $model)
+  {
+    $this->conn = $conn;
+    $this->model = $model;
+  }
+
   public function save()
   {
-
     $insert = 'INSERT INTO USER VALUES (0, :NOME_USER, :TEL_USER, :EMAIL_USER, :SENHA_USER)';
     $stmt = $this->conn->prepare($insert);
     $stmt->bindValue(':NOME_USER', $this->model->__get('NOME_USER'));
@@ -31,20 +36,21 @@ class UserService
 
   public function emailDisponivel()
   {
-    $select = 'SELECT * FROM EMAIL_USER = :EMAIL_USER';
+
+    $select = 'SELECT * FROM USER WHERE EMAIL_USER = :EMAIL_USER';
     $stmt = $this->conn->prepare($select);
-    $stmt->bindValue(':EMAIL_USER', $this->model->EMAIL_USER);
+    $stmt->bindValue(':EMAIL_USER', $this->model->__get('EMAIL_USER'));
     $stmt->execute();
-    return $stmt->rowCount === 0;
+    return !$stmt->fetch();
   }
 
   public function telDisponivel()
   {
-    $select = 'SELECT * FROM TEL_USER = :TEL_USER';
+    $select = 'SELECT * FROM USER WHERE TEL_USER = :TEL_USER';
     $stmt = $this->conn->prepare($select);
-    $stmt->bindValue(':TEL_USER', $this->model->TEL_USER);
+    $stmt->bindValue(':TEL_USER', $this->model->__get('TEL_USER'));
     $stmt->execute();
-    return $stmt->rowCount === 0;
+    return !$stmt->fetch();
   }
 
   public function checkLogin()

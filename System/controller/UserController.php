@@ -35,11 +35,11 @@ class UserController
     if (!$dadosVazios) {
       if (!ehStrValida($data['NOME_USER']))
         respostaHost('error', 'Nome de úsuario inválido');
-      else if (!ehTelefoneValido($data['TEL_USER']))
+      if (!ehTelefoneValido($data['TEL_USER']))
         respostaHost('error', 'Formato de telefone de úsuario inválido');
-      else if (!ehEmailValido($data['EMAIL_USER']))
+      if (!ehEmailValido($data['EMAIL_USER']))
         respostaHost('error', 'Formato de email de úsuario inválido');
-      else if (!ehStrValida($data['SENHA_USER']))
+      if (!ehStrValida($data['SENHA_USER']))
         respostaHost('error', 'Formato de senha inválido');
     } else {
       respostaHost('error', $dadosVazios);
@@ -50,9 +50,8 @@ class UserController
     }
     if (!$this->service->emailDisponivel())
       respostaHost('error', 'Email já esta em uso');
-    else if (!$this->service->telDisponivel())
+    if (!$this->service->telDisponivel())
       respostaHost('error', 'Telefone ja esta em uso');
-
     $this->service->save();
     respostaHost('success', 'Cadastro realizado com sucesso');
   }

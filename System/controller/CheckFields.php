@@ -12,7 +12,7 @@ function ehDadoValido($data)
 function ehTelefoneValido($tel)
 {
   $charsEspeciais = ['.', '/', '(', ')', '-', '+', ' '];
-  $tel = str_replace($charsEspeciais, $tel, '');
+  $tel = str_replace($charsEspeciais, '', $tel);
   $regexTel = '/^[1-9]{2}9?[0-9]{8}/';
   return preg_match($regexTel, $tel);
 }

@@ -17,17 +17,21 @@ use System\Service\UserService as UserService;
 use System\Controller\UserController as UserController;
 
 $data = file_get_contents('php://input');
-$data = json_decode($data);
+$data = json_decode($data, true);
 
-if (!isset($data['request']) || !ehDadoValido($data['request']))
-  respostaHost('error', 'Request inválido');
+if (!isset($data['route']) || !ehDadoValido($data['route']))
+  respostaHost('error', 'Rota inválido');
 else if (!isset($data['action']) || !ehDadoValido($data['action']))
   respostaHost('error', 'Action inválido');
 
-$request = $data['request'];
+$route = $data['route'];
 $action = $data['action'];
 
 $conn = Conn::getInstance();
 $userModel = new UserModel();
 $userService = new UserService($conn, $userModel);
 $userController = new UserController($data, $userModel, $userService);
+
+if ($route === 'user') {
+  $userController->$action();
+}

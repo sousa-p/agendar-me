@@ -8,9 +8,9 @@ use \PDOException;
 final class Conn
 {
   const HOST = 'localhost';
-  const DATABASE = '';
+  const DATABASE = 'AGENDAR';
   const USER = 'root';
-  const PASSWORD = '';
+  const PASSWORD = 'pedropedro2800';
   const CHARSET = 'utf8mb4';
   const OPTIONS = [
     PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
@@ -39,6 +39,10 @@ final class Conn
     }
   }
 
-  private function __construct(){}
-  private function __clone(){}
+  private function __construct()
+  {
+  }
+  private function __clone()
+  {
+  }
 }

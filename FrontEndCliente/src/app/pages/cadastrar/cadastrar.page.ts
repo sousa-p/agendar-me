@@ -15,7 +15,9 @@ export class CadastrarPage implements OnInit {
   ngOnInit() {}
   cadastrar() {
     const data = this.cadastrarForm.form.value;
-    console.log(this.Server.request(data));
+    data['route'] = 'user';
+    data['action'] = 'cadastrar';
+    
     this.Server.request(data).subscribe(
       (response) => {
         console.log(response);
