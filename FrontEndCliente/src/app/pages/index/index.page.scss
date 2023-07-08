@@ -16,14 +16,14 @@ ion-buttons {
   min-height: 580px;
 
   ion-label {
-    font-size: 7vh;
+    font-size: 3.5rem;
     font-weight: bolder;
   }
 
   p {
     width: 75%;
-    min-width: 300px;
-    font-size: 3.5vh;
+    min-width: 200px;
+    font-size: 1.25rem;
     font-weight: bold;
   }
 
@@ -31,5 +31,16 @@ ion-buttons {
     width: 150px;
     height: 50px;
     margin-top: 5vh;
+  }
+}
+
+@media (max-width: 576px) {
+  .main {
+    ion-label {
+      font-size: 2rem;
+    }
+    p {
+      font-size: 1rem;
+    }
   }
 }
