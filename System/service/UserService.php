@@ -24,6 +24,11 @@ class UserService
     $stmt->execute();
   }
 
+  public function gerarTokenJWT()
+  {
+    return 'token';
+  }
+
   public function getId()
   {
     $select = 'SELECT ID_USER FROM USER WHERE EMAIL_USER = :EMAIL_USER AND TEL_USER = :TEL_USER';
@@ -36,12 +41,21 @@ class UserService
 
   public function emailDisponivel()
   {
-
     $select = 'SELECT * FROM USER WHERE EMAIL_USER = :EMAIL_USER';
     $stmt = $this->conn->prepare($select);
     $stmt->bindValue(':EMAIL_USER', $this->model->__get('EMAIL_USER'));
     $stmt->execute();
     return !$stmt->fetch();
+  }
+
+  public function getSenha()
+  {
+    $select = 'SELECT SENHA_USER FROM USER WHERE EMAIL_USER = :EMAIL_USER AND TEL_USER = :TEL_USER';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':EMAIL_USER', $this->model->__get('EMAIL_USER'));
+    $stmt->bindValue(':TEL_USER', $this->model->__get('TEL_USER'));
+    $stmt->execute();
+    return $stmt->fetch()['SENHA_USER'];
   }
 
   public function telDisponivel()
@@ -53,8 +67,31 @@ class UserService
     return !$stmt->fetch();
   }
 
-  public function checkLogin()
+  public function getUserInfos()
   {
-    return true;
+    $select = 'SELECT * FROM USER wHERE EMAIL_USER = :EMAIL_USER AND TEL_USER = :TEL_USER';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':EMAIL_USER', $this->model->__get('EMAIL_USER'));
+    $stmt->bindValue(':TEL_USER', $this->model->__get('TEL_USER'));
+    $stmt->execute();
+    return $stmt->fetch();
+  }
+
+  public function checarLogin()
+  {
+    $userInfos = $this->getUserInfos();
+    if ($userInfos && password_verify($this->model->__get('SENHA_USER'), $userInfos->SENHA_USER)) {
+      return [
+        'retorno' => 'success',
+        'mensagem' => 'Login realizado com sucesso',
+        'ID_USER' => $userInfos->ID_USER,
+        'JWT' => $this->gerarTokenJWT()
+      ];
+    }
+    
+    return [
+      'retorno' => 'error',
+      'mensagem' => 'Informações de login incorretas!'
+    ];
   }
 }

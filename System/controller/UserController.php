@@ -17,47 +17,52 @@ class UserController
     $this->service = $service;
   }
 
-  public function cadastrar()
+  public function colocarDadosModel($data)
   {
-    $data = [
-      'NOME_USER' => $this->NOME_USER,
-      'TEL_USER' => $this->TEL_USER,
-      'EMAIL_USER' => $this->EMAIL_USER,
-      'SENHA_USER' => $this->SENHA_USER
-    ];
-    $dadosVazios = false;
-    foreach ($data as $chave => $valor) {
-      if (!ehDadoValido($valor)) {
-        $aux = ($dadosVazios) ? ', ' : '';
-        $dadosVazios .=  $aux . $chave . ' é inválido';
-      }
-    }
-    if (!$dadosVazios) {
-      if (!ehStrValida($data['NOME_USER']))
-        respostaHost('error', 'Nome de úsuario inválido');
-      if (!ehTelefoneValido($data['TEL_USER']))
-        respostaHost('error', 'Formato de telefone de úsuario inválido');
-      if (!ehEmailValido($data['EMAIL_USER']))
-        respostaHost('error', 'Formato de email de úsuario inválido');
-      if (!ehStrValida($data['SENHA_USER']))
-        respostaHost('error', 'Formato de senha inválido');
-    } else {
-      respostaHost('error', $dadosVazios);
-    }
-    $data['SENHA_USER'] = password_hash($data['SENHA_USER'], PASSWORD_DEFAULT);
     foreach ($data as $atributo => $valor) {
       $this->model->__set($atributo, $valor);
     }
-    if (!$this->service->emailDisponivel())
-      respostaHost('error', 'Email já esta em uso');
-    if (!$this->service->telDisponivel())
-      respostaHost('error', 'Telefone ja esta em uso');
+  }
+
+  public function cadastrar()
+  {
+    $data = [
+      'NOME_USER' => limparDados($this->NOME_USER),
+      'TEL_USER' => limparDados($this->TEL_USER),
+      'EMAIL_USER' => limparDados($this->EMAIL_USER),
+      'SENHA_USER' => limparDados($this->SENHA_USER)
+    ];
+
+    // Validação de dados
+    if (verificarDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos de cadastro estão preenchidos');
+    if (!ehStrValida($data['NOME_USER'])) respostaHost('error', 'Nome de úsuario inválido');
+    if (!ehTelefoneValido($data['TEL_USER'])) respostaHost('error', 'Formato de telefone de úsuario inválido');
+    if (!ehEmailValido($data['EMAIL_USER'])) respostaHost('error', 'Formato de email de úsuario inválido');
+    if (!ehStrValida($data['SENHA_USER'])) respostaHost('error', 'Formato de senha inválido');
+
+    $data['SENHA_USER'] = password_hash($data['SENHA_USER'], PASSWORD_DEFAULT);
+    $this->colocarDadosModel($data);
+
+    if (!$this->service->telDisponivel()) respostaHost('error', 'Telefone ja esta em uso');
+    if (!$this->service->emailDisponivel()) respostaHost('error', 'Email já esta em uso');
+
     $this->service->save();
     respostaHost('success', 'Cadastro realizado com sucesso');
   }
 
   public function login()
   {
-    return true;
+    $data = [
+      'TEL_USER' => limparDados($this->TEL_USER),
+      'EMAIL_USER' => limparDados($this->EMAIL_USER),
+      'SENHA_USER' => limparDados($this->SENHA_USER)
+    ];
+    if (verificarDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos de login estão preenchidos');
+    $this->colocarDadosModel($data);
+    if ($this->service->telDisponivel()) respostaHost('error', 'Telefone não cadastrado');
+    if ($this->service->emailDisponivel()) respostaHost('error', 'Email não cadastrado');
+    
+    echo json_encode($this->service->checarLogin());
+    exit();
   }
 }

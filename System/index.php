@@ -32,6 +32,5 @@ $userModel = new UserModel();
 $userService = new UserService($conn, $userModel);
 $userController = new UserController($data, $userModel, $userService);
 
-if ($route === 'user') {
+if ($route === 'user' && ($action === 'cadastrar' || $action === 'login'))
   $userController->$action();
-}

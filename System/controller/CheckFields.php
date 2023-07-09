@@ -36,3 +36,11 @@ function respostaHost($tipo, $mensagem)
   ]);
   exit();
 }
+
+function verificarDadosVazios($data)
+{
+  foreach ($data as $valor) {
+    if (!ehDadoValido($valor)) return true;
+  }
+  return false;
+}
