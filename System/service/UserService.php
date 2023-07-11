@@ -36,26 +36,18 @@ class UserService
     $secret = $this->model->__get('SECRET_USER');
     $header = $this->base64url_encode('{"alg": "HS256", "type": "JWT"}');
     $exp = strtotime('+15 days');
-    $payload = $this->base64url_encode('{"ID_USER": "' . $this->model->__get('ID_USER') . '", "EMAIL_USER": "' . $this->model->__get('EMAIL_USER') . '", "TEL_USER": "' . $this->model->__get('TEL_USER') . '", "exp": "' . $exp . '"}');
+    $payload = $this->base64url_encode('{"ID_USER": "' . (int)$this->model->__get('ID_USER') . '", "EMAIL_USER": "' . $this->model->__get('EMAIL_USER') . '", "TEL_USER": "' . $this->model->__get('TEL_USER') . '", "exp": "' . $exp . '"}');
     $signature = hash_hmac('sha256', $header . '.' . $payload, $secret);
-
     return $header . '.' . $payload . '.' . $signature;
   }
 
-  function JwtValido()
+  function getSecret()
   {
-    $parts = explode('.', $this->model->__get('JWT_TOKEN'));
-    if (count($parts) === 3) {
-      $secret = $this->model->get('SENHA_USER');
-      $header = $parts[0];
-      $payload = $parts[1];
-      $signature = hash_hmac('sha256', $header . '.' . $payload, $secret);
-      if ($parts[2] === $signature) {
-        $infos_token = json_decode(base64_decode($payload));
-        return time() < (int)$infos_token->exp;
-      }
-    }
-    return false;
+    $select = 'SELECT SECRET_USER FROM USER WHERE ID_USER = :ID_USER';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
+    $stmt->execute();
+    return $stmt->fetch()->SECRET_USER;
   }
 
   public function getId()
@@ -65,7 +57,7 @@ class UserService
     $stmt->bindValue(':EMAIL_USER', $this->model->__get('EMAIL_USER'));
     $stmt->bindValue(':TEL_USER', $this->model->__get('TEL_USER'));
     $stmt->execute();
-    return $stmt->fetch();
+    return (int)$stmt->fetch()->ID_USER;
   }
 
   public function emailDisponivel()
@@ -84,7 +76,7 @@ class UserService
     $stmt->bindValue(':EMAIL_USER', $this->model->__get('EMAIL_USER'));
     $stmt->bindValue(':TEL_USER', $this->model->__get('TEL_USER'));
     $stmt->execute();
-    return $stmt->fetch()['SENHA_USER'];
+    return $stmt->fetch()->SENHA_USER;
   }
 
   public function telDisponivel()

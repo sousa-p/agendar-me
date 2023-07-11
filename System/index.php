@@ -11,50 +11,56 @@ require_once '../System/controller/CheckFields.php';
 $data = file_get_contents('php://input');
 $data = json_decode($data, true);
 
-if (!isset($data['route']) || !ehDadoValido($data['route'])) respostaHost('error', 'Rota inválido');
-if (!isset($data['action']) || !ehDadoValido($data['action'])) respostaHost('error', 'Action inválido');
+if (!isset($data['route']) || !ehDadoValido($data['route']))
+  respostaHost('error', 'Rota inválido');
+if (!isset($data['action']) || !ehDadoValido($data['action']))
+  respostaHost('error', 'Action inválido');
 
 $route = $data['route'];
 $action = $data['action'];
 
-// DB CONNECTION
-require_once './db/Conn.php';
-use System\Database\Conn as Conn;
-$conn = Conn::getInstance();
-
-// MODEL IMPORT
-$classModelPath = '../System/model/' . $route . 'Model.php';
-require_once $classModelPath;
-$classModelNamespace = 'System\Model\\' . ucfirst($route) . 'Model';
-$classModel = new $classModelNamespace;
-
-// SERVICE IMPORT
-$classServicePath = './service/' . $route . 'Service.php';
-require_once $classServicePath;
-$classServiceNamespace = 'System\\Service\\' . ucfirst($route) . 'Service';
-$classService = new $classServiceNamespace($conn, $classModel);
-
-// CONTROLLER IMPORT
-$classControllerPath =  './controller/' . $route . 'Controller.php';
-require_once $classControllerPath;
-$classControllerNamespace = 'System\\Controller\\' . ucfirst($route) . 'Controller';
-$classController = new $classControllerNamespace($data, $classModel, $classService);
+require_once './imports/RouteClassImports.php';
 
 // AÇÕES QUE NÃO NECESSITAM DE VALIDAÇÃO
-if ($route === 'User' && ($action === 'cadastrar' || $action === 'login'))
+if ($route === 'User' && ($action === 'cadastrar' || $action === 'login')) {
   $classController->$action();
+  exit();
+}
 
 // VALIDAÇÃO TOKEN JWT
-if (!isset($data['Authorization']) || !ehDadoValido($data['Authorization'])) respostaHost('error', 'Algo deu errado :(');
+$httpHeader = apache_request_headers();
+if (!isset($httpHeader['Authorization']) || !ehDadoValido($httpHeader['Authorization']))
+  respostaHost('error', 'Algo deu errado :(');
 
-$bearer = explode(' ', $data['Authorization'])[1];
+$bearer = explode(' ', $httpHeader['Authorization'])[1];
+$bearer = limparDados($bearer);
+if (!ehDadoValido($bearer))
+  respostaHost('error', 'Algo deu errado :(');
+
 $parts = explode('.', $bearer);
-// Implementar lógica
-if ($parts != 3) respostaHost('access_error', 'Algo deu errado :(');
+if (count($parts) != 3)
+  respostaHost('access_error', 'Algo deu errado :(');
+
 $header = $parts[0];
 $payload = $parts[1];
-$signature = hash_hmac('sha256', $header . '.' . $payload, $secret);
-if ($parts[2] === $signature) {
-  $infos_token = json_decode(base64_decode($payload));
-  return time() < (int)$infos_token->exp;
-}
+$infosToken = json_decode(base64_decode(limparDados($payload)));
+
+require_once './imports/UserImports.php';
+
+if (!isset($infosToken->ID_USER)|| !ehDadoValido($infosToken->ID_USER))
+  respostaHost('error', 'Token de acesso inválido');
+
+$idUser = (int)$infosToken->ID_USER;
+$userModel->__set('ID_USER', (int)$idUser);
+$userModel->__set('SECRET_USER', $userService->getSecret());
+$signature = hash_hmac('sha256', $header . '.' . $payload, $userModel->__get('SECRET_USER'));
+
+if ($parts[2] != $signature)
+  respostaHost('access_error', 'Token de acesso inválido');
+
+$infosToken = json_decode(base64_decode(limparDados($payload)));
+
+if (time() > (int)$infosToken->exp)
+  respostaHost('access_error', 'Token de acesso expirou');
+
+$classController->$action();
