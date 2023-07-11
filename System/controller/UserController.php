@@ -45,7 +45,7 @@ class UserController
 
     if (!$this->service->telDisponivel()) respostaHost('error', 'Telefone ja esta em uso');
     if (!$this->service->emailDisponivel()) respostaHost('error', 'Email já esta em uso');
-    
+
     $this->service->save();
     respostaHost('success', 'Cadastro realizado com sucesso');
   }
@@ -66,8 +66,40 @@ class UserController
     exit();
   }
 
-  public function verificarLogin()
+  public function validarToken($bearer)
   {
-    
+    $bearer = limparDados($bearer);
+    if (!ehDadoValido($bearer))
+      respostaHost('error', 'Algo deu errado :(');
+
+    $parts = explode('.', $bearer);
+    if (count($parts) != 3)
+      respostaHost('access_error', 'Algo deu errado :(');
+
+    $header = $parts[0];
+    $payload = $parts[1];
+    $dataToken = json_decode(base64_decode(limparDados($payload)));
+
+
+    if (!isset($dataToken->ID_USER) || !ehDadoValido($dataToken->ID_USER))
+      respostaHost('error', 'Token de acesso inválido');
+
+    $this->model->__set('ID_USER', (int)(int)$dataToken->ID_USER);
+    $this->model->__set('SECRET_USER', $this->service->getSecret());
+    $signature = hash_hmac('sha256', $header . '.' . $payload, $this->model->__get('SECRET_USER'));
+
+    if ($parts[2] != $signature)
+      respostaHost('access_error', 'Token de acesso inválido');
+
+    $dataToken = json_decode(base64_decode(limparDados($payload)));
+    if (!isset($dataToken->exp) || !ehDadoValido($dataToken->exp))
+      respostaHost('access_error', 'Token de acesso inválido');
+
+    $exp = (int)$dataToken->exp;
+    if (time() > (int)$exp)
+      respostaHost('access_error', 'Token de acesso expirou');
+
+    unset($dataToken->exp);
+    $this->colocarDadosModel($dataToken);
   }
 }
