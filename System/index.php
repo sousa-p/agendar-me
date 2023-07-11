@@ -3,34 +3,48 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Methods: POST');
 
-// REQUIRES
-require '../System/db/Conn.php';
-require '../System/model/UserModel.php';
-require '../System/service/UserService.php';
-require '../System/controller/UserController.php';
-
-// NAMESPACES
-use System\Database\Conn as Conn;
-use System\Model\UserModel as UserModel;
-use System\Service\UserService as UserService;
-use System\Controller\UserController as UserController;
+require_once '../System/controller/CheckFields.php';
 
 $data = file_get_contents('php://input');
 $data = json_decode($data, true);
 
-if (!isset($data['route']) || !ehDadoValido($data['route']))
-  respostaHost('error', 'Rota inválido');
-else if (!isset($data['action']) || !ehDadoValido($data['action']))
-  respostaHost('error', 'Action inválido');
+if (!isset($data['route']) || !ehDadoValido($data['route'])) respostaHost('error', 'Rota inválido');
+if (!isset($data['action']) || !ehDadoValido($data['action'])) respostaHost('error', 'Action inválido');
 
 $route = $data['route'];
 $action = $data['action'];
 
+// DB CONNECTION
+require_once './db/Conn.php';
+use System\Database\Conn as Conn;
 $conn = Conn::getInstance();
-$userModel = new UserModel();
-$userService = new UserService($conn, $userModel);
-$userController = new UserController($data, $userModel, $userService);
 
-if ($route === 'user' && ($action === 'cadastrar' || $action === 'login'))
-  $userController->$action();
+// MODEL IMPORT
+$classModelPath = '../System/model/' . $route . 'Model.php';
+require_once $classModelPath;
+$classModelNamespace = 'System\Model\\' . ucfirst($route) . 'Model';
+$classModel = new $classModelNamespace;
+
+// SERVICE IMPORT
+$classServicePath = './service/' . $route . 'Service.php';
+require_once $classServicePath;
+$classServiceNamespace = 'System\\Service\\' . ucfirst($route) . 'Service';
+$classService = new $classServiceNamespace($conn, $classModel);
+
+// CONTROLLER IMPORT
+$classControllerPath =  './controller/' . $route . 'Controller.php';
+require_once $classControllerPath;
+$classControllerNamespace = 'System\\Controller\\' . ucfirst($route) . 'Controller';
+$classController = new $classControllerNamespace($data, $classModel, $classService);
+
+// AÇÕES QUE NÃO NECESSITAM DE VALIDAÇÃO
+if ($route === 'User' && ($action === 'cadastrar' || $action === 'login'))
+  $classController->$action();
+
+// VALIDAÇÃO TOKEN JWT
+if (!isset($data['Authorization']) || !ehDadoValido($data['Authorization'])) respostaHost('error', 'Algo deu errado :(');
+
+$bearer = explode(' ', $data['Authorization'])[1];

@@ -2,7 +2,7 @@
 
 namespace System\Controller;
 
-require './controller/CheckFields.php';
+require_once './controller/CheckFields.php';
 class UserController
 {
   private $model;
@@ -45,7 +45,7 @@ class UserController
 
     if (!$this->service->telDisponivel()) respostaHost('error', 'Telefone ja esta em uso');
     if (!$this->service->emailDisponivel()) respostaHost('error', 'Email já esta em uso');
-
+    
     $this->service->save();
     respostaHost('success', 'Cadastro realizado com sucesso');
   }
@@ -61,8 +61,13 @@ class UserController
     $this->colocarDadosModel($data);
     if ($this->service->telDisponivel()) respostaHost('error', 'Telefone não cadastrado');
     if ($this->service->emailDisponivel()) respostaHost('error', 'Email não cadastrado');
-    
-    echo json_encode($this->service->checarLogin());
+
+    echo json_encode($this->service->checarInfosLogin());
     exit();
+  }
+
+  public function verificarLogin()
+  {
+    
   }
 }

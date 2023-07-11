@@ -28,7 +28,7 @@ export class CadastrarPage implements OnInit {
 
   cadastrar() {
     const data = this.cadastrarForm.form.value;
-    data['route'] = 'user';
+    data['route'] = 'User';
     data['action'] = 'cadastrar';
 
     this.Server.request(data).subscribe(
@@ -37,7 +37,7 @@ export class CadastrarPage implements OnInit {
         this.mostrarToast(response.retorno, response.mensagem);
       },
       (error) => {
-        console.error(error);
+        console.error(error.error.text);
       }
     );
   }

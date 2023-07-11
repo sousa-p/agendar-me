@@ -6,7 +6,7 @@ function limparDados($data)
 
 function ehDadoValido($data)
 {
-  return isset($data) && !empty($data) && $data !== null;
+  return !empty($data) && !is_null($data) && $data !== 'null';
 }
 
 function ehTelefoneValido($tel)
