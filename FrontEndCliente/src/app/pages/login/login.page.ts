@@ -28,12 +28,15 @@ export class LoginPage implements OnInit {
 
   login() {
     const data = this.loginForm.form.value;
-    data['route'] = 'user';
+    data['route'] = 'User';
     data['action'] = 'login';
 
     this.Server.request(data).subscribe(
       (response) => {
-        if (response.retorno === 'success') this.loginForm.reset();
+        if (response.retorno === 'success') {
+          this.loginForm.reset();
+          localStorage.setItem('token', response.JWT);
+        };
         this.mostrarToast(response.retorno, response.mensagem);
       },
       (error) => {
