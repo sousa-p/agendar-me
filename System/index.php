@@ -48,3 +48,13 @@ if ($route === 'User' && ($action === 'cadastrar' || $action === 'login'))
 if (!isset($data['Authorization']) || !ehDadoValido($data['Authorization'])) respostaHost('error', 'Algo deu errado :(');
 
 $bearer = explode(' ', $data['Authorization'])[1];
+$parts = explode('.', $bearer);
+// Implementar lógica
+if ($parts != 3) respostaHost('access_error', 'Algo deu errado :(');
+$header = $parts[0];
+$payload = $parts[1];
+$signature = hash_hmac('sha256', $header . '.' . $payload, $secret);
+if ($parts[2] === $signature) {
+  $infos_token = json_decode(base64_decode($payload));
+  return time() < (int)$infos_token->exp;
+}
