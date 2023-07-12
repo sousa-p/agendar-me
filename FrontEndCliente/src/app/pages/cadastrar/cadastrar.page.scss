@@ -1,6 +1,5 @@
 .section {
   min-height: calc(100vh - 68px);
-  height: fit-content;
   background-image: url('../../../assets/images/blob_scene.svg');
   background-size: cover;
   background-position: center;
@@ -12,10 +11,7 @@
   cursor: pointer;
 }
 
-#wrapper_login {
-  width: 350px;
-  height: 500px;
-
+#wrapper_cadastrar {
   h1 {
     font-size: 2.15em;
     font-weight: bolder;
