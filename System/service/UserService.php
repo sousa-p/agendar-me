@@ -36,12 +36,24 @@ class UserService
     $secret = $this->model->__get('SECRET_USER');
     $header = $this->base64url_encode('{"alg": "HS256", "type": "JWT"}');
     $exp = strtotime('+15 days');
-    $payload = $this->base64url_encode('{"ID_USER": "' . (int)$this->model->__get('ID_USER') . '", "EMAIL_USER": "' . $this->model->__get('EMAIL_USER') . '", "TEL_USER": "' . $this->model->__get('TEL_USER') . '", "exp": "' . $exp . '"}');
+    $payload = $this->base64url_encode('{"ID_USER": "' . (int)$this->model->__get('ID_USER') . '", "IP": "' . password_hash($this->getIp(), PASSWORD_DEFAULT) . '", "exp": "' . $exp . '"}');
     $signature = hash_hmac('sha256', $header . '.' . $payload, $secret);
     return $header . '.' . $payload . '.' . $signature;
   }
 
-  function getSecret()
+  public function getIp()
+  {
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+      // Caso o usuário possua proxy
+      $listaIp = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+      $ip = $listaIp[0];
+    } else {
+      $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return password_hash($ip, PASSWORD_DEFAULT);
+  }
+
+  public function getSecret()
   {
     $select = 'SELECT SECRET_USER FROM USER WHERE ID_USER = :ID_USER';
     $stmt = $this->conn->prepare($select);

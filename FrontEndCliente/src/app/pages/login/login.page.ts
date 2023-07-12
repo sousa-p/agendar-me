@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { ServerService } from 'src/app/core/service/server.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -13,7 +14,8 @@ export class LoginPage implements OnInit {
   constructor(
     private Server: ServerService,
     private router: Router,
-    private Toast: ToastService
+    private Toast: ToastService,
+    private Cookie: CookieService
   ) {}
   @ViewChild('loginForm') loginForm!: NgForm;
 
@@ -26,8 +28,11 @@ export class LoginPage implements OnInit {
     this.Server.request(data).subscribe(
       (response) => {
         if (response.retorno === 'success') {
+          const dataExpCookie = new Date();
+          dataExpCookie.setDate(dataExpCookie.getDate() + 15);
+          
+          this.Cookie.set('token', response.JWT, dataExpCookie);
           this.loginForm.reset();
-          localStorage.setItem('token', response.JWT);
           this.router.navigate(['/home']);
         }
         this.Toast.mostrarToast(response.retorno, 3000, response.mensagem);

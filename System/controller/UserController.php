@@ -94,12 +94,18 @@ class UserController
     $dataToken = json_decode(base64_decode(limparDados($payload)));
     if (!isset($dataToken->exp) || !ehDadoValido($dataToken->exp))
       respostaHost('access_error', 'Token de acesso inválido');
-
+    if (!isset($dataToken->IP) || !ehDadoValido($dataToken->IP))
+      respostaHost('access_error', 'Token de acesso inválido');
+    
     $exp = (int)$dataToken->exp;
+    $ipToken = limparDados($dataToken->IP);
+    unset($dataToken->exp);
+    unset($dataToken->IP);
+
     if (time() > (int)$exp)
       respostaHost('access_error', 'Token de acesso expirou');
-
-    unset($dataToken->exp);
+    if (password_verify($ipToken, $this->service->getIp()))
+      respostaHost('access_error', 'Token de acesso negado');
     $this->colocarDadosModel($dataToken);
   }
 }
