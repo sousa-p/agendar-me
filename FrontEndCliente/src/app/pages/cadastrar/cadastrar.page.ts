@@ -29,7 +29,7 @@ export class CadastrarPage implements OnInit {
   cadastrar() {
     const data = this.cadastrarForm.form.value;
     data['route'] = 'User';
-    data['action'] = 'asd';
+    data['action'] = 'cadastrar';
 
     this.Server.request(data).subscribe(
       (response) => {

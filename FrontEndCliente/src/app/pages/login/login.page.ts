@@ -3,6 +3,7 @@ import { ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ServerService } from 'src/app/core/service/server.service';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -11,7 +12,8 @@ import { ToastController } from '@ionic/angular';
 export class LoginPage implements OnInit {
   constructor(
     private Server: ServerService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private router: Router
   ) {}
   @ViewChild('loginForm') loginForm!: NgForm;
 
@@ -36,7 +38,8 @@ export class LoginPage implements OnInit {
         if (response.retorno === 'success') {
           this.loginForm.reset();
           localStorage.setItem('token', response.JWT);
-        };
+          this.router.navigate(['/home']);
+        }
         this.mostrarToast(response.retorno, response.mensagem);
       },
       (error) => {

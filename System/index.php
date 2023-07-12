@@ -32,6 +32,10 @@ if ($route === 'User' && ($action === 'cadastrar' || $action === 'login')) {
 $httpHeader = apache_request_headers();
 if (!isset($httpHeader['Authorization']) || !ehDadoValido($httpHeader['Authorization']))
   respostaHost('error', 'Algo deu errado :(');
+
 $bearer = explode(' ', $httpHeader['Authorization'])[1];
 $userController->validarToken($bearer);
+if ($action === 'validarToken')
+  respostaHost('success', 'Token Válido');
+
 $classController->$action();
