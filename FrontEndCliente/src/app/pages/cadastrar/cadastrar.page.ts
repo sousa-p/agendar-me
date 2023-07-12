@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ServerService } from 'src/app/core/service/server.service';
-import { ToastController } from '@ionic/angular';
+import { ToastService } from 'src/app/core/service/toast.service';
 @Component({
   selector: 'app-cadastrar',
   templateUrl: './cadastrar.page.html',
@@ -11,20 +11,11 @@ import { ToastController } from '@ionic/angular';
 export class CadastrarPage implements OnInit {
   constructor(
     private Server: ServerService,
-    private toastController: ToastController
+    private Toast: ToastService
   ) {}
   @ViewChild('cadastrarForm') cadastrarForm!: NgForm;
 
   ngOnInit() {}
-
-  async mostrarToast(classe: string, mensagem: string) {
-    const toast = await this.toastController.create({
-      message: mensagem,
-      duration: 5000,
-      cssClass: classe,
-    });
-    await toast.present();
-  }
 
   cadastrar() {
     const data = this.cadastrarForm.form.value;
@@ -34,7 +25,7 @@ export class CadastrarPage implements OnInit {
     this.Server.request(data).subscribe(
       (response) => {
         if (response.retorno === 'success') this.cadastrarForm.reset();
-        this.mostrarToast(response.retorno, response.mensagem);
+        this.Toast.mostrarToast(response.retorno, 3000, response.mensagem);
       },
       (error) => {
         console.error(error.error.text);

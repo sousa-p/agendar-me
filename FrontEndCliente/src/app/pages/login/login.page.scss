@@ -2,9 +2,8 @@ ion-content {
   max-height: 100%;
   overflow-y: hidden;
 }
-
 .section {
-  height: calc(100vh - 68px);
+  min-height: calc(100vh - 68px);
   background-image: url("../../../assets/images/blob_scene.svg");
   background-size: cover;
   background-position: center;

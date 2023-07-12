@@ -1,6 +1,6 @@
 <ion-header translucent="true">
   <ion-toolbar>
-    <ion-img routerLink="/" id="logo" src="../../../assets/images/logo.png" alt="Agendar.Me"></ion-img>
+    <ion-img [routerLink]="['/']" id="logo" src="../../../assets/images/logo.png" alt="Agendar.Me"></ion-img>
   </ion-toolbar>
 </ion-header>
 
@@ -23,7 +23,7 @@
       <ion-text color="primary" class="ion-text-center">
         <p>
           <b>Sem uma conta? </b>
-          <a routerLink="/cadastrar">Crie uma agora!</a>
+          <a [routerLink]="['/cadastrar']">Crie uma agora!</a>
         </p>
       </ion-text>
     </div>
