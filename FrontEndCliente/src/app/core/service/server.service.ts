@@ -10,7 +10,7 @@ export class ServerService {
 
   constructor(private http: HttpClient, private Cookie: CookieService) { }
 
-  url = 'http://localhost/agendar/System/';
+  url: string = 'http://localhost/agendar/System/';
 
   request (data: any): Observable<any> {
     const token = this.Cookie.get('token');
