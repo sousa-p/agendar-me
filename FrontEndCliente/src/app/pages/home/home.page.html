@@ -14,10 +14,29 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true">
-  <main>
-    <app-card-dia></app-card-dia>
-  </main>
-  <app-fab></app-fab>
+  <ion-row class="section ion-justify-content-center">
+    <ion-col>
+      <ion-row id="slide">
+        <ion-col size="12">
+          <app-carrossel
+            [slides]="[
+            'https://images.unsplash.com/photo-1554147090-e1221a04a025?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=848&q=80',
+            'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8d2FsbHBhcGVyfGVufDB8MHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
+            'https://images.unsplash.com/photo-1485470733090-0aae1788d5af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHdhbGxwYXBlcnxlbnwwfDB8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60']"
+          ></app-carrossel>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-datetime
+            id="calendario"
+            presentation="date"
+            locale="pt-BR"
+          ></ion-datetime>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
 </ion-content>
+<app-fab> </app-fab>

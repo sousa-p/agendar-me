@@ -8,7 +8,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
 import { FabComponent } from 'src/app/component/fab/fab.component';
-import { CardDiaComponent } from 'src/app/component/card-dia/card-dia.component';
+import { CarrosselComponent } from 'src/app/component/carrossel/carrossel.component';
 
 @NgModule({
   imports: [
@@ -17,6 +17,6 @@ import { CardDiaComponent } from 'src/app/component/card-dia/card-dia.component'
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage, FabComponent, CardDiaComponent]
+  declarations: [HomePage, FabComponent, CarrosselComponent]
 })
 export class HomePageModule {}
