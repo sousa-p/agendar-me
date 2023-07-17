@@ -1,7 +1,7 @@
 <ion-row class="ion-justify-content-center">
   <ion-col class="slide"
-    *ngFor="let slide of slides; let i = index" [class.active]="currentIndex === i"
-    style="background-image: url({{slide}});"
+    *ngFor="let image of images; let i = index" [class.active]="currentIndex === i"
+    style="background-image: url({{image}});"
   >
   </ion-col>
 </ion-row>

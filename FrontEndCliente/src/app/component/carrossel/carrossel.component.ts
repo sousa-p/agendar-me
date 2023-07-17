@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./carrossel.component.scss'],
 })
 export class CarrosselComponent {
-  @Input() slides: string[] = [];
+  @Input() images: string[] = [];
   @Input() time: number = 5000;
   currentIndex = 0;
   eventAutoPlay: any;
@@ -18,6 +18,6 @@ export class CarrosselComponent {
   }
 
   nextSlide() {
-    this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+    this.currentIndex = (this.currentIndex + 1) % this.images.length;
   }
 }
