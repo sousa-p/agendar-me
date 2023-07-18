@@ -8,8 +8,11 @@ import { UserService } from 'src/app/core/service/user.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-
-  constructor(public date: DateService, public user: UserService, private router: Router) { }
+  constructor(
+    public date: DateService,
+    public user: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 

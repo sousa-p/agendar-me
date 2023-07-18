@@ -10,12 +10,7 @@ import { HomePage } from './home.page';
 import { CarrosselComponent } from 'src/app/component/carrossel/carrossel.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HomePageRoutingModule
-  ],
-  declarations: [HomePage, CarrosselComponent]
+  imports: [CommonModule, FormsModule, IonicModule, HomePageRoutingModule],
+  declarations: [HomePage, CarrosselComponent],
 })
 export class HomePageModule {}

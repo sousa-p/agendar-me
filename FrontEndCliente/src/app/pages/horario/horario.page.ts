@@ -8,12 +8,22 @@ import { DateService } from 'src/app/core/service/date.service';
   styleUrls: ['./horario.page.scss'],
 })
 export class HorarioPage implements OnInit {
-  constructor(private route: ActivatedRoute, private router: Router, private Date: DateService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private Date: DateService
+  ) {}
   date?: string;
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.date = params['date'];
-      if(this.date === undefined || this.date === null || !this.Date.isValideDate(this.date) || this.Date.isPastDate(this.date)) this.router.navigate(['/home']);
+      if (
+        this.date === undefined ||
+        this.date === null ||
+        !this.Date.isValideDate(this.date) ||
+        this.Date.isPastDate(this.date)
+      )
+        this.router.navigate(['/home']);
     });
   }
 }

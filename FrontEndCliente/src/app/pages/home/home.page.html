@@ -9,8 +9,14 @@
         <ion-icon name="notifications-outline"></ion-icon>
       </ion-button>
       <ion-button>
-        <ion-button id="click-trigger"><ion-icon name="person-outline"></ion-icon></ion-button>
-        <ion-popover trigger="click-trigger" triggerAction="click" [dismissOnSelect]="true">
+        <ion-button id="click-trigger"
+          ><ion-icon name="person-outline"></ion-icon
+        ></ion-button>
+        <ion-popover
+          trigger="click-trigger"
+          triggerAction="click"
+          [dismissOnSelect]="true"
+        >
           <ng-template>
             <ion-content class="ion-padding">
               <ion-tab-button routerLink="/configuracoes">
@@ -23,7 +29,7 @@
               </ion-tab-button>
             </ion-content>
           </ng-template>
-        </ion-popover>        
+        </ion-popover>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

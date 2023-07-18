@@ -2,10 +2,19 @@
   <ion-header collapse="fade">
     <ion-toolbar>
       <ion-title>
-      <ion-img class="logo" id="logo-header" src="../../../assets/images/logo.png" alt="AGENDAR.ME"></ion-img>
+        <ion-img
+          id="logo"
+          src="../../../assets/images/logo.png"
+          alt="AGENDAR.ME"
+        ></ion-img>
       </ion-title>
       <ion-buttons slot="primary">
-        <ion-button [routerLink]="['/login']" fill="outline" color="secondary" id="login">
+        <ion-button
+          [routerLink]="['/login']"
+          fill="outline"
+          color="secondary"
+          id="login"
+        >
           Entrar
         </ion-button>
       </ion-buttons>
@@ -19,7 +28,10 @@
             <ion-label>Torne mais agradável a sua rotina de trabalho</ion-label>
           </ion-text>
           <ion-text color="secondary">
-            <p>Agendar.me é uma solução <u>rápida e fácil de usar.</u> que ajuda na sua organização de trabalho e empresas.</p>
+            <p>
+              Agendar.me é uma solução <u>rápida e fácil de usar.</u> que ajuda
+              na sua organização de trabalho e empresas.
+            </p>
           </ion-text>
           <ion-button [routerLink]="['/cadastrar']" class="btn_comecar">
             Começar <ion-icon name="arrow-forward-outline"></ion-icon>

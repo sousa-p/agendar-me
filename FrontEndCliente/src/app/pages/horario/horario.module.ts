@@ -9,12 +9,7 @@ import { HorarioPageRoutingModule } from './horario-routing.module';
 import { HorarioPage } from './horario.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HorarioPageRoutingModule
-  ],
-  declarations: [HorarioPage]
+  imports: [CommonModule, FormsModule, IonicModule, HorarioPageRoutingModule],
+  declarations: [HorarioPage],
 })
 export class HorarioPageModule {}
