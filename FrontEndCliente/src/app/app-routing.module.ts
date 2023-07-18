@@ -25,12 +25,17 @@ const routes: Routes = [
     canActivate: [RedirectGuard]
   },
   {
+    path: 'horario',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
     canActivate: [AuthGuard]
   },
   {
-    path: 'horario',
+    path: 'horario/:date',
     loadChildren: () => import('./pages/horario/horario.module').then( m => m.HorarioPageModule),
     canActivate: [AuthGuard]
   },

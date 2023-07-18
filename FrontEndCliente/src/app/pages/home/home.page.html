@@ -47,6 +47,7 @@
           <ion-datetime
             id="calendario"
             mode="md"
+            (ionChange)="clicarDia($event)"
             min="{{ date.getISOTodayDate() }}"
             presentation="date"
             locale="pt-BR"
