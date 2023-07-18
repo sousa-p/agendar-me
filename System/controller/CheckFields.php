@@ -44,3 +44,15 @@ function verificarDadosVazios($data)
   }
   return false;
 }
+
+function ehDataValida($data) {
+  $explodedData = explode('-', $data);
+  $mes = $explodedData[1];
+  $dia = $explodedData[2];
+  $ano = $explodedData[0];
+  return checkdate($mes, $ano, $dia);
+}
+
+function ehHoraValida($hora) {
+  return DateTime::createFromFormat('!H:i', $hora) === $hora;
+}
