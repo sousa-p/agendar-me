@@ -18,13 +18,12 @@ export class AgendamentoService {
         action: 'getAgendamentosData',
         DATA_AGENDAMENTO: date
       };
-  
       return this.Server.request(data);
-    } else {
-      return new Observable<Agendamento[]>(observer => {
-        observer.next([]);
-        observer.complete();
-      });
-    }
+    } 
+    return new Observable<Agendamento[]>(observer => {
+      observer.next([]);
+      observer.complete();
+    });
+
   }
 }

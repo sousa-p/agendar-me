@@ -2,7 +2,7 @@
 
 namespace System\Controller;
 
-require_once './CheckFields.php';
+require_once './controller/CheckFields.php';
 
 class RestricaoController
 {

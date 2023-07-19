@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Agendamento } from 'src/app/core/interface/Agendamento';
+import { Restricao } from 'src/app/core/interface/Restricao';
 import { AgendamentoService } from 'src/app/core/service/agendamento.service';
 import { DateService } from 'src/app/core/service/date.service';
+import { RestricaoService } from 'src/app/core/service/restricao.service';
 
 @Component({
   selector: 'app-horario',
@@ -14,7 +16,8 @@ export class HorarioPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private Date: DateService,
-    private Agendamento: AgendamentoService
+    private Agendamento: AgendamentoService,
+    private Restricao: RestricaoService
   ) {}
   
   intervalo?: number;
@@ -41,6 +44,15 @@ export class HorarioPage implements OnInit {
       this.Agendamento.getTodosAgendamentosData(this.date!).subscribe(
         (response: Agendamento[]) => {
           this.agendamentos = response;
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+
+      this.Restricao.getTodasRestricoesData(this.date!).subscribe(
+        (response: Restricao[]) => {
+          this.restricoes = response;
         },
         (error) => {
           console.error(error);
