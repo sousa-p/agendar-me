@@ -13,12 +13,11 @@ class RestricaoService
   }
 
   public function getTodasaRestricoesData() {
-    $restricoes = [];
     $select = 'SELECT HORARIO_INICIO, HORARIO_FIM FROM RESTRICAO WHERE DATA_INICIO >= :DATA_AGENDAMENTO AND :DATA_AGENDAMENTO <= DATA_FIM';
     $stmt = $this->conn->prepare($select);
     $stmt->bindValues(':DATA_AGENDAMENTO', $this->model->DATA_AGENDAMENTO);
     $stmt->execute();
-    $restricoes['INTERVALOS'] = $stmt->fetch_all(PDO::FETCH_OBJ);
+    return $stmt->fetch_all(PDO::FETCH_OBJ);
   }
 
   public function getDiasRestricoes() {

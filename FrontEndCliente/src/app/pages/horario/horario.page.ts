@@ -13,8 +13,18 @@ export class HorarioPage implements OnInit {
     private router: Router,
     private Date: DateService
   ) {}
+  
+  intervalo?: number;
+  restricoes?: any;
+  agendamentos?: any;
+  
   date?: string;
+  presentingElement?: any;
+  isOpen: boolean = false;
+  horario?: string;
+
   ngOnInit() {
+    this.presentingElement = document.querySelector('.section');
     this.route.params.subscribe((params) => {
       this.date = params['date'];
       if (
@@ -25,5 +35,9 @@ export class HorarioPage implements OnInit {
       )
         this.router.navigate(['/home']);
     });
+  }
+  agendar(horas: string) {
+    this.isOpen = true;
+    this.horario = horas;
   }
 }

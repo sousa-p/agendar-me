@@ -14,7 +14,7 @@ export class HomePage implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {console.log(this.date.getISOTodayDate())}
 
   clicarDia(event: any) {
     const date = event.detail.value.split('T')[0];
