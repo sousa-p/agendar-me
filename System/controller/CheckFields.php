@@ -50,7 +50,7 @@ function ehDataValida($data) {
   $mes = $explodedData[1];
   $dia = $explodedData[2];
   $ano = $explodedData[0];
-  return checkdate($mes, $ano, $dia);
+  return checkdate($mes, $dia, $ano);
 }
 
 function ehHoraValida($hora) {

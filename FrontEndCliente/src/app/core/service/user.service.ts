@@ -8,7 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class UserService {
 
   constructor(private router: Router, private Cookie: CookieService) { }
-
+  
   logout () {
     this.Cookie.delete('token');
     this.router.navigate(['/login']);

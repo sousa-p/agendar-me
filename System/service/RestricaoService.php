@@ -6,10 +6,10 @@ use PDO;
 
 class RestricaoService
 {
-  public function __construct($model, $conn)
+  public function __construct($conn, $model)
   {
-    $this->model = $model;
     $this->conn = $conn;
+    $this->model = $model;
   }
 
   public function getTodasaRestricoesData() {

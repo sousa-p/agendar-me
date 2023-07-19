@@ -2,7 +2,7 @@
 
 namespace System\Controller;
 
-require_once './CheckFields.php';
+require_once './controller/CheckFields.php';
 class AgendamentoController
 {
   public function __construct($data, $model, $service)
@@ -12,6 +12,12 @@ class AgendamentoController
     }
     $this->model = $model;
     $this->service = $service;
+  }
+
+  public function colocarDadosModel($data) {
+    foreach ($data as $chave => $valor) {
+      $this->model->__set($chave, $valor);
+    }
   }
 
   public function getAgendamentosData()

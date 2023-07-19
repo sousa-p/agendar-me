@@ -2,12 +2,14 @@
 
 namespace System\Service;
 
+use PDO;
+
 class AgendamentoService
 {
-  public function __construct($model, $conn)
+  public function __construct($conn, $model)
   {
-    $this->model = $model;
     $this->conn = $conn;
+    $this->model = $model;
   }
 
   public function getTodosAgendamentosData() {
@@ -15,6 +17,6 @@ class AgendamentoService
     $stmt = $this->conn->prepare($select);
     $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->DATA_AGENDAMENTO);
     $stmt->execute();
-    return $stmt->fetch();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
 }

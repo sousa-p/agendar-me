@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Agendamento } from 'src/app/core/interface/Agendamento';
+import { AgendamentoService } from 'src/app/core/service/agendamento.service';
 import { DateService } from 'src/app/core/service/date.service';
 
 @Component({
@@ -11,12 +13,13 @@ export class HorarioPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private Date: DateService
+    private Date: DateService,
+    private Agendamento: AgendamentoService
   ) {}
   
   intervalo?: number;
   restricoes?: any;
-  agendamentos?: any;
+  agendamentos?: Agendamento[];
   
   date?: string;
   presentingElement?: any;
@@ -34,6 +37,15 @@ export class HorarioPage implements OnInit {
         this.Date.isPastDate(this.date)
       )
         this.router.navigate(['/home']);
+      
+      this.Agendamento.getTodosAgendamentosData(this.date!).subscribe(
+        (response: Agendamento[]) => {
+          this.agendamentos = response;
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
     });
   }
   agendar(horas: string) {
