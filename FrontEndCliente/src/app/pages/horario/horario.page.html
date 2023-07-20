@@ -7,25 +7,28 @@
 <ion-content [fullscreen]="true">
   <ion-row class="section">
     <ion-col size="12">
-      <app-linha-horario (click)="agendar('22:00')"></app-linha-horario>
+      <ng-container *ngIf="restricoes && agendamentos">
+        <app-linha-horario (click)="agendar('22:00')"></app-linha-horario>
 
-      <ion-modal #modal [isOpen]="isOpen">
-        <ng-template>
-          <ion-header>
-            <ion-toolbar>
-              <ion-title>Realizar agendamento</ion-title>
-              <ion-buttons slot="end">
-                <ion-button (click)="isOpen = false"
-                  ><ion-icon name="close"></ion-icon
-                ></ion-button>
-              </ion-buttons>
-            </ion-toolbar>
-          </ion-header>
-          <ion-content class="ion-padding">
-            <p>{{ this.horario }}</p>
-          </ion-content>
-        </ng-template>
-      </ion-modal>
+        <ion-modal #modal [isOpen]="isOpen">
+          <ng-template>
+            <ion-header>
+              <ion-toolbar>
+                <ion-title>Realizar agendamento</ion-title>
+                <ion-buttons slot="end">
+                  <ion-button (click)="isOpen = false"
+                    ><ion-icon name="close"></ion-icon
+                  ></ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+              <p>{{ this.horario }}</p>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+      </ng-container>
+      <app-loading [condicao]="!(restricoes || agendamentos)"></app-loading>
     </ion-col>
   </ion-row>
 </ion-content>

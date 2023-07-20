@@ -12,7 +12,7 @@ class RestricaoService
     $this->model = $model;
   }
 
-  public function getTodasRestricoesData() {
+  public function getTodasRestricoesNaData() {
     $select = 'SELECT HORARIO_INICIO, HORARIO_FIM FROM RESTRICAO WHERE DATA_INICIO <= :DATA_AGENDAMENTO AND (:DATA_AGENDAMENTO <= DATA_FIM OR DATA_FIM IS NULL)';
     $stmt = $this->conn->prepare($select);
     $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->DATA_AGENDAMENTO);
@@ -20,10 +20,24 @@ class RestricaoService
     return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
 
-  public function getDiasRestricoes() {
-    $select = 'SELECT DATA_INICIO, DATA_FIM, DIA_SEMANA FROM RESTRICAO WHERE HORA_INICIO == NULL OR HORA_FIM == NULL';
+  public function getTodosDiasSemana() {
+    $select = 'SELECT DIA_SEMANA FROM RESTRICAO WHERE DIA_SEMANA IS NOT NULL';
     $stmt = $this->conn->query($select);
     $stmt->execute();
-    return $stmt->fetch();
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
+  }
+
+  public function getTodasDatas() {
+    $select = 'SELECT DATA_INICIO, DATA_FIM FROM RESTRICAO WHERE DATA_INICIO IS NOT NULL';
+    $stmt = $this->conn->query($select);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+  }
+
+  public function getTodasDatasEspeciais() {
+    $select = 'SELECT DATA FROM DATAS_ESPECIAIS';
+    $stmt = $this->conn->query($select);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
 }

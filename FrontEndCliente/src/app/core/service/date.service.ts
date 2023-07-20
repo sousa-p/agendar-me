@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { addDays, format, parseISO, isValid, differenceInDays, parse } from 'date-fns';
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +9,11 @@ export class DateService {
   constructor() { }
 
   getISOTodayDate() {
-    const now = new Date();
-    return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
+    return format(new Date(), 'yyyy-MM-dd');
   }
 
   isValideDate(dateString: string): boolean {
-    const date = new Date(dateString);
-    return Object.prototype.toString.call(date) === "[object Date]" && !isNaN(date.getTime());
+    return isValid(parseISO(dateString));
   }
 
   isPastDate(dateString: string): boolean {
@@ -23,5 +22,10 @@ export class DateService {
     now.setHours(0, 0, 0, 0);
     date.setHours(24, 0, 0, 0);
     return now.getTime() > date.getTime();
+  }
+
+  getUltimaDataAgendamento() {
+    const now = new Date();
+    return format(addDays(now, 30), 'yyyy-MM-dd');
   }
 }

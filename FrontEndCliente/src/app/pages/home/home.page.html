@@ -55,7 +55,9 @@
             mode="md"
             (ionChange)="clicarDia($event)"
             min="{{ date.getISOTodayDate() }}"
+            max="{{ date.getUltimaDataAgendamento() }}"
             presentation="date"
+            [isDateEnabled]="ehRestrita"
             locale="pt-BR"
           ></ion-datetime>
         </ion-col>

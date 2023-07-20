@@ -19,11 +19,11 @@ export class HorarioPage implements OnInit {
     private Agendamento: AgendamentoService,
     private Restricao: RestricaoService
   ) {}
-  
-  intervalo?: number;
-  restricoes?: any;
+
+  intervalo: number = 30;
+  restricoes: Restricao[] = [];
   agendamentos?: Agendamento[];
-  
+
   date?: string;
   presentingElement?: any;
   isOpen: boolean = false;
@@ -40,7 +40,7 @@ export class HorarioPage implements OnInit {
         this.Date.isPastDate(this.date)
       )
         this.router.navigate(['/home']);
-      
+
       this.Agendamento.getTodosAgendamentosData(this.date!).subscribe(
         (response: Agendamento[]) => {
           this.agendamentos = response;

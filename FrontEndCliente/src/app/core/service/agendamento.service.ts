@@ -24,6 +24,5 @@ export class AgendamentoService {
       observer.next([]);
       observer.complete();
     });
-
   }
 }

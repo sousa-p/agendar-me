@@ -25,4 +25,12 @@ export class RestricaoService {
       observer.complete();
     });
   }
+
+  getDiasRestricoes(): Observable<Restricao[]> {
+    const data = {
+      route: 'Restricao',
+      action: 'getDiasRestricoes'
+    }
+    return this.Server.request(data);
+  }
 }
