@@ -19,14 +19,14 @@
         >
           <ng-template>
             <ion-content class="ion-padding">
-              <ion-tab-button routerLink="/configuracoes">
+              <ion-button shape="clear" routerLink="/configuracoes">
                 <ion-icon name="cog-outline"></ion-icon>
                 <ion-label>Configurações</ion-label>
-              </ion-tab-button>
-              <ion-tab-button (click)="user.logout()">
+              </ion-button>
+              <ion-button shape="clear" (click)="user.logout()">
                 <ion-icon name="log-out-outline"></ion-icon>
                 <ion-label>Sair</ion-label>
-              </ion-tab-button>
+              </ion-button>
             </ion-content>
           </ng-template>
         </ion-popover>

@@ -24,7 +24,7 @@ function ehEmailValido($email)
 
 function ehStrValida($str)
 {
-  $regexStr = '/^[a-zA-Z áéíóúÁÉÍÓÚãõÃÕâêîôûÂÊÎÔÛçÇ]*$/';
+  $regexStr = '/^[a-zA-Z 0-9 áéíóúÁÉÍÓÚãõÃÕâêîôûÂÊÎÔÛçÇ]*$/';
   return is_string($str) && preg_match($regexStr, $str);
 }
 
