@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import { Agendamento } from 'src/app/core/interface/Agendamento';
 import { Restricao } from 'src/app/core/interface/Restricao';
 import { AgendamentoService } from 'src/app/core/service/agendamento.service';
@@ -20,10 +21,12 @@ export class HorarioPage implements OnInit {
     private Restricao: RestricaoService
   ) {}
 
-  intervalo: number = 1;
+  intervalo: number = 10;
   restricoes?: any;
   agendamentos?: any;
-  horariosLivres?: string[];
+  horariosLivres: string[] = [];
+  horariosLivresPagina: string[] = [];
+  horarioAtual: number = 0;
 
   date?: string;
   presentingElement?: any;
@@ -48,13 +51,12 @@ export class HorarioPage implements OnInit {
           this.Restricao.getTodasRestricoesData(this.date!).subscribe(
             (response: Restricao[]) => {
               this.restricoes = response;
-              const init = new Date().getTime()
               this.horariosLivres = this.Date.gerarHorarios(
                 this.intervalo,
                 this.restricoes,
                 this.agendamentos
               );
-              console.log(new Date().getTime() - init)
+              this.mostrarItens()
             },
             (error) => {
               console.error(error);
@@ -67,6 +69,19 @@ export class HorarioPage implements OnInit {
       );
     });
   }
+
+  mostrarItens() {
+    this.horarioAtual += 15;
+    this.horariosLivresPagina = this.horariosLivres?.slice(0, this.horarioAtual);
+  }
+
+  onIonInfinite(ev: any) {
+    this.mostrarItens();
+    setTimeout(() => {
+      (ev as InfiniteScrollCustomEvent).target.complete();
+    }, 500);
+  }
+
   agendar(horas: string) {
     this.isOpen = true;
     this.horario = horas;

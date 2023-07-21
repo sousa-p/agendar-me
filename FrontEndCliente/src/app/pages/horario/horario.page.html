@@ -8,7 +8,7 @@
   <ion-row class="section">
     <ion-col size="12">
       <ng-container *ngIf="restricoes && agendamentos">
-        <ng-container *ngFor="let horario of horariosLivres">
+        <ng-container *ngFor="let horario of horariosLivresPagina!">
           <app-linha-horario
             [horas]="horario"
             (click)="agendar(horario)"
@@ -21,9 +21,9 @@
                 <ion-title>Realizar agendamento</ion-title>
                 <ion-buttons slot="end">
                   <ion-button (click)="isOpen = false"
-                    ><ion-icon name="close"></ion-icon
-                  ></ion-button>
-                </ion-buttons>
+                  ><ion-icon name="close"></ion-icon
+                    ></ion-button>
+                  </ion-buttons>
               </ion-toolbar>
             </ion-header>
             <ion-content class="ion-padding">
@@ -32,6 +32,9 @@
           </ng-template>
         </ion-modal>
       </ng-container>
+      <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)" [disabled]="horarioAtual >= horariosLivres!.length">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
       <app-loading [condicao]="!(restricoes || agendamentos)"></app-loading>
     </ion-col>
   </ion-row>
