@@ -1,6 +1,12 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Horário</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" defaultHref="#" routerLink="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Horários</ion-title>
+    <ion-buttons slot="end">
+      <ion-title color="primary">{{ this.Date.formatarDataString(date!, 'dd/MM/yyyy') }}</ion-title>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -8,31 +14,34 @@
   <ion-row class="section">
     <ion-col size="12">
       <ng-container *ngIf="restricoes && agendamentos">
-        <ng-container *ngFor="let horario of horariosLivresPagina!">
+        <ng-container *ngFor="let horas of horariosLivresPagina!">
           <app-linha-horario
-            [horas]="horario"
-            (click)="agendar(horario)"
+            [horas]="horas"
+            (click)="this.horario = horas; setOpen(true)"
           ></app-linha-horario>
         </ng-container>
-        <ion-modal #modal [isOpen]="isOpen">
+        <ion-modal backdropDismiss="false" [isOpen]="isModalOpen">
           <ng-template>
             <ion-header>
               <ion-toolbar>
-                <ion-title>Realizar agendamento</ion-title>
+                <ion-title>Marcar às {{horario}}</ion-title>
                 <ion-buttons slot="end">
-                  <ion-button (click)="isOpen = false"
-                  ><ion-icon name="close"></ion-icon
-                    ></ion-button>
-                  </ion-buttons>
+                  <ion-button (click)="setOpen(false)"
+                    ><ion-icon name="close-outline" size="large"></ion-icon
+                  ></ion-button>
+                </ion-buttons>
               </ion-toolbar>
             </ion-header>
             <ion-content class="ion-padding">
-              <p>{{ this.horario }}</p>
+              <p>{{ horario }}</p>
             </ion-content>
           </ng-template>
         </ion-modal>
       </ng-container>
-      <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)" [disabled]="horarioAtual >= horariosLivres!.length">
+      <ion-infinite-scroll
+        (ionInfinite)="onIonInfinite($event)"
+        [disabled]="horarioAtual >= horariosLivres!.length"
+      >
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
       <app-loading [condicao]="!(restricoes || agendamentos)"></app-loading>

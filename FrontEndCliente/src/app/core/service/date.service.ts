@@ -94,4 +94,8 @@ export class DateService {
 
     return horarios;
   }
+
+  formatarDataString(dateString: string, formatString: string): string {
+    return format(parseISO(dateString), formatString);
+  }
 }

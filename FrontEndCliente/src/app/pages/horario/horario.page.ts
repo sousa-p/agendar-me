@@ -16,7 +16,7 @@ export class HorarioPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private Date: DateService,
+    public Date: DateService,
     private Agendamento: AgendamentoService,
     private Restricao: RestricaoService
   ) {}
@@ -30,11 +30,15 @@ export class HorarioPage implements OnInit {
 
   date?: string;
   presentingElement?: any;
-  isOpen: boolean = false;
   horario?: string;
 
+  isModalOpen = false;
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
+
   ngOnInit() {
-    this.presentingElement = document.querySelector('.section');
     this.route.params.subscribe((params) => {
       this.date = params['date'];
       if (
@@ -56,7 +60,7 @@ export class HorarioPage implements OnInit {
                 this.restricoes,
                 this.agendamentos
               );
-              this.mostrarItens()
+              this.mostrarItens();
             },
             (error) => {
               console.error(error);
@@ -72,7 +76,10 @@ export class HorarioPage implements OnInit {
 
   mostrarItens() {
     this.horarioAtual += 15;
-    this.horariosLivresPagina = this.horariosLivres?.slice(0, this.horarioAtual);
+    this.horariosLivresPagina = this.horariosLivres?.slice(
+      0,
+      this.horarioAtual
+    );
   }
 
   onIonInfinite(ev: any) {
@@ -80,10 +87,5 @@ export class HorarioPage implements OnInit {
     setTimeout(() => {
       (ev as InfiniteScrollCustomEvent).target.complete();
     }, 500);
-  }
-
-  agendar(horas: string) {
-    this.isOpen = true;
-    this.horario = horas;
   }
 }
