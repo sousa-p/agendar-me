@@ -19,7 +19,7 @@ import {
 export class DateService {
   constructor() {}
 
-  getISOTodayDate() {
+  getISOTodayDate(): string {
     return format(new Date(), 'yyyy-MM-dd');
   }
 
@@ -35,23 +35,23 @@ export class DateService {
     return now.getTime() > date.getTime();
   }
 
-  getUltimaDataAgendamento() {
+  getUltimaDataAgendamento(): string {
     const now = new Date();
     return format(addDays(now, 30), 'yyyy-MM-dd');
   }
 
-  estaIntervaloData(date: Date, inicio?: Date, fim?: Date | null) {
-    return inicio && isAfter(date, inicio) && (!fim || isBefore(fim, date));
+  estaIntervaloData(date: Date, inicio: Date | null, fim: Date | null): boolean {
+    return inicio != null && isAfter(date, inicio) && (!fim || isBefore(fim, date));
   }
 
-  estaIntervaloHorario(horario: Date, inicio: Date, fim: Date | null) {
+  estaIntervaloHorario(horario: Date, inicio: Date, fim: Date | null): boolean {
     return (
       (isEqual(horario, inicio) || isAfter(horario, inicio)) &&
       (!fim || isEqual(horario, fim) || isBefore(horario, fim))
     );
   }
 
-  horaStringToDate(horario: string) {
+  horaStringToDate(horario: string): Date {
     const [hora, minuto] = horario.split(':');
     return setMinutes(
       setHours(startOfDay(new Date()), parseInt(hora)),
@@ -88,7 +88,7 @@ export class DateService {
       });
 
       if (ehValido) horarios.push(format(horario, 'HH:mm'));
-      
+
       ultimoHorario = horario;
     }
 
