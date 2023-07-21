@@ -40,50 +40,56 @@ export class DateService {
     return format(addDays(now, 30), 'yyyy-MM-dd');
   }
 
-  estaIntervalo(date: string, inicio?: string, fim?: string) {
+  estaIntervaloData(date: Date, inicio?: Date, fim?: Date | null) {
+    return inicio && isAfter(date, inicio) && (!fim || isBefore(fim, date));
+  }
+
+  estaIntervaloHorario(horario: Date, inicio: Date, fim: Date | null) {
     return (
-      inicio &&
-      isAfter(parseISO(date), parseISO(inicio)) &&
-      (!fim || isBefore(parseISO(fim), parseISO(date)))
+      (isEqual(horario, inicio) || isAfter(horario, inicio)) &&
+      (!fim || isEqual(horario, fim) || isBefore(horario, fim))
     );
   }
+
+  horaStringToDate(horario: string) {
+    const [hora, minuto] = horario.split(':');
+    return setMinutes(
+      setHours(startOfDay(new Date()), parseInt(hora)),
+      parseInt(minuto)
+    );
+  }
+
+  getQtddMaxHorarios(intervalo: number): number {
+    return (24 * 60) / intervalo;
+  }
+
   gerarHorarios(
     intervalo: number,
     restricoes: any,
     agendamentos: any
   ): string[] {
     const horarios: string[] = [];
-    const inicio = startOfDay(new Date());
-    const qtddMaxHorarios = (24 * 60) / intervalo;
+    let ultimoHorario = addMinutes(startOfDay(new Date()), -intervalo);
 
-    for (let i = 0; i < qtddMaxHorarios; i++) {
-      const horario = addMinutes(inicio, i * intervalo);
-      let ehValido = true;
-      restricoes.forEach((restricao: any) => {
-        const [iH, iM] = restricao.HORARIO_INICIO.split(':');
-        const inicio = setMinutes(
-          setHours(startOfDay(new Date()), parseInt(iH)),
-          parseInt(iM)
-        );
-        const [fH, fM] = (restricao.HORARIO_FIM)
-          ? restricao.HORARIO_FIM.split(':')
-          : [null, null];
-        const fim = setMinutes(
-          setHours(startOfDay(new Date()), parseInt(fH)),
-          parseInt(fM)
-        );
+    for (let i = 0; i < this.getQtddMaxHorarios(intervalo); i++) {
+      const horario = addMinutes(ultimoHorario, intervalo);
 
-        if (
+      const ehValido = restricoes.every((res: any) => {
+        const hInicio = res.HORARIO_INICIO;
+        const hFim = res.HORARIO_FIM;
+
+        const inicio = this.horaStringToDate(hInicio);
+        const fim = hFim ? this.horaStringToDate(hFim) : null;
+
+        return !(
           agendamentos.includes(horario) ||
-          ((isEqual(horario, inicio) || isAfter(horario, inicio)) &&
-            (!restricao.HORARIO_FIM ||
-              isEqual(horario, inicio) ||
-              isBefore(horario, fim)))
-        )
-          ehValido = false;
+          this.estaIntervaloHorario(horario, inicio, fim)
+        );
       });
 
       if (ehValido) horarios.push(format(horario, 'HH:mm'));
+      
+      ultimoHorario = horario;
     }
 
     return horarios;

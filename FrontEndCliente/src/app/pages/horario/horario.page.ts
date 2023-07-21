@@ -20,7 +20,7 @@ export class HorarioPage implements OnInit {
     private Restricao: RestricaoService
   ) {}
 
-  intervalo: number = 60;
+  intervalo: number = 1;
   restricoes?: any;
   agendamentos?: any;
   horariosLivres?: string[];
@@ -48,12 +48,13 @@ export class HorarioPage implements OnInit {
           this.Restricao.getTodasRestricoesData(this.date!).subscribe(
             (response: Restricao[]) => {
               this.restricoes = response;
-              console.log(this.restricoes);
+              const init = new Date().getTime()
               this.horariosLivres = this.Date.gerarHorarios(
                 this.intervalo,
                 this.restricoes,
                 this.agendamentos
               );
+              console.log(new Date().getTime() - init)
             },
             (error) => {
               console.error(error);
