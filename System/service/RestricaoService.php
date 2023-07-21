@@ -13,7 +13,7 @@ class RestricaoService
   }
 
   public function getTodasRestricoesNaData() {
-    $select = 'SELECT HORARIO_INICIO, HORARIO_FIM FROM RESTRICAO WHERE DATA_INICIO <= :DATA_AGENDAMENTO AND (:DATA_AGENDAMENTO <= DATA_FIM OR DATA_FIM IS NULL)';
+    $select = 'SELECT HORARIO_INICIO, HORARIO_FIM FROM RESTRICAO WHERE DATA_INICIO <= :DATA_AGENDAMENTO AND (:DATA_AGENDAMENTO <= DATA_FIM OR DATA_FIM IS NULL) AND HORARIO_INICIO IS NOT NULL';
     $stmt = $this->conn->prepare($select);
     $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->DATA_AGENDAMENTO);
     $stmt->execute();

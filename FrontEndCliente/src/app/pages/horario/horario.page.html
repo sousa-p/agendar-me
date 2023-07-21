@@ -8,7 +8,12 @@
   <ion-row class="section">
     <ion-col size="12">
       <ng-container *ngIf="restricoes && agendamentos">
-        <app-linha-horario (click)="agendar('22:00')"></app-linha-horario>
+        <ng-container *ngFor="let horario of horariosLivres">
+          <app-linha-horario
+            [horas]="horario"
+            (click)="agendar(horario)"
+          ></app-linha-horario>
+        </ng-container>
         <ion-modal #modal [isOpen]="isOpen">
           <ng-template>
             <ion-header>

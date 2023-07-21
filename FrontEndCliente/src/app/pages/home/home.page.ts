@@ -38,7 +38,6 @@ export class HomePage implements OnInit {
   ehRestrita = (date: string) => {
     const ehDiaEspecial = this.restricoes.DATAS_ESPECIAIS.includes(date);
     if (ehDiaEspecial) return true;
-    
     const ehDiaSemanaValido = !(this.restricoes.DIAS_SEMANA.includes(parseISO(date).getDay()));
     let estaIntervalo = true;
 

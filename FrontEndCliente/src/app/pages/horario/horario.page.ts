@@ -20,9 +20,10 @@ export class HorarioPage implements OnInit {
     private Restricao: RestricaoService
   ) {}
 
-  intervalo: number = 30;
+  intervalo: number = 60;
   restricoes?: any;
-  agendamentos?: Agendamento[];
+  agendamentos?: any;
+  horariosLivres?: string[];
 
   date?: string;
   presentingElement?: any;
@@ -44,15 +45,20 @@ export class HorarioPage implements OnInit {
       this.Agendamento.getTodosAgendamentosData(this.date!).subscribe(
         (response: Agendamento[]) => {
           this.agendamentos = response;
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
-
-      this.Restricao.getTodasRestricoesData(this.date!).subscribe(
-        (response: Restricao[]) => {
-          this.restricoes = response;
+          this.Restricao.getTodasRestricoesData(this.date!).subscribe(
+            (response: Restricao[]) => {
+              this.restricoes = response;
+              console.log(this.restricoes);
+              this.horariosLivres = this.Date.gerarHorarios(
+                this.intervalo,
+                this.restricoes,
+                this.agendamentos
+              );
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
         },
         (error) => {
           console.error(error);

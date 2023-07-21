@@ -29,7 +29,6 @@ class RestricaoController
     ];
     if (!ehDataValida($data['DATA_AGENDAMENTO'])) respostaHost('error', 'Data inválida');
     $this->colocarDadosModel($data);
-
     echo json_encode($this->service->getTodasRestricoesNaData());
     exit();
   }
