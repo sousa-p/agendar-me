@@ -8,10 +8,10 @@ import { HorarioPageRoutingModule } from './horario-routing.module';
 
 import { HorarioPage } from './horario.page';
 import { LinhaHorarioComponent } from 'src/app/component/linha-horario/linha-horario.component';
-import { LoadingComponent } from 'src/app/component/loading/loading.component';
+import { LoadingModule } from 'src/app/component/loading/loading.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, HorarioPageRoutingModule],
-  declarations: [HorarioPage, LinhaHorarioComponent, LoadingComponent],
+  imports: [CommonModule, FormsModule, IonicModule, HorarioPageRoutingModule, LoadingModule],
+  declarations: [HorarioPage, LinhaHorarioComponent],
 })
 export class HorarioPageModule {}

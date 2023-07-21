@@ -38,6 +38,6 @@ class RestricaoService
     $select = 'SELECT DATA FROM DATAS_ESPECIAIS';
     $stmt = $this->conn->query($select);
     $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
   }
 }

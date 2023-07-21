@@ -9,7 +9,6 @@
     <ion-col size="12">
       <ng-container *ngIf="restricoes && agendamentos">
         <app-linha-horario (click)="agendar('22:00')"></app-linha-horario>
-
         <ion-modal #modal [isOpen]="isOpen">
           <ng-template>
             <ion-header>

@@ -35,7 +35,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
-  <ion-row class="section ion-justify-content-center">
+  <ion-row class="section ion-justify-content-center" *ngIf="restricoes">
     <ion-col>
       <ion-row id="slide">
         <ion-col size="12">
@@ -54,14 +54,15 @@
             id="calendario"
             mode="md"
             (ionChange)="clicarDia($event)"
-            min="{{ date.getISOTodayDate() }}"
-            max="{{ date.getUltimaDataAgendamento() }}"
-            presentation="date"
             [isDateEnabled]="ehRestrita"
+            [min]="date.getISOTodayDate()"
+            [max]="date.getUltimaDataAgendamento()"
+            presentation="date"
             locale="pt-BR"
           ></ion-datetime>
         </ion-col>
       </ion-row>
     </ion-col>
   </ion-row>
+  <app-loading [condicao]="!restricoes"></app-loading>
 </ion-content>

@@ -38,7 +38,7 @@ class RestricaoController
   {
     $response = [
       'DIAS_SEMANA' => $this->service->getTodosDiasSemana(),
-      'DATAS' => $this->service->getTodasDatas(),
+      'INTERVALOS' => $this->service->getTodasDatas(),
       'DATAS_ESPECIAIS' => $this->service->getTodasDatasEspeciais()
     ];
     echo json_encode($response);

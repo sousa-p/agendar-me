@@ -23,7 +23,6 @@ export class HomePage implements OnInit {
     this.Restricao.getDiasRestricoes().subscribe(
       (response) => {
         this.restricoes = response;
-        console.log(this.restricoes.DIAS_SEMANA)
       },
       (error) => {
         console.error(error);
@@ -36,7 +35,17 @@ export class HomePage implements OnInit {
     this.router.navigate(['/horario', date]);
   };
 
-  ehRestrita(date: string) {
-    return !(this.restricoes.DIAS_SEMANA.includes(parseISO(date).getDay()));
+  ehRestrita = (date: string) => {
+    const ehDiaEspecial = this.restricoes.DATAS_ESPECIAIS.includes(date);
+    if (ehDiaEspecial) return true;
+    
+    const ehDiaSemanaValido = !(this.restricoes.DIAS_SEMANA.includes(parseISO(date).getDay()));
+    let estaIntervalo = true;
+
+    this.restricoes.INTERVALOS.forEach((intervalo: any) => {
+      if (!this.date.estaIntervalo(date, intervalo.DATA_INICIO, intervalo.DATA_FIM))
+        estaIntervalo = false;
+    });
+    return ehDiaSemanaValido && estaIntervalo;
   }
 }

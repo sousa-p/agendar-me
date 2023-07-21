@@ -9,10 +9,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './core/auth/auth.guard';
 import { RedirectGuard } from './core/auth/redirect.guard';
+import { LoadingModule } from './component/loading/loading.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, LoadingModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AuthGuard, RedirectGuard],
   bootstrap: [AppComponent],
 })

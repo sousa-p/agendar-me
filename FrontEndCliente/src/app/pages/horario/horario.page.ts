@@ -21,7 +21,7 @@ export class HorarioPage implements OnInit {
   ) {}
 
   intervalo: number = 30;
-  restricoes: Restricao[] = [];
+  restricoes?: any;
   agendamentos?: Agendamento[];
 
   date?: string;
