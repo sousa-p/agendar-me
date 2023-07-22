@@ -19,14 +19,22 @@
         >
           <ng-template>
             <ion-content class="ion-padding">
-              <ion-button shape="clear" routerLink="/configuracoes">
-                <ion-icon name="cog-outline"></ion-icon>
-                <ion-label>Configurações</ion-label>
-              </ion-button>
-              <ion-button shape="clear" (click)="user.logout()">
-                <ion-icon name="log-out-outline"></ion-icon>
-                <ion-label>Sair</ion-label>
-              </ion-button>
+              <ion-row shape="clear" (click)="user.logout()">
+                <ion-col size="12">
+                  <ion-button expand="block" fill="clear" shape="round">
+                    <ion-icon name="cog-outline"></ion-icon>
+                    <ion-label>Configurações</ion-label>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+              <ion-row shape="clear" (click)="user.logout()">
+                <ion-col size="12">
+                  <ion-button expand="block" fill="clear" shape="round">
+                    <ion-icon name="log-out-outline"></ion-icon>
+                    <ion-label>Sair</ion-label>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
             </ion-content>
           </ng-template>
         </ion-popover>

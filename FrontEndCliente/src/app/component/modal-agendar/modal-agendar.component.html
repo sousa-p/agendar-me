@@ -1,0 +1,59 @@
+<ion-modal backdropDismiss="false" [isOpen]="isModalOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Marcar às {{ horario }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="fechar.emit('fechar')"
+            ><ion-icon name="close-outline" size="large"></ion-icon
+          ></ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <form #agendarForm="ngForm">
+        <ion-text color="primary">
+          <h3>Serviços</h3>
+        </ion-text>
+        <ion-list>
+          <ion-item>
+            <ion-checkbox aria-label="Corte">
+              <ion-text>
+                <p>Corte</p>
+              </ion-text>
+              <ion-text color="primary">
+                <p class="preco">R$ 4.00</p>
+              </ion-text>
+            </ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox aria-label="Sombrencelha">
+              <ion-text>
+                <p>Corte</p>
+              </ion-text>
+              <ion-text color="primary">
+                <p class="preco">R$ 4.00</p>
+              </ion-text>
+            </ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-padding">Total:</ion-label>
+            <ion-label slot="end" class="preco ion-padding">R$ 13,21</ion-label>
+          </ion-item>
+        </ion-list>
+        <ion-row class="ion-align-items-center ion-justify-content-center">
+          <ion-col size="auto">
+            <ion-button
+              id="agendar"
+              size="default"
+              type="submit"
+              [disabled]="!agendarForm.valid"
+            >
+              AGENDAR
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>

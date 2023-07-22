@@ -14,29 +14,17 @@
   <ion-row class="section">
     <ion-col size="12">
       <ng-container *ngIf="restricoes && agendamentos">
-        <ng-container *ngFor="let horas of horariosLivresPagina!">
+        <ng-container *ngFor="let horaLivre of horariosLivresPagina!">
           <app-linha-horario
-            [horas]="horas"
-            (click)="this.horario = horas; setOpen(true)"
+            [horas]="horaLivre"
+            (click)="this.horario = horaLivre; isModalOpen = true"
           ></app-linha-horario>
         </ng-container>
-        <ion-modal backdropDismiss="false" [isOpen]="isModalOpen">
-          <ng-template>
-            <ion-header>
-              <ion-toolbar>
-                <ion-title>Marcar às {{horario}}</ion-title>
-                <ion-buttons slot="end">
-                  <ion-button (click)="setOpen(false)"
-                    ><ion-icon name="close-outline" size="large"></ion-icon
-                  ></ion-button>
-                </ion-buttons>
-              </ion-toolbar>
-            </ion-header>
-            <ion-content class="ion-padding">
-              <p>{{ horario }}</p>
-            </ion-content>
-          </ng-template>
-        </ion-modal>
+        <app-modal-agendar
+          [isModalOpen]="isModalOpen"
+          [horario]="horario!"
+          (fechar)="isModalOpen = false"
+        ></app-modal-agendar>
       </ng-container>
       <ion-infinite-scroll
         (ionInfinite)="onIonInfinite($event)"
