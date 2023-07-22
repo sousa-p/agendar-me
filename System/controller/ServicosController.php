@@ -14,4 +14,9 @@ class ServicosController
     $this->model = $model;
     $this->service = $service;
   }
+
+  public function getServicos() {
+    echo json_encode($this->service->getTodosServicos());
+    exit();
+  }
 }

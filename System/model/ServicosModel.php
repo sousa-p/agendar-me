@@ -2,13 +2,11 @@
 
 namespace System\Model;
 
-class ServicosModal
+class ServicosModel
 {
   private $ID_SERVICO;
   private $NOME_SERVICO;
-  private $DESC_SERVICO;
   private $PRECO_SERVICO;
-  private $DURACAO_SERVICO;
 
   public function __get($atributo)
   {
