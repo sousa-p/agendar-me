@@ -5,6 +5,9 @@ namespace System\Controller;
 require_once './controller/CheckFields.php';
 class AgendamentoController
 {
+  private $model;
+  private $service;
+  
   public function __construct($data, $model, $service)
   {
     foreach ($data as $chave => $valor) {
