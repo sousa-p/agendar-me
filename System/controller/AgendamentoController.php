@@ -7,7 +7,7 @@ class AgendamentoController
 {
   private $model;
   private $service;
-  
+
   public function __construct($data, $model, $service)
   {
     foreach ($data as $chave => $valor) {
@@ -17,7 +17,8 @@ class AgendamentoController
     $this->service = $service;
   }
 
-  public function colocarDadosModel($data) {
+  public function colocarDadosModel($data)
+  {
     foreach ($data as $chave => $valor) {
       $this->model->__set($chave, $valor);
     }
@@ -28,12 +29,11 @@ class AgendamentoController
     $data = [
       'DATA_AGENDAMENTO' => limparDados($this->DATA_AGENDAMENTO)
     ];
-    if(!ehDataValida($data['DATA_AGENDAMENTO'])) respostaHost('error', 'Data inválida');
+    if (!ehDataValida($data['DATA_AGENDAMENTO'])) respostaHost('error', 'Data inválida');
     $this->colocarDadosModel($data);
     echo json_encode($this->service->getTodosAgendamentosData());
     exit();
   }
-
 
   public function realizarAgendamento()
   {
@@ -43,12 +43,20 @@ class AgendamentoController
       'SERVICOS_AGENDAMENTO' => limparDados($this->SERVICOS_AGENDAMENTO)
     ];
     $data['SERVICOS_AGENDAMENTO'] = json_decode($data['SERVICOS_AGENDAMENTO']);
+
+    if (temDadosVazios($data['SERVICOS_AGENDAMENTO'])) respostaHost('error', 'Serviços de agendamento inválido');
+    if (count($data['SERVICOS_AGENDAMENTO']) <= 0) respostaHost('error', 'Quantidade de serviços inválida');
+    if (!ehDataValida($data['DATA_AGENDAMENTO'])) respostaHost('error', 'Data agendamento inválida');
+    if (ehDataPassado($data['DATA_AGENDAMENTO'])) respostaHost('error', 'Data agendamento do passado');
+    if (!ehHoraValida($data['HORARIO_AGENDAMENTO'])) respostaHost('error', 'Hora agendamento inválida');
+    if (ehDataHoje($data['DATA_AGENDAMENTO']) && ehHoraPassado($data['HORARIO_AGENDAMENTO'], '12:00')) respostaHost('error', 'Tarde demais...');
+    if (!ehHoraPossivelIntervalo($data['HORARIO_AGENDAMENTO'], 30)) respostaHost('error', 'Hora mal formada');
     
-    if(temDadosVazios($data['SERVICOS_AGENDAMENTO'])) respostaHost('error', 'Serviços de agendamento inválido');
-    if(count($data['SERVICOS_AGENDAMENTO']) <= 0) respostaHost('error', 'Quantidade de serviços inválida');
-    if(!ehDataValida($data['DATA_AGENDAMENTO'])) respostaHost('error', 'Data agendamento inválida');
-    if(!ehDataValida($data['DATA_AGENDAMENTO'])) respostaHost('error', 'Data agendamento inválida');
-    if(ehDataPassado($data['DATA_AGENDAMENTO'])) respostaHost('error', 'Data agendamento inválida');
-    if(!ehHoraValida($data['HORA_AGENDAMENTO'])) respostaHost('error', 'Hora agendamento inválida');
+    $this->colocarDadosModel($data);
+    $agendamentos = $this->service->getTodosAgendamentosData();
+    if (in_array($data['HORARIO_AGENDAMENTO'], $agendamentos)) respostaHost('error', 'Agendamento já existe, por favor atualize a página!');
+
+    echo json_encode($this->service->save());
+    exit();
   }
 }

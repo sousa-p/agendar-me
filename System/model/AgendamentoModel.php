@@ -6,6 +6,7 @@ class AgendamentoModel  {
   private $ID_USER;
   private $DATA_CRIACAO_AGENDAMENTO;
   private $DATA_AGENDAMENTO;
+  private $HORARIO_AGENDAMENTO;
   private $STATUS_AGENDAMENTO;
   private $TIPO_PAGAMENTO;
   

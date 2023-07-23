@@ -5,7 +5,7 @@ use System\Database\Conn as Conn;
 $conn = Conn::getInstance();
 
 // MODEL IMPORT
-$classModelPath = '../System/model/' . $route . 'Model.php';
+$classModelPath = './model/' . $route . 'Model.php';
 require_once $classModelPath;
 $classModelNamespace = 'System\Model\\' . ucfirst($route) . 'Model';
 $classModel = new $classModelNamespace;

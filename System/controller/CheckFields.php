@@ -47,7 +47,8 @@ function temDadosVazios($data)
   return false;
 }
 
-function ehDataValida($data) {
+function ehDataValida($data)
+{
   $explodedData = explode('-', $data);
   $mes = $explodedData[1];
   $dia = $explodedData[2];
@@ -55,11 +56,30 @@ function ehDataValida($data) {
   return checkdate($mes, $dia, $ano);
 }
 
-function ehDataPassado($data) {
+function ehDataPassado($data)
+{
   $now = date('Y-m-d');
-  return strtotime($now) < strtotime($data);
+  return strtotime($now) > strtotime($data);
 }
 
-function ehHoraValida($hora) {
-  return DateTime::createFromFormat('!H:i', $hora) === $hora;
+function ehDataHoje($data) {
+  $now = date('Y-m-d');
+  return strtotime($now) === strtotime($data);
+}
+
+function ehHoraPassado($hora, $dataMax)
+{
+  return strtotime($hora) < $dataMax;
+}
+
+function ehHoraValida($hora)
+{
+  return date('H:i', strtotime($hora)) === $hora;
+}
+
+function ehHoraPossivelIntervalo($hora, $intervaloMin)
+{
+  $hora = strtotime($hora) / 60;
+  $intervaloMin = (int)$intervaloMin;
+  return ($hora % $intervaloMin) === 0;
 }

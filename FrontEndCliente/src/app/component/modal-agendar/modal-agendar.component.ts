@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Servicos } from 'src/app/core/interface/Servicos';
+import { AgendamentoService } from 'src/app/core/service/agendamento.service';
 import { ServicosService } from 'src/app/core/service/servicos.service';
 
 @Component({
@@ -16,9 +17,10 @@ import { ServicosService } from 'src/app/core/service/servicos.service';
   styleUrls: ['./modal-agendar.component.scss'],
 })
 export class ModalAgendarComponent implements OnInit {
-  constructor(private Servicos: ServicosService) {}
+  constructor(private Servicos: ServicosService, private Agendamento: AgendamentoService) {}
 
   @Input() isModalOpen: boolean = false;
+  @Input() dataAgendamento?: string;
   @Input() horario?: string;
 
   @Output() fechar = new EventEmitter();
@@ -51,6 +53,13 @@ export class ModalAgendarComponent implements OnInit {
     }
   }
   agendar() {
-    console.log(this.agendarForm.form.value);
+    this.Agendamento.realizarAgendamento(this.dataAgendamento!, this.horario!, this.servicosSelecionados).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.error(error);
+      }
+    )
   }
 }

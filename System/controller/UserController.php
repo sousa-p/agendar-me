@@ -57,7 +57,7 @@ class UserController
       'EMAIL_USER' => limparDados($this->EMAIL_USER),
       'SENHA_USER' => limparDados($this->SENHA_USER)
     ];
-    if (verificarDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos de login estão preenchidos');
+    if (temDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos de login estão preenchidos');
     $this->colocarDadosModel($data);
     if ($this->service->telDisponivel()) respostaHost('error', 'Telefone não cadastrado');
     if ($this->service->emailDisponivel()) respostaHost('error', 'Email não cadastrado');

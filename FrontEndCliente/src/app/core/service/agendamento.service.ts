@@ -32,7 +32,7 @@ export class AgendamentoService {
     servicosAgendamento: Servicos[]
   ) {
     const data = {
-      router: 'agendamento',
+      route: 'Agendamento',
       action: 'realizarAgendamento',
       DATA_AGENDAMENTO: dataAgendamento,
       HORARIO_AGENDAMENTO: horarioAgendamento,
