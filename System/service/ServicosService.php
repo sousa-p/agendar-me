@@ -21,4 +21,12 @@ class ServicosService
     $stmt = $this->conn->query($select);
     return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
+
+  public function saveServicoAgendamento () {
+    $insert = 'INSERT INTO SERVICO_AGENDAMENTOS VALUES (:ID_SERVICO, :ID_AGENDAMENTO)';
+    $stmt = $this->conn->prepare($insert);
+    $stmt->bindValue(':ID_SERVICO', (int)$this->model->ID_SERVICO);
+    $stmt->bindValue(':ID_AGENDAMENTO', (int)$this->model->ID_SERVICO);
+    $stmt->execute();
+  }
 }

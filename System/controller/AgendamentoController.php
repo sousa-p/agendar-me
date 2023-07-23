@@ -33,4 +33,22 @@ class AgendamentoController
     echo json_encode($this->service->getTodosAgendamentosData());
     exit();
   }
+
+
+  public function realizarAgendamento()
+  {
+    $data = [
+      'DATA_AGENDAMENTO' => limparDados($this->DATA_AGENDAMENTO),
+      'HORARIO_AGENDAMENTO' => limparDados($this->HORARIO_AGENDAMENTO),
+      'SERVICOS_AGENDAMENTO' => limparDados($this->SERVICOS_AGENDAMENTO)
+    ];
+    $data['SERVICOS_AGENDAMENTO'] = json_decode($data['SERVICOS_AGENDAMENTO']);
+    
+    if(temDadosVazios($data['SERVICOS_AGENDAMENTO'])) respostaHost('error', 'Serviços de agendamento inválido');
+    if(count($data['SERVICOS_AGENDAMENTO']) <= 0) respostaHost('error', 'Quantidade de serviços inválida');
+    if(!ehDataValida($data['DATA_AGENDAMENTO'])) respostaHost('error', 'Data agendamento inválida');
+    if(!ehDataValida($data['DATA_AGENDAMENTO'])) respostaHost('error', 'Data agendamento inválida');
+    if(ehDataPassado($data['DATA_AGENDAMENTO'])) respostaHost('error', 'Data agendamento inválida');
+    if(!ehHoraValida($data['HORA_AGENDAMENTO'])) respostaHost('error', 'Hora agendamento inválida');
+  }
 }

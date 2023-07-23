@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
         if (response.retorno === 'success') {
           const dataExpCookie = new Date();
           dataExpCookie.setDate(dataExpCookie.getDate() + 15);
-          
+
           this.Cookie.set('token', response.JWT, dataExpCookie);
           this.loginForm.reset();
           this.router.navigate(['/home']);

@@ -23,4 +23,8 @@ class AgendamentoService
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
+
+  public function save() {
+
+  }
 }

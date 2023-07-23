@@ -3,6 +3,7 @@ namespace System\Model;
 
 class AgendamentoModel  {
   private $ID_AGENDAMENTO;
+  private $ID_USER;
   private $DATA_CRIACAO_AGENDAMENTO;
   private $DATA_AGENDAMENTO;
   private $STATUS_AGENDAMENTO;

@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('America/Sao_Paulo');
+
 function limparDados($data)
 {
   return strip_tags(stripcslashes(trim($data)));
@@ -37,7 +39,7 @@ function respostaHost($tipo, $mensagem)
   exit();
 }
 
-function verificarDadosVazios($data)
+function temDadosVazios($data)
 {
   foreach ($data as $valor) {
     if (!ehDadoValido($valor)) return true;
@@ -51,6 +53,11 @@ function ehDataValida($data) {
   $dia = $explodedData[2];
   $ano = $explodedData[0];
   return checkdate($mes, $dia, $ano);
+}
+
+function ehDataPassado($data) {
+  $now = date('Y-m-d');
+  return strtotime($now) < strtotime($data);
 }
 
 function ehHoraValida($hora) {
