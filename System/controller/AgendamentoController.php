@@ -51,10 +51,12 @@ class AgendamentoController
     if (!ehHoraValida($data['HORARIO_AGENDAMENTO'])) respostaHost('error', 'Hora agendamento inválida');
     if (ehDataHoje($data['DATA_AGENDAMENTO']) && ehHoraPassado($data['HORARIO_AGENDAMENTO'], '12:00')) respostaHost('error', 'Tarde demais...');
     if (!ehHoraPossivelIntervalo($data['HORARIO_AGENDAMENTO'], 30)) respostaHost('error', 'Hora mal formada');
-    
+
     $this->colocarDadosModel($data);
     $agendamentos = $this->service->getTodosAgendamentosData();
     if (in_array($data['HORARIO_AGENDAMENTO'], $agendamentos)) respostaHost('error', 'Agendamento já existe, por favor atualize a página!');
+    if ($this->service->ehDataRestrita()) respostaHost('error', 'Horário em restrição');
+    if ($this->service->existeAgendamento()) respostaHost('error', 'Horário já em uso');
 
     echo json_encode($this->service->save());
     exit();

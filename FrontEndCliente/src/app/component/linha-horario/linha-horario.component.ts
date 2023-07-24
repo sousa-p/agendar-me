@@ -9,7 +9,6 @@ export class LinhaHorarioComponent  implements OnInit {
 
   constructor() { }
   @Input() horas?: string;
-  @Input() status?: string;
 
   ngOnInit() {}
 

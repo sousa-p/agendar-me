@@ -10,6 +10,7 @@ import { NgForm } from '@angular/forms';
 import { Servicos } from 'src/app/core/interface/Servicos';
 import { AgendamentoService } from 'src/app/core/service/agendamento.service';
 import { ServicosService } from 'src/app/core/service/servicos.service';
+import { ToastService } from 'src/app/core/service/toast.service';
 
 @Component({
   selector: 'app-modal-agendar',
@@ -17,7 +18,7 @@ import { ServicosService } from 'src/app/core/service/servicos.service';
   styleUrls: ['./modal-agendar.component.scss'],
 })
 export class ModalAgendarComponent implements OnInit {
-  constructor(private Servicos: ServicosService, private Agendamento: AgendamentoService) {}
+  constructor(private Servicos: ServicosService, private Agendamento: AgendamentoService, private Toast: ToastService) {}
 
   @Input() isModalOpen: boolean = false;
   @Input() dataAgendamento?: string;
@@ -52,10 +53,18 @@ export class ModalAgendarComponent implements OnInit {
       if (id !== -1) this.servicosSelecionados.splice(id, 1);
     }
   }
+
   agendar() {
     this.Agendamento.realizarAgendamento(this.dataAgendamento!, this.horario!, this.servicosSelecionados).subscribe(
       (response) => {
-        console.log(response);
+        const tempo = 1000;
+        this.servicosSelecionados = [];
+        this.Toast.mostrarToast(response.retorno, tempo, response.mensagem);
+        if (response.retorno === 'success') {
+          setTimeout(() => {
+            location.reload();
+          }, tempo);
+        }
       },
       (error) => {
         console.error(error);

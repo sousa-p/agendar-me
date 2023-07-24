@@ -22,8 +22,8 @@ export class HorarioPage implements OnInit {
   ) {}
 
   intervalo: number = 30;
-  restricoes?: any;
-  agendamentos?: any;
+  restricoes: any = [];
+  agendamentos: any = [];
   horariosLivres: string[] = [];
   horariosLivresPagina: string[] = [];
   horarioAtual: number = 0;
@@ -48,30 +48,33 @@ export class HorarioPage implements OnInit {
         this.Date.isPastDate(this.date)
       )
         this.router.navigate(['/home']);
-
-      this.Agendamento.getTodosAgendamentosData(this.date!).subscribe(
-        (response: Agendamento[]) => {
-          this.agendamentos = response;
-          this.Restricao.getTodasRestricoesData(this.date!).subscribe(
-            (response: Restricao[]) => {
-              this.restricoes = response;
-              this.horariosLivres = this.Date.gerarHorarios(
-                this.intervalo,
-                this.restricoes,
-                this.agendamentos
-              );
-              this.mostrarItens();
-            },
-            (error) => {
-              console.error(error);
-            }
-          );
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
+      else this.carregarPagina();
     });
+  }
+
+  carregarPagina() {
+    this.Agendamento.getTodosAgendamentosData(this.date!).subscribe(
+      (response: Agendamento[]) => {
+        this.agendamentos = response;
+        this.Restricao.getTodasRestricoesData(this.date!).subscribe(
+          (response: Restricao[]) => {
+            this.restricoes = response;
+            this.horariosLivres = this.Date.gerarHorarios(
+              this.intervalo,
+              this.restricoes,
+              this.agendamentos
+            );
+            this.mostrarItens();
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   mostrarItens() {

@@ -42,7 +42,7 @@ class RestricaoService
 
   public function getTodasDatasEspeciais()
   {
-    $select = 'SELECT DATA FROM DATAS_ESPECIAIS';
+    $select = 'SELECT DATA_ESPECIAL FROM DATAS_ESPECIAIS';
     $stmt = $this->conn->query($select);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_COLUMN);

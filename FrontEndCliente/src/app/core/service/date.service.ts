@@ -40,8 +40,14 @@ export class DateService {
     return format(addDays(now, 30), 'yyyy-MM-dd');
   }
 
-  estaIntervaloData(date: Date, inicio: Date | null, fim: Date | null): boolean {
-    return inicio != null && isAfter(date, inicio) && (!fim || isBefore(fim, date));
+  estaIntervaloData(
+    date: Date,
+    inicio: Date | null,
+    fim: Date | null
+  ): boolean {
+    return (
+      inicio != null && isAfter(date, inicio) && (!fim || isBefore(fim, date))
+    );
   }
 
   estaIntervaloHorario(horario: Date, inicio: Date, fim: Date | null): boolean {
@@ -81,13 +87,14 @@ export class DateService {
         const inicio = this.horaStringToDate(hInicio);
         const fim = hFim ? this.horaStringToDate(hFim) : null;
 
-        return !(
-          agendamentos.includes(horario) ||
-          this.estaIntervaloHorario(horario, inicio, fim)
-        );
+        return !this.estaIntervaloHorario(horario, inicio, fim);
       });
+      
+      const estaAgendado = agendamentos.includes(
+        format(horario, 'HH:mm') + ':00'
+      );
 
-      if (ehValido) horarios.push(format(horario, 'HH:mm'));
+      if (ehValido && !estaAgendado) horarios.push(format(horario, 'HH:mm'));
 
       ultimoHorario = horario;
     }
