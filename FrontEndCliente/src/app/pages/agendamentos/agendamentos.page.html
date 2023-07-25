@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        color="primary"
+        defaultHref="#"
+        routerLink="/home"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Agendamentos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-row class="section">
+    <ion-col size="12">
+      <ng-container *ngIf="agendamentosRealizados">
+        <app-linha-agendamento
+          *ngFor="let agendamento of agendamentosRealizados"
+          [data]="Date.formatarDataString(agendamento.DATA_AGENDAMENTO!, 'dd/MM/yyyy')"
+          [horas]="agendamento.HORARIO_AGENDAMENTO"
+          [status]="agendamento.STATUS_AGENDAMENTO"
+        ></app-linha-agendamento>
+      </ng-container>
+      <app-loading
+        [condicao]="!agendamentosRealizados"
+      ></app-loading>
+    </ion-col>
+  </ion-row>
+</ion-content>

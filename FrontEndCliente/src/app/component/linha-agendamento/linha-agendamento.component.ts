@@ -8,7 +8,10 @@ import { Component, Input, OnInit } from '@angular/core';
 export class LinhaAgendamentoComponent  implements OnInit {
 
   constructor() { }
+  @Input() data?: string;
   @Input() horas?: string;
+  @Input() status?: string;
+
 
 
   ngOnInit() {}

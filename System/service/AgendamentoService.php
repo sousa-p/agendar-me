@@ -8,13 +8,11 @@ class AgendamentoService
 {
   private $conn;
   private $model;
-
   public function __construct($conn, $model)
   {
     $this->conn = $conn;
     $this->model = $model;
   }
-
   public function getTodosAgendamentosData()
   {
     $select = 'SELECT HORARIO_AGENDAMENTO FROM AGENDAMENTO WHERE DATA_AGENDAMENTO = :DATA_AGENDAMENTO';
@@ -23,39 +21,33 @@ class AgendamentoService
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_COLUMN);
   }
-
   public function ehDataEspecial()
   {
     $select = "SELECT * FROM DATAS_ESPECIAIS WHERE DATA_ESPECIAL = :DATA_AGENDAMENTO";
     $stmt = $this->conn->prepare($select);
     $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->__get('DATA_AGENDAMENTO'));
     $stmt->execute();
-
     return $stmt->rowCount() > 0;
   }
-
   public function ehDataRestrita()
   {
     $DIA_SEMANA = date('N', strtotime($this->model->__get('DATA_AGENDAMENTO')));
     $DIA_SEMANA = (int)$DIA_SEMANA - 1;
-
     $select = "SELECT * FROM RESTRICAO
-    INNER JOIN DATAS_ESPECIAIS
-    ON DATA_ESPECIAL != :DATA_AGENDAMENTO
-    WHERE
-    (:DIA_SEMANA = DIA_SEMANA AND (DATA_INICIO <= :DATA_AGENDAMENTO OR DATA_INICIO IS NULL)
-    AND (:DATA_AGENDAMENTO <= DATA_FIM OR DATA_FIM IS NULL))
-    OR (DATA_INICIO <= :DATA_AGENDAMENTO
-    AND (:DATA_AGENDAMENTO <= DATA_FIM OR DATA_FIM IS NULL))";
-
+      INNER JOIN DATAS_ESPECIAIS
+      ON DATA_ESPECIAL != :DATA_AGENDAMENTO
+      WHERE
+      (:DIA_SEMANA = DIA_SEMANA AND (DATA_INICIO <= :DATA_AGENDAMENTO OR DATA_INICIO IS NULL)
+      AND (:DATA_AGENDAMENTO <= DATA_FIM OR DATA_FIM IS NULL))
+      OR (DATA_INICIO <= :DATA_AGENDAMENTO
+      AND (:DATA_AGENDAMENTO <= DATA_FIM OR DATA_FIM IS NULL))
+    ";
     $stmt = $this->conn->prepare($select);
     $stmt->bindValue(':DIA_SEMANA', $DIA_SEMANA);
     $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->__get('DATA_AGENDAMENTO'));
     $stmt->execute();
-
     return $stmt->rowCount() > 0;
   }
-
   public function existeAgendamento()
   {
     $select = 'SELECT * FROM AGENDAMENTO WHERE DATA_AGENDAMENTO = :DATA_AGENDAMENTO AND HORARIO_AGENDAMENTO = :HORARIO_AGENDAMENTO';
@@ -65,7 +57,6 @@ class AgendamentoService
     $stmt->execute();
     return $stmt->rowCount() > 0;
   }
-
   public function save()
   {
     $insert = 'INSERT INTO AGENDAMENTO (ID_USER, DATA_AGENDAMENTO, HORARIO_AGENDAMENTO) VALUES (:ID_USER, :DATA_AGENDAMENTO, :HORARIO_AGENDAMENTO)';
@@ -74,9 +65,7 @@ class AgendamentoService
     $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->__get('DATA_AGENDAMENTO'));
     $stmt->bindValue(':HORARIO_AGENDAMENTO', $this->model->__get('HORARIO_AGENDAMENTO'));
     $stmt->execute();
-
     $this->model->__set('ID_AGENDAMENTO', $this->getIdUltimoAgendamento());
-
     foreach ($this->model->__get('SERVICOS_AGENDAMENTO') as $servico) {
       $insert = 'INSERT INTO SERVICOS_AGENDAMENTO VALUES (:ID_SERVICO, :ID_AGENDAMENTO)';
       $stmt = $this->conn->prepare($insert);
@@ -84,19 +73,22 @@ class AgendamentoService
       $stmt->bindValue(':ID_AGENDAMENTO', (int)$this->model->__get('ID_AGENDAMENTO'));
       $stmt->execute();
     }
-
-    return [
-      'retorno' => 'success',
-      'mensagem' => 'Agendamento realizado com sucesso'
-    ];
+    return ['retorno' => 'success', 'mensagem' => 'Agendamento realizado com sucesso'];
   }
-
   public function getIdUltimoAgendamento()
   {
     $select = 'SELECT ID_AGENDAMENTO FROM AGENDAMENTO WHERE ID_USER = :ID_USER ORDER BY DATA_CRIACAO_AGENDAMENTO DESC LIMIT 1';
     $stmt = $this->conn->prepare($select);
-    $stmt->bindValue(':ID_USER', $this->model->__get('ID_USER'));
+    $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
     $stmt->execute();
     return $stmt->fetch()->ID_AGENDAMENTO;
+  }
+  public function getAgendamentosRealizados()
+  {
+    $select = 'SELECT DATA_AGENDAMENTO, HORARIO_AGENDAMENTO, STATUS_AGENDAMENTO, ID_AGENDAMENTO FROM AGENDAMENTO WHERE ID_USER = :ID_USER';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
 }

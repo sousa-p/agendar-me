@@ -41,4 +41,13 @@ export class AgendamentoService {
 
     return this.Server.request(data);
   }
+
+  getAgendamentosRealizados() {
+    const data = {
+      route: 'Agendamento',
+      action: 'getAgendamentosRealizados'
+    }
+
+    return this.Server.request(data);
+  }
 }

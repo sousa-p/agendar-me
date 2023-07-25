@@ -61,4 +61,16 @@ class AgendamentoController
     echo json_encode($this->service->save());
     exit();
   }
+  
+  public function getAgendamentosRealizados()
+  {
+    $agendamentosRealizados = $this->service->getAgendamentosRealizados();
+
+    foreach($agendamentosRealizados as $agendamento) {
+      $agendamento->HORARIO_AGENDAMENTO = substr($agendamento->HORARIO_AGENDAMENTO, 0, -3);
+    }
+
+    echo json_encode($agendamentosRealizados);
+    exit();
+  }
 }
