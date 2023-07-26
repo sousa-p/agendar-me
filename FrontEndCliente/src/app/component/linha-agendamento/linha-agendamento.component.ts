@@ -5,15 +5,11 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './linha-agendamento.component.html',
   styleUrls: ['./linha-agendamento.component.scss'],
 })
-export class LinhaAgendamentoComponent  implements OnInit {
-
-  constructor() { }
+export class LinhaAgendamentoComponent implements OnInit {
+  constructor() {}
   @Input() data?: string;
   @Input() horas?: string;
   @Input() status?: string;
 
-
-
   ngOnInit() {}
-
 }

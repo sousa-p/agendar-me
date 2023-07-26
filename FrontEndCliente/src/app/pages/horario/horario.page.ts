@@ -29,7 +29,6 @@ export class HorarioPage implements OnInit {
   horarioAtual: number = 0;
 
   date?: string;
-  presentingElement?: any;
   horario?: string;
 
   isModalOpen = false;

@@ -9,15 +9,22 @@ import { DateService } from 'src/app/core/service/date.service';
   styleUrls: ['./agendamentos.page.scss'],
 })
 export class AgendamentosPage implements OnInit {
-  constructor(private Agendamento: AgendamentoService, public Date: DateService) {}
+  constructor(
+    private Agendamento: AgendamentoService,
+    public Date: DateService
+  ) {}
 
   agendamentosRealizados?: Agendamento[];
+  isModalOpen = true;
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
 
   ngOnInit() {
     this.Agendamento.getAgendamentosRealizados().subscribe(
       (response) => {
         this.agendamentosRealizados = response;
-        console.log(response);
       },
       (error) => {
         console.error(error);

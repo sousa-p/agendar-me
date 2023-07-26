@@ -15,16 +15,20 @@
   <ion-row class="section">
     <ion-col size="12">
       <ng-container *ngIf="agendamentosRealizados">
-        <app-linha-agendamento
-          *ngFor="let agendamento of agendamentosRealizados"
-          [data]="Date.formatarDataString(agendamento.DATA_AGENDAMENTO!, 'dd/MM/yyyy')"
-          [horas]="agendamento.HORARIO_AGENDAMENTO"
-          [status]="agendamento.STATUS_AGENDAMENTO"
-        ></app-linha-agendamento>
+        <ng-container *ngFor="let agendamento of agendamentosRealizados">
+          <app-linha-agendamento
+            [data]="Date.formatarDataString(agendamento.DATA_AGENDAMENTO!, 'dd/MM/yyyy')"
+            [horas]="agendamento.HORARIO_AGENDAMENTO"
+            [status]="agendamento.STATUS_AGENDAMENTO"
+            (click)="setOpen(true)"
+          ></app-linha-agendamento>
+        </ng-container>
+        <app-modal-horario
+          [isModalOpen]="isModalOpen"
+          (fechar)="setOpen(false)"
+        ></app-modal-horario>
       </ng-container>
-      <app-loading
-        [condicao]="!agendamentosRealizados"
-      ></app-loading>
+      <app-loading [condicao]="!agendamentosRealizados"></app-loading>
     </ion-col>
   </ion-row>
 </ion-content>

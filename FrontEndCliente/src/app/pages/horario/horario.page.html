@@ -21,17 +21,16 @@
     <ion-col size="12">
       <ng-container *ngIf="restricoes && agendamentos">
         <ng-container *ngFor="let horaLivre of horariosLivresPagina!">
-          
           <app-linha-horario
             [horas]="horaLivre"
-            (click)="this.horario = horaLivre; isModalOpen = true"
+            (click)="this.horario = horaLivre; setOpen(true)"
           ></app-linha-horario>
         </ng-container>
         <app-modal-agendar
           [isModalOpen]="isModalOpen"
           [dataAgendamento]="date!"
           [horario]="horario!"
-          (fechar)="isModalOpen = false"
+          (fechar)="setOpen(false)"
         ></app-modal-agendar>
       </ng-container>
       <ion-infinite-scroll

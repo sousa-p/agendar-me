@@ -1,0 +1,15 @@
+<ion-modal backdropDismiss="false" [isOpen]="isModalOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Agendamento</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="fechar.emit('fechar')">
+            <ion-icon name="close-outline" size="large"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding"> Text </ion-content>
+  </ng-template>
+</ion-modal>

@@ -9,6 +9,7 @@ import { AgendamentosPageRoutingModule } from './agendamentos-routing.module';
 import { AgendamentosPage } from './agendamentos.page';
 import { LinhaAgendamentoComponent } from 'src/app/component/linha-agendamento/linha-agendamento.component';
 import { LoadingModule } from 'src/app/component/loading/loading.module';
+import { ModalHorarioComponent } from 'src/app/component/modal-horario/modal-horario.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { LoadingModule } from 'src/app/component/loading/loading.module';
     AgendamentosPageRoutingModule,
     LoadingModule
   ],
-  declarations: [AgendamentosPage, LinhaAgendamentoComponent]
+  declarations: [AgendamentosPage, LinhaAgendamentoComponent, ModalHorarioComponent]
 })
 export class AgendamentosPageModule {}
