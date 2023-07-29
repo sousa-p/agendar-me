@@ -1,17 +1,17 @@
-<ion-row class="linha-agendamento ion-align-items-center">
+<ion-row [class]="tipoAgendamento! + ' linha-agendamento ion-align-items-center'">
   <ion-col class="linha-agendamento__infos ion-padding" size="auto">
     <ion-text color="primary">
-      <ion-label>{{ data }}</ion-label>
+      <ion-label>{{ this.Date.formatarDataString(agendamento!.DATA_AGENDAMENTO, 'dd/MM/yyyy') }}</ion-label>
     </ion-text>
   </ion-col>
   <ion-col class="linha-agendamento__infos ion-padding" size="auto">
     <ion-text class="linha-agendamento__infos__horas">
-      <ion-label>{{ horas }}</ion-label>
+      <ion-label>{{ agendamento?.HORARIO_AGENDAMENTO }}</ion-label>
     </ion-text>
   </ion-col>
   <ion-col class="linha-agendamento__infos ion-padding" size="auto">
     <ion-text color="primary">
-      <ion-label>{{ status }}</ion-label>
+      <ion-label>{{ agendamento?.STATUS_AGENDAMENTO }}</ion-label>
     </ion-text>
   </ion-col>
   <ion-col>

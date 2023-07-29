@@ -27,12 +27,15 @@ export class DateService {
     return isValid(parseISO(dateString));
   }
 
-  isPastDate(dateString: string): boolean {
+  isPastDate(dateString: string, considerarHoras: boolean=false): boolean {
     const now = new Date();
     const date = new Date(dateString);
-    now.setHours(0, 0, 0, 0);
-    date.setHours(24, 0, 0, 0);
-    return now.getTime() > date.getTime();
+
+    if (!considerarHoras) {
+      now.setHours(0, 0, 0, 0);
+      date.setHours(24, 0, 0, 0);
+    }
+    return isBefore(date, now);
   }
 
   getUltimaDataAgendamento(): string {
@@ -102,7 +105,9 @@ export class DateService {
     return horarios;
   }
 
-  formatarDataString(dateString: string, formatString: string): string {
+  formatarDataString(dateString: string | undefined, formatString: string): string {
+    if (typeof(dateString) === 'undefined')
+      return 'errorToParse';
     return format(parseISO(dateString), formatString);
   }
 }

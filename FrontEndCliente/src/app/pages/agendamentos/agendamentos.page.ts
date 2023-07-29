@@ -13,7 +13,8 @@ export class AgendamentosPage implements OnInit {
     private Agendamento: AgendamentoService,
     public Date: DateService
   ) {}
-
+  
+  agendamentoSelecionado?: Agendamento;
   agendamentosRealizados?: Agendamento[];
   isModalOpen = true;
 

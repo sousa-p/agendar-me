@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Agendamento } from 'src/app/core/interface/Agendamento';
+import { DateService } from 'src/app/core/service/date.service';
 
 @Component({
   selector: 'app-linha-agendamento',
@@ -6,10 +8,15 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./linha-agendamento.component.scss'],
 })
 export class LinhaAgendamentoComponent implements OnInit {
-  constructor() {}
-  @Input() data?: string;
-  @Input() horas?: string;
-  @Input() status?: string;
+  constructor(public Date: DateService) {}
+  @Input() agendamento?: Agendamento;
 
-  ngOnInit() {}
+  tipoAgendamento: string = '';
+
+  ngOnInit() {
+    const ISOdataAgendamento = `${this.agendamento?.DATA_AGENDAMENTO}T${this.agendamento?.HORARIO_AGENDAMENTO}:00`;
+
+    if (['cancelado', 'finalizado'].includes(this.agendamento?.STATUS_AGENDAMENTO!) || this.Date.isPastDate(ISOdataAgendamento, true))
+      this.tipoAgendamento = 'invalido'
+  }
 }
