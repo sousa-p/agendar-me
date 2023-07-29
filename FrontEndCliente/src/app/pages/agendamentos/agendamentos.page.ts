@@ -16,7 +16,7 @@ export class AgendamentosPage implements OnInit {
   
   agendamentoSelecionado?: Agendamento;
   agendamentosRealizados?: Agendamento[];
-  isModalOpen = true;
+  isModalOpen = false;
 
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;

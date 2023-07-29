@@ -34,7 +34,7 @@ class UserController
     ];
 
     // Validação de dados
-    if (verificarDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos de cadastro estão preenchidos');
+    if (temDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos de cadastro estão preenchidos');
     if (!ehStrValida($data['NOME_USER'])) respostaHost('error', 'Nome de úsuario inválido');
     if (!ehTelefoneValido($data['TEL_USER'])) respostaHost('error', 'Formato de telefone de úsuario inválido');
     if (!ehEmailValido($data['EMAIL_USER'])) respostaHost('error', 'Formato de email de úsuario inválido');
