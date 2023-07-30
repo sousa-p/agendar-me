@@ -9,15 +9,14 @@ import { ServicosService } from 'src/app/core/service/servicos.service';
   styleUrls: ['./modal-horario.component.scss'],
 })
 export class ModalHorarioComponent implements OnInit {
-  constructor(public Date: DateService, private Servicos: ServicosService) {}
+  constructor(public Date: DateService) {}
 
   @Input() agendamento?: Agendamento;
 
   @Input() isModalOpen?: boolean;
   @Output() fechar = new EventEmitter();
 
-  servicos: Servicos[] = [];
-
   ngOnInit() {
+    console.log(this.agendamento?.SERVICOS)
   }
 }

@@ -7,7 +7,6 @@ class ServicosModel
   private $ID_SERVICO;
   private $NOME_SERVICO;
   private $PRECO_SERVICO;
-  private $ID_USER;
 
   public function __get($atributo)
   {

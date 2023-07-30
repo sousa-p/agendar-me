@@ -18,7 +18,7 @@
         <ng-container *ngFor="let agendamento of agendamentosRealizados">
           <app-linha-agendamento
             [agendamento]="agendamento"
-            (click)="agendamentoSelecionado = agendamento;setOpen(true)"
+            (click)="clicarAgendamento(agendamento)"
           ></app-linha-agendamento>
         </ng-container>
         <app-modal-horario

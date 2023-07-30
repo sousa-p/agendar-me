@@ -2,8 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoadingComponent } from '../loading/loading.component';
 
+
+
 @NgModule({
   declarations: [LoadingComponent],
-  imports: [CommonModule],
+  imports: [
+    CommonModule
+  ]
 })
-export class ModalAgendarModule {}
+export class ModalHorarioModule { }

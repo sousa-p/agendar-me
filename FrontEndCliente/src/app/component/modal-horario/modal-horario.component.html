@@ -11,20 +11,41 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-list>
+      <ion-list *ngIf="agendamento?.SERVICOS !== undefined">
         <ion-item>
-          <ion-label>Data: {{this.Date.formatarDataString(agendamento!.DATA_AGENDAMENTO, 'dd/MM/yyyy')}}</ion-label>
+          <ion-text>
+            <h3>Data:</h3>
+            <p>{{this.Date.formatarDataString(agendamento!.DATA_AGENDAMENTO, 'dd/MM/yyyy')}}</p>
+          </ion-text>
         </ion-item>
         <ion-item>
-          <ion-label>Horário: Ás {{agendamento!.HORARIO_AGENDAMENTO}}</ion-label>
+          <ion-text>
+            <h3>Horário:</h3>
+            <p>Ás {{agendamento!.HORARIO_AGENDAMENTO}}</p>
+          </ion-text>
         </ion-item>
         <ion-item>
-          <ion-label>Serviços:</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Super Mario World</ion-label>
+          <ion-text>
+            <h3>Serviços</h3>
+            <ion-row class="ion-align-items-center" *ngFor="let servico of agendamento?.SERVICOS">
+              <ion-col size="auto">
+                <ion-text>
+                  <p>{{ servico.NOME_SERVICO }}:</p>
+                </ion-text>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-text color="primary">
+                  <p class="preco">R$ {{ servico.PRECO_SERVICO }}</p>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-text>
         </ion-item>
       </ion-list>
+      <app-loading
+        [condicao]="agendamento?.SERVICOS === undefined"
+      ></app-loading>
     </ion-content>
+    
   </ng-template>
 </ion-modal>

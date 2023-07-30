@@ -33,15 +33,15 @@ class ServicosController
   public function getServicosAgendamento()
   {
     $data = [
-      'ID_USER' => limparDados($this->ID_USER),
-      'ID_AGENDAMENTO' => limparDados($this->ID_AGENDAMENTO)
+      'ID_USER' => $this->model->ID_USER,
+      'ID_AGENDAMENTO' => $this->ID_AGENDAMENTO
     ];
 
     if (!ehDadoValido($data['ID_USER'])) respostaHost('error', 'Algo deu errado :(');
     if (!ehDadoValido($data['ID_AGENDAMENTO'])) respostaHost('error', 'Algo deu errado :(');
     
-    $this->colocarDadosModel($data);
-
+    $this->model->__set('ID_AGENDAMENTO', (int)$data['ID_AGENDAMENTO']);
+    
     echo json_encode($this->service->getTodosServicosAgendamento());
     exit();
   }

@@ -1,3 +1,5 @@
+import { Servicos } from "./Servicos";
+
 export interface Agendamento {
   ID_AGENDAMENTO?: number;
   DATA_CRIACAO_AGENDAMENTO?: string;
@@ -5,4 +7,5 @@ export interface Agendamento {
   HORARIO_AGENDAMENTO: string;
   STATUS_AGENDAMENTO?: string;
   TIPO_PAGAMENTO?: string;
+  SERVICOS?: Servicos[]
 }

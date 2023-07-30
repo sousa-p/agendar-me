@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Agendamento } from 'src/app/core/interface/Agendamento';
 import { AgendamentoService } from 'src/app/core/service/agendamento.service';
 import { DateService } from 'src/app/core/service/date.service';
+import { ServicosService } from 'src/app/core/service/servicos.service';
 
 @Component({
   selector: 'app-agendamentos',
@@ -11,7 +12,8 @@ import { DateService } from 'src/app/core/service/date.service';
 export class AgendamentosPage implements OnInit {
   constructor(
     private Agendamento: AgendamentoService,
-    public Date: DateService
+    public Date: DateService,
+    private Servicos: ServicosService
   ) {}
   
   agendamentoSelecionado?: Agendamento;
@@ -20,6 +22,22 @@ export class AgendamentosPage implements OnInit {
 
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
+  }
+
+  clicarAgendamento(agendamento: Agendamento) {
+    this.setOpen(true)
+    
+    this.Servicos.getServicosAgendamento(agendamento.ID_AGENDAMENTO).subscribe(
+      (response) => {
+        agendamento.SERVICOS = response;
+        this.agendamentoSelecionado = agendamento;
+      },
+      (error) => {
+        console.error(error);
+      }
+    )
+
+    this.agendamentoSelecionado = agendamento;
   }
 
   ngOnInit() {

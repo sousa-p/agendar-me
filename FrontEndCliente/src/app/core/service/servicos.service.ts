@@ -17,4 +17,14 @@ export class ServicosService {
 
     return this.Server.request(data);
   }
+
+  getServicosAgendamento(idAgendamento: number | undefined): Observable<Servicos[]> {
+    const data = {
+      route: 'Servicos',
+      action: 'getServicosAgendamento',
+      ID_AGENDAMENTO: idAgendamento,
+    };
+
+    return this.Server.request(data);
+  }
 }

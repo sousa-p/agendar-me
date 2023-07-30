@@ -18,7 +18,7 @@ export class HorarioPage implements OnInit {
     private router: Router,
     public Date: DateService,
     private Agendamento: AgendamentoService,
-    private Restricao: RestricaoService
+    private Restricao: RestricaoService,
   ) {}
 
   intervalo: number = 30;
