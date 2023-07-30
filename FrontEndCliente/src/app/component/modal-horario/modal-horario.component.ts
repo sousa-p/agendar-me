@@ -16,9 +16,7 @@ export class ModalHorarioComponent implements OnInit {
   @Input() isModalOpen?: boolean;
   @Output() fechar = new EventEmitter();
 
-  ngOnInit() {
-    console.log(this.agendamento?.SERVICOS)
-  }
+  ngOnInit() {}
 
   public alertButtons = [
     {
