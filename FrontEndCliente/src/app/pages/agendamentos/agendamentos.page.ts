@@ -3,6 +3,7 @@ import { Agendamento } from 'src/app/core/interface/Agendamento';
 import { AgendamentoService } from 'src/app/core/service/agendamento.service';
 import { DateService } from 'src/app/core/service/date.service';
 import { ServicosService } from 'src/app/core/service/servicos.service';
+import { ToastService } from 'src/app/core/service/toast.service';
 
 @Component({
   selector: 'app-agendamentos',
@@ -13,7 +14,7 @@ export class AgendamentosPage implements OnInit {
   constructor(
     private Agendamento: AgendamentoService,
     public Date: DateService,
-    private Servicos: ServicosService
+    private Servicos: ServicosService,
   ) {}
   
   agendamentoSelecionado?: Agendamento;

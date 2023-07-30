@@ -61,16 +61,30 @@ class AgendamentoController
     echo json_encode($this->service->save());
     exit();
   }
-  
+
   public function getAgendamentosRealizados()
   {
     $agendamentosRealizados = $this->service->getAgendamentosRealizados();
 
-    foreach($agendamentosRealizados as $agendamento) {
+    foreach ($agendamentosRealizados as $agendamento) {
       $agendamento->HORARIO_AGENDAMENTO = substr($agendamento->HORARIO_AGENDAMENTO, 0, -3);
     }
 
     echo json_encode($agendamentosRealizados);
+    exit();
+  }
+
+  public function deleteAgendamento()
+  {
+    $data = [
+      'ID_AGENDAMENTO' => (int)$this->ID_AGENDAMENTO
+    ];
+
+    if (!ehDadoValido($data['ID_AGENDAMENTO'])) respostaHost('error', 'Algo deu errado :(');
+
+    $this->colocarDadosModel($data);
+
+    echo json_encode($this->service->deleteAgendamento());
     exit();
   }
 }

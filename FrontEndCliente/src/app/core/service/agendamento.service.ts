@@ -42,10 +42,20 @@ export class AgendamentoService {
     return this.Server.request(data);
   }
 
-  getAgendamentosRealizados() {
+  getAgendamentosRealizados(): Observable<Agendamento[]> {
     const data = {
       route: 'Agendamento',
       action: 'getAgendamentosRealizados'
+    }
+
+    return this.Server.request(data);
+  }
+
+  deleteAgendamento(idAgendamento: number | undefined) {
+    const data = {
+      route: 'Agendamento',
+      action: 'deleteAgendamento',
+      ID_AGENDAMENTO: idAgendamento
     }
 
     return this.Server.request(data);
