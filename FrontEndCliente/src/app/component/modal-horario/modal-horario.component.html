@@ -41,6 +41,20 @@
             </ion-row>
           </ion-text>
         </ion-item>
+        <ion-row class="ion-align-items-center ion-justify-content-center">
+          <ion-col size="auto">
+            <ion-button id="cancelar">
+              Cancelar
+            </ion-button>
+            <ion-alert
+              mode="ios"
+              trigger="cancelar"
+              header="Alerta!"
+              subHeader="Você tem certeza que gostaria de cancelar sua reserva?"
+              [buttons]="alertButtons"
+            ></ion-alert>
+          </ion-col>
+        </ion-row>
       </ion-list>
       <app-loading
         [condicao]="agendamento?.SERVICOS === undefined"

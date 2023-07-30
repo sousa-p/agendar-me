@@ -19,4 +19,18 @@ export class ModalHorarioComponent implements OnInit {
   ngOnInit() {
     console.log(this.agendamento?.SERVICOS)
   }
+
+  public alertButtons = [
+    {
+      text: 'Não',
+      role: 'cancel',
+    },
+    {
+      text: 'Sim',
+      role: 'confirm',
+      handler: () => {
+        alert('cancelou')
+      },
+    },
+  ]
 }
