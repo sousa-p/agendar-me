@@ -37,14 +37,14 @@
               id="agendar"
               size="default"
               type="submit"
-              [disabled]="!servicosSelecionados.length"
+              [disabled]="!this.servicosSelecionados.length"
             >
               AGENDAR
             </ion-button>
           </ion-col>
         </ion-row>
       </form>
-      <app-loading [condicao]="servicos === undefined"> </app-loading>
+      <app-loading [condicao]="this.servicos === undefined"> </app-loading>
     </ion-content>
   </ng-template>
 </ion-modal>

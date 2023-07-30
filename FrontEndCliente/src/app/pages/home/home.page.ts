@@ -11,7 +11,7 @@ import { UserService } from 'src/app/core/service/user.service';
 })
 export class HomePage implements OnInit {
   constructor(
-    public date: DateService,
+    public Date: DateService,
     public user: UserService,
     private router: Router,
     private Restricao: RestricaoService
@@ -48,7 +48,7 @@ export class HomePage implements OnInit {
       const inicio = parseISO(intervalo.DATA_INICIO);
       const fim = intervalo.DATA_FIM ? parseISO(intervalo.DATA_FIM) : null;
 
-      if (!this.date.estaIntervaloData(date, inicio, fim))
+      if (!this.Date.estaIntervaloData(date, inicio, fim))
         estaIntervalo = false;
     });
     return ehDiaSemanaValido && estaIntervalo;

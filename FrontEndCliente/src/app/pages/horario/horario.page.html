@@ -10,7 +10,7 @@
     <ion-title>Horários</ion-title>
     <ion-buttons slot="end">
       <ion-title color="primary"
-        >{{ this.Date.formatarDataString(date!, 'dd/MM/yyyy') }}</ion-title
+        >{{ this.Date.formatarDataString(this.date!, 'dd/MM/yyyy') }}</ion-title
       >
     </ion-buttons>
   </ion-toolbar>
@@ -19,27 +19,27 @@
 <ion-content [fullscreen]="true">
   <ion-row class="section">
     <ion-col size="12">
-      <ng-container *ngIf="restricoes && agendamentos">
-        <ng-container *ngFor="let horaLivre of horariosLivresPagina!">
+      <ng-container *ngIf="this.restricoes && this.agendamentos">
+        <ng-container *ngFor="let horaLivre of this.horariosLivresPagina!">
           <app-linha-horario
             [horas]="horaLivre"
-            (click)="this.horario = horaLivre; setOpen(true)"
+            (click)="this.horario = horaLivre; this.setOpen(true)"
           ></app-linha-horario>
         </ng-container>
         <app-modal-agendar
-          [isModalOpen]="isModalOpen"
-          [dataAgendamento]="date!"
-          [horario]="horario!"
-          (fechar)="setOpen(false)"
+          [isModalOpen]="this.isModalOpen"
+          [dataAgendamento]="this.date!"
+          [horario]="this.horario!"
+          (fechar)="this.setOpen(false)"
         ></app-modal-agendar>
       </ng-container>
       <ion-infinite-scroll
         (ionInfinite)="onIonInfinite($event)"
-        [disabled]="horarioAtual >= horariosLivres!.length"
+        [disabled]="this.horarioAtual >= this.horariosLivres!.length"
       >
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
-      <app-loading [condicao]="!(horariosLivres.length)"></app-loading>
+      <app-loading [condicao]="!(this.horariosLivres.length)"></app-loading>
     </ion-col>
   </ion-row>
 </ion-content>

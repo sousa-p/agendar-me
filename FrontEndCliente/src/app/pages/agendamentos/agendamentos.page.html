@@ -14,20 +14,20 @@
 <ion-content [fullscreen]="true">
   <ion-row class="section">
     <ion-col size="12">
-      <ng-container *ngIf="agendamentosRealizados">
-        <ng-container *ngFor="let agendamento of agendamentosRealizados">
+      <ng-container *ngIf="this.agendamentosRealizados">
+        <ng-container *ngFor="let agendamento of this.agendamentosRealizados">
           <app-linha-agendamento
             [agendamento]="agendamento"
             (click)="clicarAgendamento(agendamento)"
           ></app-linha-agendamento>
         </ng-container>
         <app-modal-horario
-          [agendamento]="agendamentoSelecionado!"
-          [isModalOpen]="isModalOpen"
-          (fechar)="setOpen(false)"
+          [agendamento]="this.agendamentoSelecionado!"
+          [isModalOpen]="this.isModalOpen"
+          (fechar)="this.setOpen(false)"
         ></app-modal-horario>
       </ng-container>
-      <app-loading [condicao]="!agendamentosRealizados"></app-loading>
+      <app-loading [condicao]="!this.agendamentosRealizados"></app-loading>
     </ion-col>
   </ion-row>
 </ion-content>

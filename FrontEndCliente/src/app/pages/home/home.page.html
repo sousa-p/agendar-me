@@ -19,7 +19,7 @@
         >
           <ng-template>
             <ion-content class="ion-padding">
-              <ion-row shape="clear" (click)="user.logout()">
+              <ion-row shape="clear">
                 <ion-col size="12">
                   <ion-button expand="block" fill="clear" shape="round">
                     <ion-icon name="cog-outline"></ion-icon>
@@ -27,7 +27,7 @@
                   </ion-button>
                 </ion-col>
               </ion-row>
-              <ion-row shape="clear" (click)="user.logout()">
+              <ion-row shape="clear" (click)="this.user.logout()">
                 <ion-col size="12">
                   <ion-button expand="block" fill="clear" shape="round">
                     <ion-icon name="log-out-outline"></ion-icon>
@@ -61,10 +61,10 @@
           <ion-datetime
             id="calendario"
             mode="md"
-            (ionChange)="clicarDia($event)"
-            [isDateEnabled]="ehRestrita"
-            [min]="date.getISOTodayDate()"
-            [max]="date.getUltimaDataAgendamento()"
+            (ionChange)="this.clicarDia($event)"
+            [isDateEnabled]="this.ehRestrita"
+            [min]="this.Date.getISOTodayDate()"
+            [max]="this.Date.getUltimaDataAgendamento()"
             presentation="date"
             locale="pt-BR"
           ></ion-datetime>
@@ -72,5 +72,5 @@
       </ion-row>
     </ion-col>
   </ion-row>
-  <app-loading [condicao]="!restricoes"></app-loading>
+  <app-loading [condicao]="!this.restricoes"></app-loading>
 </ion-content>
