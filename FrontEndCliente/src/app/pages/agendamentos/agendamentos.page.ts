@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import { Agendamento } from 'src/app/core/interface/Agendamento';
 import { AgendamentoService } from 'src/app/core/service/agendamento.service';
 import { DateService } from 'src/app/core/service/date.service';
 import { ServicosService } from 'src/app/core/service/servicos.service';
-import { ToastService } from 'src/app/core/service/toast.service';
 
 @Component({
   selector: 'app-agendamentos',
@@ -19,6 +19,10 @@ export class AgendamentosPage implements OnInit {
   
   agendamentoSelecionado?: Agendamento;
   agendamentosRealizados?: Agendamento[];
+
+  agendamentosRealizadosPagina?: Agendamento[]= [];
+  agendamentoAtual: number = 0;
+
   isModalOpen = false;
 
   setOpen(isOpen: boolean) {
@@ -45,10 +49,26 @@ export class AgendamentosPage implements OnInit {
     this.Agendamento.getAgendamentosRealizados().subscribe(
       (response) => {
         this.agendamentosRealizados = response;
+        this.mostrarItens();
       },
       (error) => {
         console.error(error);
       }
     );
+  }
+
+  mostrarItens() {
+    this.agendamentoAtual += 15;
+    this.agendamentosRealizadosPagina = this.agendamentosRealizados?.slice(
+      0,
+      this.agendamentoAtual
+    );
+  }
+
+  onIonInfinite(ev: any) {
+    this.mostrarItens();
+    setTimeout(() => {
+      (ev as InfiniteScrollCustomEvent).target.complete();
+    }, 500);
   }
 }

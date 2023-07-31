@@ -15,7 +15,7 @@
   <ion-row class="section">
     <ion-col size="12">
       <ng-container *ngIf="this.agendamentosRealizados">
-        <ng-container *ngFor="let agendamento of this.agendamentosRealizados">
+        <ng-container *ngFor="let agendamento of this.agendamentosRealizadosPagina">
           <app-linha-agendamento
             [agendamento]="agendamento"
             (click)="clicarAgendamento(agendamento)"
@@ -27,6 +27,12 @@
           (fechar)="this.setOpen(false)"
         ></app-modal-horario>
       </ng-container>
+      <ion-infinite-scroll
+        (ionInfinite)="onIonInfinite($event)"
+        [disabled]="this.agendamentosRealizados && this.agendamentoAtual >= this.agendamentosRealizados!.length"
+      >
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
       <app-loading [condicao]="!this.agendamentosRealizados"></app-loading>
     </ion-col>
   </ion-row>
