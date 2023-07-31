@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ConfiguracaoPageRoutingModule } from './configuracao-routing.module';
 
 import { ConfiguracaoPage } from './configuracao.page';
+import { ModalConfiguracaoComponent } from 'src/app/components/modal-configuracao/modal-configuracao.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { ConfiguracaoPage } from './configuracao.page';
     IonicModule,
     ConfiguracaoPageRoutingModule
   ],
-  declarations: [ConfiguracaoPage]
+  declarations: [ConfiguracaoPage, ModalConfiguracaoComponent]
 })
 export class ConfiguracaoPageModule {}

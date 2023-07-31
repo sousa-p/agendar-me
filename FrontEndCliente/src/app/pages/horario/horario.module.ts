@@ -7,12 +7,18 @@ import { IonicModule } from '@ionic/angular';
 import { HorarioPageRoutingModule } from './horario-routing.module';
 
 import { HorarioPage } from './horario.page';
-import { LinhaHorarioComponent } from 'src/app/component/linha-horario/linha-horario.component';
-import { LoadingModule } from 'src/app/component/loading/loading.module';
-import { ModalAgendarComponent } from 'src/app/component/modal-agendar/modal-agendar.component';
+import { LinhaHorarioComponent } from 'src/app/components/linha-horario/linha-horario.component';
+import { LoadingModule } from 'src/app/components/loading/loading.module';
+import { ModalAgendarComponent } from 'src/app/components/modal-agendar/modal-agendar.component';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, HorarioPageRoutingModule, LoadingModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    HorarioPageRoutingModule,
+    LoadingModule,
+  ],
   declarations: [HorarioPage, LinhaHorarioComponent, ModalAgendarComponent],
 })
 export class HorarioPageModule {}

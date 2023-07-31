@@ -8,6 +8,13 @@ import { Component, OnInit } from '@angular/core';
 export class ConfiguracaoPage implements OnInit {
 
   constructor() { }
+  
+  isModalOpen = false;
+  loading = true;
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
 
   ngOnInit() {
   }

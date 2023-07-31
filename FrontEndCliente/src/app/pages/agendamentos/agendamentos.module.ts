@@ -7,9 +7,9 @@ import { IonicModule } from '@ionic/angular';
 import { AgendamentosPageRoutingModule } from './agendamentos-routing.module';
 
 import { AgendamentosPage } from './agendamentos.page';
-import { LinhaAgendamentoComponent } from 'src/app/component/linha-agendamento/linha-agendamento.component';
-import { LoadingModule } from 'src/app/component/loading/loading.module';
-import { ModalHorarioComponent } from 'src/app/component/modal-horario/modal-horario.component';
+import { LinhaAgendamentoComponent } from 'src/app/components/linha-agendamento/linha-agendamento.component';
+import { LoadingModule } from 'src/app/components/loading/loading.module';
+import { ModalHorarioComponent } from 'src/app/components/modal-horario/modal-horario.component';
 
 @NgModule({
   imports: [
@@ -17,8 +17,12 @@ import { ModalHorarioComponent } from 'src/app/component/modal-horario/modal-hor
     FormsModule,
     IonicModule,
     AgendamentosPageRoutingModule,
-    LoadingModule
+    LoadingModule,
   ],
-  declarations: [AgendamentosPage, LinhaAgendamentoComponent, ModalHorarioComponent]
+  declarations: [
+    AgendamentosPage,
+    LinhaAgendamentoComponent,
+    ModalHorarioComponent,
+  ],
 })
 export class AgendamentosPageModule {}
