@@ -81,8 +81,11 @@ class AgendamentoController
     ];
 
     if (!ehDadoValido($data['ID_AGENDAMENTO'])) respostaHost('error', 'Algo deu errado :(');
-
+    
     $this->colocarDadosModel($data);
+    $agendamento = $this->service->getAgendamentoId();
+    if (!$agendamento) respostaHost('error', 'Agendamento inválido');
+    if (ehDataPassado($agendamento->DATA_AGENDAMENTO) || calcIntervaloData($agendamento->DATA_AGENDAMENTO, $agendamento->HORARIO_AGENDAMENTO) < 1) respostaHost('error', 'Agendamento só pode ser cancelado com 1 dia de antecedência');
 
     echo json_encode($this->service->deleteAgendamento());
     exit();

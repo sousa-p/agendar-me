@@ -93,6 +93,16 @@ class AgendamentoService
     return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
 
+  public function getAgendamentoId()
+  {
+    $select = 'SELECT * FROM AGENDAMENTO WHERE ID_USER = :ID_USER AND ID_AGENDAMENTO = :ID_AGENDAMENTO';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
+    $stmt->bindValue(':ID_AGENDAMENTO', (int)$this->model->__get('ID_AGENDAMENTO'));
+    $stmt->execute();
+    return $stmt->fetch();
+  }
+
   public function deleteAgendamento()
   {
     $delete = 'DELETE FROM AGENDAMENTO WHERE ID_USER = :ID_USER AND ID_AGENDAMENTO = :ID_AGENDAMENTO';

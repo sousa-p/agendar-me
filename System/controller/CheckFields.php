@@ -62,7 +62,8 @@ function ehDataPassado($data)
   return strtotime($now) > strtotime($data);
 }
 
-function ehDataHoje($data) {
+function ehDataHoje($data)
+{
   $now = date('Y-m-d');
   return strtotime($now) === strtotime($data);
 }
@@ -82,4 +83,12 @@ function ehHoraPossivelIntervalo($hora, $intervaloMin)
   $hora = strtotime($hora) / 60;
   $intervaloMin = (int)$intervaloMin;
   return ($hora % $intervaloMin) === 0;
+}
+
+function calcIntervaloData($data, $hora='00:00:00', $formato='days')
+{
+  $now = new DateTime();
+  $intervalo = $now->diff(new DateTime("$data $hora"));
+
+  return $intervalo->$formato;
 }
