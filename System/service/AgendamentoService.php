@@ -86,7 +86,7 @@ class AgendamentoService
 
   public function getAgendamentosRealizados()
   {
-    $select = 'SELECT DATA_AGENDAMENTO, HORARIO_AGENDAMENTO, STATUS_AGENDAMENTO, ID_AGENDAMENTO FROM AGENDAMENTO WHERE ID_USER = :ID_USER ORDER BY DATA_AGENDAMENTO DESC';
+    $select = 'SELECT DATA_AGENDAMENTO, HORARIO_AGENDAMENTO, ID_AGENDAMENTO FROM AGENDAMENTO WHERE ID_USER = :ID_USER ORDER BY DATA_AGENDAMENTO DESC';
     $stmt = $this->conn->prepare($select);
     $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
     $stmt->execute();

@@ -16,7 +16,7 @@ export class LinhaAgendamentoComponent implements OnInit {
   ngOnInit() {
     const ISOdataAgendamento = `${this.agendamento?.DATA_AGENDAMENTO}T${this.agendamento?.HORARIO_AGENDAMENTO}:00`;
 
-    if (['cancelado', 'finalizado'].includes(this.agendamento?.STATUS_AGENDAMENTO!) || this.Date.isPastDate(ISOdataAgendamento, true))
+    if (this.Date.isPastDate(ISOdataAgendamento, true))
       this.tipoAgendamento = 'invalido'
   }
 }
