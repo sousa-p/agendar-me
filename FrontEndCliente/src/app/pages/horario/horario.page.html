@@ -19,7 +19,9 @@
 <ion-content [fullscreen]="true">
   <ion-row class="section">
     <ion-col size="12">
-      <ng-container *ngIf="this.restricoes && this.agendamentos">
+      <ng-container
+        *ngIf="this.restricoes && this.agendamentos && this.horariosLivres.length > 0"
+      >
         <ng-container *ngFor="let horaLivre of this.horariosLivresPagina!">
           <app-linha-horario
             [horas]="horaLivre"
@@ -33,13 +35,18 @@
           (fechar)="this.setOpen(false)"
         ></app-modal-agendar>
       </ng-container>
+      <ng-container *ngIf="!loading && !horariosLivres.length">
+        <ion-text color="primary" class="ion-text-center">
+          <h2>Não há horários livres...</h2>
+        </ion-text>
+      </ng-container>
       <ion-infinite-scroll
         (ionInfinite)="onIonInfinite($event)"
         [disabled]="this.horarioAtual >= this.horariosLivres!.length"
       >
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
-      <app-loading [condicao]="!(this.horariosLivres.length)"></app-loading>
+      <app-loading [condicao]="loading"></app-loading>
     </ion-col>
   </ion-row>
 </ion-content>

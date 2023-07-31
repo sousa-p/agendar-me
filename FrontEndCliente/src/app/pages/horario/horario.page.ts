@@ -32,6 +32,7 @@ export class HorarioPage implements OnInit {
   horario?: string;
 
   isModalOpen = false;
+  loading = true;
 
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
@@ -63,6 +64,7 @@ export class HorarioPage implements OnInit {
               this.restricoes,
               this.agendamentos
             );
+            this.loading = false;
             this.mostrarItens();
           },
           (error) => {
