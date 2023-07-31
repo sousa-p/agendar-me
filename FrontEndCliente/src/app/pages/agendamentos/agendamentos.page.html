@@ -33,6 +33,11 @@
       >
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
+      <ng-container *ngIf="this.agendamentosRealizados?.length === 0">
+        <ion-text color="primary" class="ion-text-center">
+          <h2>Não há agendamentos...</h2>
+        </ion-text>
+      </ng-container>
       <app-loading [condicao]="!this.agendamentosRealizados"></app-loading>
     </ion-col>
   </ion-row>
