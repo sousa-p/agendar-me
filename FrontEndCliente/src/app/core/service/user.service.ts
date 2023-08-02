@@ -21,4 +21,12 @@ export class UserService {
     this.Cookie.delete('token');
     this.router.navigate(['/login']);
   }
+
+  getInfos() {
+    const data = {
+      'route': 'User',
+      'action': 'getUserInfosId'
+    };
+    return this.Server.request(data);
+  }
 }

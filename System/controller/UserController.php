@@ -38,7 +38,7 @@ class UserController
     if (!ehStrValida($data['NOME_USER'])) respostaHost('error', 'Nome de úsuario inválido');
     if (!ehTelefoneValido($data['TEL_USER'])) respostaHost('error', 'Formato de telefone de úsuario inválido');
     if (!ehEmailValido($data['EMAIL_USER'])) respostaHost('error', 'Formato de email de úsuario inválido');
-    if (!ehStrValida($data['SENHA_USER'])) respostaHost('error', 'Formato de senha inválido');
+    if (strlen($data['SENHA_USER']) < 8) respostaHost('error', 'Senha deve conter 8 caracteres');
 
     $data['SENHA_USER'] = password_hash($data['SENHA_USER'], PASSWORD_DEFAULT);
     $this->colocarDadosModel($data);
@@ -107,5 +107,10 @@ class UserController
     if (password_verify($ipToken, $this->service->getIp()))
       respostaHost('access_error', 'Token de acesso negado');
     $this->colocarDadosModel($dataToken);
+  }
+
+  public function getUserInfosId() {
+    echo json_encode($this->service->getUserInfosId());
+    exit();
   }
 }

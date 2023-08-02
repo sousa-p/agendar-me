@@ -19,22 +19,39 @@
   </ion-header>
   <ion-row class="ion-justify-content-center ion-align-items-center">
     <ion-col size="12" sizeMd="11" sizeLg="10">
-      <ion-item mode="ios">
-        <ion-label class="ion-padding" (click)="this.setOpen(true)">Nome</ion-label>
+      <ion-item mode="ios" button button>
+        <ion-label
+          class="ion-padding"
+          (click)="this.informacaoSelecionada='Nome';setOpen(true)"
+          >Nome</ion-label
+        >
       </ion-item>
-      <ion-item mode="ios">
-        <ion-label class="ion-padding">Email</ion-label>
+      <ion-item mode="ios" button>
+        <ion-label
+          class="ion-padding"
+          (click)="this.informacaoSelecionada='Email';setOpen(true)"
+          >Email</ion-label
+        >
       </ion-item>
-      <ion-item mode="ios">
-        <ion-label class="ion-padding">Telefone</ion-label>
+      <ion-item mode="ios" button>
+        <ion-label
+          class="ion-padding"
+          (click)="this.informacaoSelecionada='Telefone';setOpen(true)"
+          >Telefone</ion-label
+        >
       </ion-item>
-      <ion-item mode="ios">
-        <ion-label class="ion-padding">Senha</ion-label>
+      <ion-item mode="ios" button>
+        <ion-label
+          class="ion-padding"
+          (click)="this.informacaoSelecionada='Senha';setOpen(true)"
+          >Senha</ion-label
+        >
       </ion-item>
     </ion-col>
   </ion-row>
   <app-modal-configuracao
     [isModalOpen]="this.isModalOpen"
+    [informacaoSelecionada]="this.informacaoSelecionada!"
     (fechar)="this.setOpen(false)"
   ></app-modal-configuracao>
 </ion-content>

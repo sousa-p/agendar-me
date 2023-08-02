@@ -2,6 +2,8 @@
 
 namespace System\Service;
 
+use PDO;
+
 class UserService
 {
   private $conn;
@@ -127,5 +129,14 @@ class UserService
       'retorno' => 'error',
       'mensagem' => 'Informações de login incorretas!'
     ];
+  }
+
+  public function getUserInfosId() {
+    $select = 'SELECT NOME_USER, EMAIL_USER, TEL_USER FROM USER WHERE ID_USER = :ID_USER';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':ID_USER', $this->model->__get('ID_USER'));
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_OBJ);
   }
 }

@@ -2,7 +2,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Agendamento</ion-title>
+        <ion-title>Alterar informações</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="this.fechar.emit('fechar')">
             <ion-icon name="close-outline" size="large"></ion-icon>
@@ -11,7 +11,66 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
+      <ion-row>
+        <ion-col size="12" *ngIf="this.informacaoSelecionada! === 'Nome'">
+          <ion-input
+            [(ngModel)]="this.infosUser!.NOME_USER"
+            required
+            fill="outline"
+            clearInput="true"
+            label="Nome"
+            label-placement="floating"
+            type="text"
+          ></ion-input>
+        </ion-col>
+        <ion-col size="12" *ngIf="this.informacaoSelecionada! === 'Telefone'">
+          <ion-input
+            [(ngModel)]="this.infosUser!.TEL_USER"
+            required
+            fill="outline"
+            pattern="^[1-9]{2}9?[0-9]{8}$"
+            maxlength="11"
+            clearInput="true"
+            label="Telefone"
+            autocomplete="tel"
+            label-placement="floating"
+            type="tel"
+          ></ion-input>
+        </ion-col>
+        <ion-col size="12" *ngIf="this.informacaoSelecionada! === 'Email'">
+          <ion-input
+            [(ngModel)]="this.infosUser!.EMAIL_USER"
+            required
+            email
+            fill="outline"
+            clearInput="true"
+            label="Email"
+            autocomplete="email"
+            label-placement="floating"
+            type="email"
+          ></ion-input>
+        </ion-col>
+        <ion-col size="12" *ngIf="this.informacaoSelecionada! === 'Senha'">
+          <ion-input
+            [(ngModel)]="this.infosUser!.SENHA_USER"
+            required
+            fill="outline"
+            minlength="8"
+            label="Senha"
+            label-placement="floating"
+            type="password"
+          ></ion-input>
+          <ion-input
+            required
+            fill="outline"
+            pattern="{{this.infosUser!.SENHA_USER}}"
+            minlength="8"
+            label="Confirmar Senha"
+            label-placement="floating"
+            type="password"
+          ></ion-input>
+        </ion-col>
+      </ion-row>
     </ion-content>
-    
   </ng-template>
 </ion-modal>

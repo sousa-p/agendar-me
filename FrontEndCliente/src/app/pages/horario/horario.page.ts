@@ -31,8 +31,8 @@ export class HorarioPage implements OnInit {
   date?: string;
   horario?: string;
 
-  isModalOpen = false;
-  loading = true;
+  isModalOpen: boolean = false;
+  loading: boolean = true;
 
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
