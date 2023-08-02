@@ -16,7 +16,7 @@ export class ModalConfiguracaoComponent  implements OnInit {
 
   @Output() fechar = new EventEmitter();
 
-  infosUser?: User;
+  infosUser?: any;
   ngOnInit() {
     this.User.getInfos().subscribe(
       (response) => {

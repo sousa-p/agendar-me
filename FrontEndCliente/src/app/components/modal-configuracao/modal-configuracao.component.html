@@ -11,10 +11,10 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-row>
+      <ion-row id="wrapper__modal" class="ion-align-items-center">
         <ion-col size="12" *ngIf="this.informacaoSelecionada! === 'Nome'">
           <ion-input
-            [(ngModel)]="this.infosUser!.NOME_USER"
+            [(ngModel)]="this.infosUser.NOME_USER"
             required
             fill="outline"
             clearInput="true"
@@ -25,7 +25,7 @@
         </ion-col>
         <ion-col size="12" *ngIf="this.informacaoSelecionada! === 'Telefone'">
           <ion-input
-            [(ngModel)]="this.infosUser!.TEL_USER"
+            [(ngModel)]="this.infosUser.TEL_USER"
             required
             fill="outline"
             pattern="^[1-9]{2}9?[0-9]{8}$"
@@ -39,7 +39,7 @@
         </ion-col>
         <ion-col size="12" *ngIf="this.informacaoSelecionada! === 'Email'">
           <ion-input
-            [(ngModel)]="this.infosUser!.EMAIL_USER"
+            [(ngModel)]="this.infosUser.EMAIL_USER"
             required
             email
             fill="outline"
@@ -51,24 +51,39 @@
           ></ion-input>
         </ion-col>
         <ion-col size="12" *ngIf="this.informacaoSelecionada! === 'Senha'">
-          <ion-input
-            [(ngModel)]="this.infosUser!.SENHA_USER"
-            required
-            fill="outline"
-            minlength="8"
-            label="Senha"
-            label-placement="floating"
-            type="password"
-          ></ion-input>
-          <ion-input
-            required
-            fill="outline"
-            pattern="{{this.infosUser!.SENHA_USER}}"
-            minlength="8"
-            label="Confirmar Senha"
-            label-placement="floating"
-            type="password"
-          ></ion-input>
+          <ion-row>
+            <ion-col size="12">
+              <ion-input
+                [(ngModel)]="this.infosUser.SENHA_USER"
+                name="SENHA_USER"
+                label="Senha antiga"
+                label-placement="floating"
+                fill="outline"
+                type="password"
+                minlength="8"
+              ></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-input
+                [(ngModel)]="this.infosUser.NOVA_SENHA_USER"
+                name="NOVA_SENHA_USER"
+                label="Senha nova"
+                label-placement="floating"
+                fill="outline"
+                type="password"
+                minlength="8"
+              ></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-align-items-center ion-justify-content-center">
+        <ion-col size="auto">
+          <ion-button id="alterar" size="default" type="submit">
+            ALTERAR
+          </ion-button>
         </ion-col>
       </ion-row>
     </ion-content>
