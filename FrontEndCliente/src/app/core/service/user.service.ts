@@ -29,4 +29,14 @@ export class UserService {
     };
     return this.Server.request(data);
   }
+
+  alterarInfo(informacao: string, valor: string) {
+    const data = {
+      'route': 'User',
+      'action': 'alterarInfo',
+      'INFORMACAO': informacao,
+      'VALOR': valor
+    };
+    return this.Server.request(data);
+  }
 }

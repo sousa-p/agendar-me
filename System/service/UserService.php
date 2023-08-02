@@ -139,4 +139,10 @@ class UserService
 
     return $stmt->fetch(PDO::FETCH_OBJ);
   }
+
+  public function alterarNome() {}
+  public function alterarEmail() {}
+  public function alterarTelefone() {}
+  public function alterarSenha() {}
+
 }
