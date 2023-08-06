@@ -131,18 +131,35 @@ class UserService
     ];
   }
 
-  public function getUserInfosId() {
+  public function getUserInfosId()
+  {
     $select = 'SELECT NOME_USER, EMAIL_USER, TEL_USER FROM USER WHERE ID_USER = :ID_USER';
     $stmt = $this->conn->prepare($select);
-    $stmt->bindValue(':ID_USER', $this->model->__get('ID_USER'));
+    $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
     $stmt->execute();
 
     return $stmt->fetch(PDO::FETCH_OBJ);
   }
 
-  public function alterarNome() {}
-  public function alterarEmail() {}
-  public function alterarTelefone() {}
-  public function alterarSenha() {}
-
+  public function alterarNOME()
+  {
+    $update = 'UPDATE USER SET NOME_USER = :VALOR WHERE ID_USER = :ID_USER';
+    $stmt = $this->conn->prepare($update);
+    $stmt->bindValue(':VALOR', $this->model->__get('VALOR'));
+    $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
+    $stmt->execute();
+    return [
+      'retorno' => 'success',
+      'mensagem' => 'Nome alterado com sucesso!'
+    ];
+  }
+  public function alterarEMAIL()
+  {
+  }
+  public function alterarTELEFONE()
+  {
+  }
+  public function alterarSENHA()
+  {
+  }
 }

@@ -120,19 +120,19 @@ class UserController
       'VALOR' => limparDados($this->VALOR)
     ];
 
-    if (temDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos de cadastro estão preenchidos');
-
-    $infosValidas = ['Nome', 'Email', 'Telefone', 'Senha'];
+    
+    $infosValidas = ['NOME', 'EMAIL', 'TELEFONE', 'SENHA'];
     if (!in_array($data['INFORMACAO'], $infosValidas)) respostaHost('error', 'Informação inválida');
-    if ($data['INFORMACAO'] === 'Nome' && !ehStrValida($data['VALOR'])) respostaHost('error', 'Nome de úsuario inválido');
-    if ($data['INFORMACAO'] === 'Telefone' && !ehTelefoneValido($data['VALOR'])) respostaHost('error', 'Formato de telefone de úsuario inválido');
-    if ($data['INFORMACAO'] === 'Email' && !ehEmailValido($data['VALOR'])) respostaHost('error', 'Formato de email de úsuario inválido');
-    if ($data['INFORMACAO'] === 'Senha' && strlen($data['VALOR']['ANTIGA_SENHA_USER']) < 8) respostaHost('error', 'Senha antiga deve conter 8 caracteres');
-    if ($data['INFORMACAO'] === 'Senha' && strlen($data['VALOR']['NOVA_SENHA_USER']) < 8) respostaHost('error', 'Senha nova deve conter 8 caracteres');
+    if ($data['INFORMACAO'] !== 'SENHA' && temDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos de cadastro estão preenchidos');
+    if ($data['INFORMACAO'] === 'NOME' && !ehStrValida($data['VALOR'])) respostaHost('error', 'Nome de úsuario inválido');
+    if ($data['INFORMACAO'] === 'TELEFONE' && !ehTelefoneValido($data['VALOR'])) respostaHost('error', 'Formato de telefone de úsuario inválido');
+    if ($data['INFORMACAO'] === 'EMAIL' && !ehEmailValido($data['VALOR'])) respostaHost('error', 'Formato de email de úsuario inválido');
+    if ($data['INFORMACAO'] === 'SENHA' && strlen($data['VALOR']['ANTIGA_SENHA_USER']) < 8) respostaHost('error', 'Senha antiga deve conter 8 caracteres');
+    if ($data['INFORMACAO'] === 'SENHA' && strlen($data['VALOR']['NOVA_SENHA_USER']) < 8) respostaHost('error', 'Senha nova deve conter 8 caracteres');
 
     $this->colocarDadosModel($data);
     $metodo = 'alterar'.$data['INFORMACAO'];
     echo json_encode($this->service->$metodo());
     exit();
-  }
+  } 
 }
