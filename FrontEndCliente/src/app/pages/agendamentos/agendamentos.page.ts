@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import { Agendamento } from 'src/app/core/interface/Agendamento';
 import { AgendamentoService } from 'src/app/core/service/agendamento.service';
-import { DateService } from 'src/app/core/service/date.service';
+import { DateService } from 'src/app/core/controller/date.service';
 import { ServicosService } from 'src/app/core/service/servicos.service';
 
 @Component({

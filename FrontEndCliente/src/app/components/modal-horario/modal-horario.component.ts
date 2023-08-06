@@ -1,10 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Agendamento } from 'src/app/core/interface/Agendamento';
-import { Servicos } from 'src/app/core/interface/Servicos';
 import { AgendamentoService } from 'src/app/core/service/agendamento.service';
-import { DateService } from 'src/app/core/service/date.service';
-import { ServicosService } from 'src/app/core/service/servicos.service';
-import { ToastService } from 'src/app/core/service/toast.service';
+import { DateService } from 'src/app/core/controller/date.service';
+import { ToastService } from 'src/app/core/controller/toast.service';
 @Component({
   selector: 'app-modal-horario',
   templateUrl: './modal-horario.component.html',

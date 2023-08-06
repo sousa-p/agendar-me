@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ServerService } from './server.service';
 import { Agendamento } from '../interface/Agendamento';
-import { DateService } from './date.service';
+import { DateService } from '../controller/date.service';
 import { Observable } from 'rxjs';
 import { Servicos } from '../interface/Servicos';
 

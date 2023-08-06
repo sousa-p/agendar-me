@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ServerService } from 'src/app/core/service/server.service';
-import { ToastService } from 'src/app/core/service/toast.service';
+import { ToastService } from 'src/app/core/controller/toast.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 @Component({

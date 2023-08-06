@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Agendamento } from 'src/app/core/interface/Agendamento';
-import { DateService } from 'src/app/core/service/date.service';
+import { DateService } from 'src/app/core/controller/date.service';
 
 @Component({
   selector: 'app-linha-agendamento',

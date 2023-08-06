@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ServerService } from './server.service';
-import { DateService } from './date.service';
 import { Observable } from 'rxjs';
 import { Restricao } from '../interface/Restricao';
+import { DateService } from '../controller/date.service';
 
 @Injectable({
   providedIn: 'root'

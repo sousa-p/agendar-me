@@ -3,7 +3,7 @@ import { ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ServerService } from 'src/app/core/service/server.service';
-import { ToastService } from 'src/app/core/service/toast.service';
+import { ToastService } from 'src/app/core/controller/toast.service';
 @Component({
   selector: 'app-cadastrar',
   templateUrl: './cadastrar.page.html',

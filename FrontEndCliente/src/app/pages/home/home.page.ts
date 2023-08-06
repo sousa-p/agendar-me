@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { parse, parseISO } from 'date-fns';
-import { DateService } from 'src/app/core/service/date.service';
+import { parseISO } from 'date-fns';
+import { DateService } from 'src/app/core/controller/date.service';
 import { RestricaoService } from 'src/app/core/service/restricao.service';
 import { UserService } from 'src/app/core/service/user.service';
 @Component({

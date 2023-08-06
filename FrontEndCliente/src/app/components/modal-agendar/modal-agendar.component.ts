@@ -10,7 +10,7 @@ import { NgForm } from '@angular/forms';
 import { Servicos } from 'src/app/core/interface/Servicos';
 import { AgendamentoService } from 'src/app/core/service/agendamento.service';
 import { ServicosService } from 'src/app/core/service/servicos.service';
-import { ToastService } from 'src/app/core/service/toast.service';
+import { ToastService } from 'src/app/core/controller/toast.service';
 
 @Component({
   selector: 'app-modal-agendar',
