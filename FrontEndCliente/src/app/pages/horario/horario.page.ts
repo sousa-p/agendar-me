@@ -18,7 +18,7 @@ export class HorarioPage implements OnInit {
     private router: Router,
     public Date: DateService,
     private Agendamento: AgendamentoService,
-    private Restricao: RestricaoService,
+    private Restricao: RestricaoService
   ) {}
 
   intervalo: number = 30;
@@ -45,10 +45,22 @@ export class HorarioPage implements OnInit {
         this.date === undefined ||
         this.date === null ||
         !this.Date.isValideDate(this.date) ||
-        this.Date.isPastDate(this.date)
+        this.Date.isPastDate(this.date) ||
+        this.Date.ehDepois(new Date(this.date), new Date(this.Date.getUltimaDataAgendamento()))
       )
         this.router.navigate(['/home']);
-      else this.carregarPagina();
+      else {
+        this.Agendamento.ehDataRestrita(this.date).subscribe(
+          (response) => {
+            response.retorno === 'error'
+              ? this.router.navigate(['/home'])
+              : this.carregarPagina();
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+      }
     });
   }
 

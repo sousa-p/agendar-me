@@ -32,7 +32,7 @@ class AgendamentoService
   public function ehDataRestrita()
   {
     $DIA_SEMANA = date('N', strtotime($this->model->__get('DATA_AGENDAMENTO')));
-    $DIA_SEMANA = (int)$DIA_SEMANA - 1;
+    $DIA_SEMANA = (int)$DIA_SEMANA;
     $select = "SELECT *
     FROM RESTRICAO
     INNER JOIN DATAS_ESPECIAIS ON DATA_ESPECIAL != :DATA_AGENDAMENTO

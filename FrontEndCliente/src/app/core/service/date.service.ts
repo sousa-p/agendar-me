@@ -110,4 +110,8 @@ export class DateService {
       return 'errorToParse';
     return format(parseISO(dateString), formatString);
   }
+
+  ehDepois (date: Date, dateCompare: Date): boolean {
+    return isAfter(date, dateCompare);
+  }
 }

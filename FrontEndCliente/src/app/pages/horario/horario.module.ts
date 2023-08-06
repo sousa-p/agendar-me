@@ -17,7 +17,7 @@ import { ModalAgendarComponent } from 'src/app/components/modal-agendar/modal-ag
     FormsModule,
     IonicModule,
     HorarioPageRoutingModule,
-    LoadingModule,
+    LoadingModule
   ],
   declarations: [HorarioPage, LinhaHorarioComponent, ModalAgendarComponent],
 })

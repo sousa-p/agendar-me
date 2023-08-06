@@ -45,8 +45,8 @@ export class AgendamentoService {
   getAgendamentosRealizados(): Observable<Agendamento[]> {
     const data = {
       route: 'Agendamento',
-      action: 'getAgendamentosRealizados'
-    }
+      action: 'getAgendamentosRealizados',
+    };
 
     return this.Server.request(data);
   }
@@ -55,8 +55,18 @@ export class AgendamentoService {
     const data = {
       route: 'Agendamento',
       action: 'deleteAgendamento',
-      ID_AGENDAMENTO: idAgendamento
-    }
+      ID_AGENDAMENTO: idAgendamento,
+    };
+
+    return this.Server.request(data);
+  }
+
+  ehDataRestrita(date: string) {
+    const data = {
+      route: 'Agendamento',
+      action: 'ehDataRestrita',
+      DATA_AGENDAMENTO: date,
+    };
 
     return this.Server.request(data);
   }

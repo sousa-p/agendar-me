@@ -81,7 +81,7 @@ class AgendamentoController
     ];
 
     if (!ehDadoValido($data['ID_AGENDAMENTO'])) respostaHost('error', 'Algo deu errado :(');
-    
+
     $this->colocarDadosModel($data);
     $agendamento = $this->service->getAgendamentoId();
     if (!$agendamento) respostaHost('error', 'Agendamento inválido');
@@ -89,5 +89,21 @@ class AgendamentoController
 
     echo json_encode($this->service->deleteAgendamento());
     exit();
+  }
+
+  public function ehDataRestrita()
+  {
+    $data = [
+      'DATA_AGENDAMENTO' => limparDados($this->DATA_AGENDAMENTO)
+    ];
+
+    if (!ehDadoValido($this->DATA_AGENDAMENTO)) respostaHost('error', 'Dados inválidos');
+    if (!ehDataValida($this->DATA_AGENDAMENTO)) respostaHost('error', 'Data inválida');
+
+    $this->colocarDadosModel($data);
+
+    if ($this->service->ehDataRestrita()) respostaHost('error', 'É data restrita');
+
+    respostaHost('success', 'Não é data restrita');
   }
 }
