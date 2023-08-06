@@ -36,8 +36,10 @@ if (!isset($httpHeader['Authorization']) || !ehDadoValido($httpHeader['Authoriza
 $bearer = explode(' ', $httpHeader['Authorization'])[1];
 $userController->validarToken($bearer);
 
-if ($action === 'validarToken')
+if ($action === 'validarToken') {
   respostaHost('success', 'Token Válido');
+  exit();
+}
 
 $classModel->__set('ID_USER', $userModel->ID_USER);
 $classController->$action();

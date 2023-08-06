@@ -84,7 +84,7 @@ class UserController
     if (!isset($dataToken->ID_USER) || !ehDadoValido($dataToken->ID_USER))
       respostaHost('error', 'Token de acesso inválido');
 
-    $this->model->__set('ID_USER', (int)(int)$dataToken->ID_USER);
+    $this->model->__set('ID_USER', (int)$dataToken->ID_USER);
     $this->model->__set('SECRET_USER', $this->service->getSecret());
     $signature = hash_hmac('sha256', $header . '.' . $payload, $this->model->__get('SECRET_USER'));
 
@@ -101,7 +101,7 @@ class UserController
     $ipToken = limparDados($dataToken->IP);
     unset($dataToken->exp);
     unset($dataToken->IP);
-
+    
     if (time() > (int)$exp)
       respostaHost('access_error', 'Token de acesso expirou');
     if (password_verify($ipToken, $this->service->getIp()))
