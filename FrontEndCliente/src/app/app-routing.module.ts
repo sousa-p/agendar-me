@@ -46,7 +46,8 @@ const routes: Routes = [
   },
   {
     path: 'configuracao',
-    loadChildren: () => import('./pages/configuracao/configuracao.module').then( m => m.ConfiguracaoPageModule)
+    loadChildren: () => import('./pages/configuracao/configuracao.module').then( m => m.ConfiguracaoPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: '**',

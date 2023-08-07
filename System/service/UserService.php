@@ -93,6 +93,15 @@ class UserService
     return $stmt->fetch()->SENHA_USER;
   }
 
+  public function getSenhaID()
+  {
+    $select = 'SELECT SENHA_USER FROM USER WHERE ID_USER = :ID_USER';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':ID_USER', $this->model->__get('ID_USER'));
+    $stmt->execute();
+    return $stmt->fetch()->SENHA_USER;
+  }
+
   public function telDisponivel()
   {
     $select = 'SELECT * FROM USER WHERE TEL_USER = :TEL_USER';
@@ -155,11 +164,57 @@ class UserService
   }
   public function alterarEMAIL()
   {
+    
+    if ($this->emailDisponivel()) {
+      $update = 'UPDATE USER SET EMAIL_USER = :VALOR WHERE ID_USER = :ID_USER';
+      $stmt = $this->conn->prepare($update);
+      $stmt->bindValue(':VALOR', $this->model->__get('EMAIL_USER'));
+      $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
+      $stmt->execute();
+      return [
+        'retorno' => 'success',
+        'mensagem' => 'Email alterado com sucesso!'
+      ];
+    }
+    return [
+      'retorno' => 'error',
+      'mensagem' => 'Email não esta disponível'
+    ];
   }
-  public function alterarTELEFONE()
+  public function alterarTEL()
   {
+    if ($this->telDisponivel()) {
+      $update = 'UPDATE USER SET TEL_USER = :VALOR WHERE ID_USER = :ID_USER';
+      $stmt = $this->conn->prepare($update);
+      $stmt->bindValue(':VALOR', $this->model->__get('TEL_USER'));
+      $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
+      $stmt->execute();
+      return [
+        'retorno' => 'success',
+        'mensagem' => 'Telefone alterado com sucesso!'
+      ];
+    }
+    return [
+      'retorno' => 'error',
+      'mensagem' => 'Telefone não esta disponível'
+    ];
   }
   public function alterarSENHA()
   {
+    if (password_verify($this->model->__get('VALOR')['ANTIGA_SENHA_USER'], $this->getSenhaID())) {
+      $update = 'UPDATE USER SET SENHA_USER = :NOVA_SENHA_USER WHERE ID_USER = :ID_USER';
+      $stmt = $this->conn->prepare($update);
+      $stmt->bindValue(':NOVA_SENHA_USER', password_hash($this->model->__get('VALOR')['NOVA_SENHA_USER'], PASSWORD_DEFAULT));
+      $stmt->bindValue(':ID_USER', $this->model->__get('ID_USER'));
+      $stmt->execute();
+      return [
+        'retorno' => 'success',
+        'mensagem' => 'Senha alterada com sucesso!'
+      ];
+    }
+    return [
+      'retorno' => 'error',
+      'mensagem' => 'Senha antiga não corresponde'
+    ];
   }
 }

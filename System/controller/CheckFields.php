@@ -3,7 +3,7 @@ date_default_timezone_set('America/Sao_Paulo');
 
 function limparDados($data)
 {
-  return strip_tags(stripcslashes(trim($data)));
+  return strip_tags(stripcslashes(trim((String)$data)));
 }
 
 function ehDadoValido($data)

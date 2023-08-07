@@ -36,7 +36,9 @@ class UserController
     // Validação de dados
     if (temDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos de cadastro estão preenchidos');
     if (!ehStrValida($data['NOME_USER'])) respostaHost('error', 'Nome de úsuario inválido');
+    if (strlen($data['NOME_USER'] < 75)) respostaHost('error', 'Nome muito longo :(');
     if (!ehTelefoneValido($data['TEL_USER'])) respostaHost('error', 'Formato de telefone de úsuario inválido');
+    if (strlen($data['EMAIL_USER'] < 150)) respostaHost('error', 'Email muito longo :(');
     if (!ehEmailValido($data['EMAIL_USER'])) respostaHost('error', 'Formato de email de úsuario inválido');
     if (strlen($data['SENHA_USER']) < 8) respostaHost('error', 'Senha deve conter 8 caracteres');
 
@@ -59,6 +61,9 @@ class UserController
     ];
     if (temDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos de login estão preenchidos');
     $this->colocarDadosModel($data);
+    if (!ehTelefoneValido($data['TEL_USER'])) respostaHost('error', 'Formato de telefone de úsuario inválido');
+    if (strlen($data['EMAIL_USER'] < 150)) respostaHost('error', 'Email muito longo :(');
+    if (!ehEmailValido($data['EMAIL_USER'])) respostaHost('error', 'Formato de email de úsuario inválido');
     if ($this->service->telDisponivel()) respostaHost('error', 'Telefone não cadastrado');
     if ($this->service->emailDisponivel()) respostaHost('error', 'Email não cadastrado');
 
@@ -86,6 +91,9 @@ class UserController
 
     $this->model->__set('ID_USER', (int)$dataToken->ID_USER);
     $this->model->__set('SECRET_USER', $this->service->getSecret());
+
+    if(!ehDadoValido($this->model->__get('SECRET_USER')) || !$this->model->__get('SECRET_USER')) respostaHost('access_error', 'Token de acesso inválido');
+
     $signature = hash_hmac('sha256', $header . '.' . $payload, $this->model->__get('SECRET_USER'));
 
     if ($parts[2] != $signature)
@@ -117,20 +125,21 @@ class UserController
   public function alterarInfo() {
     $data = [
       'INFORMACAO' => limparDados($this->INFORMACAO),
-      'VALOR' => limparDados($this->VALOR)
+      'VALOR' => $this->VALOR
     ];
 
-    
-    $infosValidas = ['NOME', 'EMAIL', 'TELEFONE', 'SENHA'];
+    $infosValidas = ['NOME', 'EMAIL', 'TEL', 'SENHA'];
     if (!in_array($data['INFORMACAO'], $infosValidas)) respostaHost('error', 'Informação inválida');
+    if ($data['INFORMACAO'] !== 'SENHA') $data['VALOR'] = limparDados($data['VALOR']);
     if ($data['INFORMACAO'] !== 'SENHA' && temDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos de cadastro estão preenchidos');
     if ($data['INFORMACAO'] === 'NOME' && !ehStrValida($data['VALOR'])) respostaHost('error', 'Nome de úsuario inválido');
-    if ($data['INFORMACAO'] === 'TELEFONE' && !ehTelefoneValido($data['VALOR'])) respostaHost('error', 'Formato de telefone de úsuario inválido');
+    if ($data['INFORMACAO'] === 'TEL' && !ehTelefoneValido($data['VALOR'])) respostaHost('error', 'Formato de telefone de úsuario inválido');
     if ($data['INFORMACAO'] === 'EMAIL' && !ehEmailValido($data['VALOR'])) respostaHost('error', 'Formato de email de úsuario inválido');
     if ($data['INFORMACAO'] === 'SENHA' && strlen($data['VALOR']['ANTIGA_SENHA_USER']) < 8) respostaHost('error', 'Senha antiga deve conter 8 caracteres');
     if ($data['INFORMACAO'] === 'SENHA' && strlen($data['VALOR']['NOVA_SENHA_USER']) < 8) respostaHost('error', 'Senha nova deve conter 8 caracteres');
 
     $this->colocarDadosModel($data);
+    $this->model->__set($data['INFORMACAO'].'_USER', $data['VALOR']);
     $metodo = 'alterar'.$data['INFORMACAO'];
     echo json_encode($this->service->$metodo());
     exit();
