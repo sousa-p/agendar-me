@@ -1,22 +1,22 @@
-<ion-modal backdropDismiss="false" [isOpen]="isModalOpen">
+<ion-modal backdropDismiss="false" [isOpen]="this.isModalOpen">
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Marcar às {{ horario }}</ion-title>
+        <ion-title>Marcar às {{ this.horario }}</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="fechar.emit('fechar'); servicosSelecionados = []"
+          <ion-button (click)="this.fechar.emit('fechar'); this.servicosSelecionados = []"
             ><ion-icon name="close-outline" size="large"></ion-icon
           ></ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <form #agendarForm="ngForm" *ngIf="servicos" (ngSubmit)="agendar()">
+      <form #agendarForm="ngForm" *ngIf="this.servicos" (ngSubmit)="agendar()">
         <ion-text color="primary">
           <h3>Serviços</h3>
         </ion-text>
         <ion-list>
-          <ion-item *ngFor="let servico of servicos!">
+          <ion-item *ngFor="let servico of this.servicos!">
             <ion-checkbox (ionChange)="attServicosSelecionados($event)" [value]="servico">
               <ion-text>
                 <p>{{ servico.NOME_SERVICO }}</p>
@@ -28,7 +28,7 @@
           </ion-item>
           <ion-item>
             <ion-label class="ion-padding">Total:</ion-label>
-            <ion-label slot="end" class="preco ion-padding">R$ {{ total.toFixed(2).replace('-', '') }}</ion-label>
+            <ion-label slot="end" class="preco ion-padding">R$ {{ this.total.toFixed(2).replace('-', '') }}</ion-label>
           </ion-item>
         </ion-list>
         <ion-row class="ion-align-items-center ion-justify-content-center">

@@ -11,6 +11,8 @@ import { Servicos } from 'src/app/core/interface/Servicos';
 import { AgendamentoService } from 'src/app/core/service/agendamento.service';
 import { ServicosService } from 'src/app/core/service/servicos.service';
 import { ToastService } from 'src/app/core/controller/toast.service';
+import { DateService } from 'src/app/core/controller/date.service';
+import { WhatsappService } from 'src/app/core/service/whatsapp.service';
 
 @Component({
   selector: 'app-modal-agendar',
@@ -18,7 +20,13 @@ import { ToastService } from 'src/app/core/controller/toast.service';
   styleUrls: ['./modal-agendar.component.scss'],
 })
 export class ModalAgendarComponent implements OnInit {
-  constructor(private Servicos: ServicosService, private Agendamento: AgendamentoService, private Toast: ToastService) {}
+  constructor(
+    private Servicos: ServicosService,
+    private Agendamento: AgendamentoService,
+    private Toast: ToastService,
+    private Date: DateService,
+    private Whatsapp: WhatsappService
+  ) {}
 
   @Input() isModalOpen: boolean = false;
   @Input() dataAgendamento?: string;
@@ -55,20 +63,39 @@ export class ModalAgendarComponent implements OnInit {
   }
 
   agendar() {
-    this.Agendamento.realizarAgendamento(this.dataAgendamento!, this.horario!, this.servicosSelecionados).subscribe(
+    this.Agendamento.realizarAgendamento(
+      this.dataAgendamento!,
+      this.horario!,
+      this.servicosSelecionados
+    ).subscribe(
       (response) => {
         const tempo = 1000;
-        this.servicosSelecionados = [];
         this.Toast.mostrarToast(response.retorno, tempo, response.mensagem);
         if (response.retorno === 'success') {
+          const mensagem = this.gerarMensagem();
           setTimeout(() => {
             location.reload();
+            this.Whatsapp.mandarMensagem(mensagem);
           }, tempo);
         }
+        this.servicosSelecionados = [];
       },
       (error) => {
         console.error(error);
       }
-    )
+    );
+  }
+
+  gerarMensagem() {
+    let mensagem = `🗓️ *AGENDAMENTO*\n📆 Data: ${this.Date.formatarDataString(
+      this.dataAgendamento,
+      'dd/MM/yyyy'
+    )}\n⏰ Horário: ${this.horario}\n\n💼 *SERVIÇOS*  \n`;
+    this.servicosSelecionados!.forEach((servico) => {
+      mensagem += `📌 ${servico.NOME_SERVICO}: R$ ${servico.PRECO_SERVICO}\n`;
+    });
+    mensagem += `💵 *Total:* R$ ${this.total.toFixed(2).replace('-', '')}`;
+
+    return mensagem;
   }
 }
