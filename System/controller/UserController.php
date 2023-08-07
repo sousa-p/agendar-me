@@ -131,7 +131,8 @@ class UserController
     $infosValidas = ['NOME', 'EMAIL', 'TEL', 'SENHA'];
     if (!in_array($data['INFORMACAO'], $infosValidas)) respostaHost('error', 'Informação inválida');
     if ($data['INFORMACAO'] !== 'SENHA') $data['VALOR'] = limparDados($data['VALOR']);
-    if ($data['INFORMACAO'] !== 'SENHA' && temDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos de cadastro estão preenchidos');
+    if ($data['INFORMACAO'] !== 'SENHA' && temDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos estão preenchidos');
+    if ($data['INFORMACAO'] === 'SENHA' && temDadosVazios($data['VALOR'])) respostaHost('error', 'Verifique se todos os campos estão preenchidos');
     if ($data['INFORMACAO'] === 'NOME' && !ehStrValida($data['VALOR'])) respostaHost('error', 'Nome de úsuario inválido');
     if ($data['INFORMACAO'] === 'TEL' && !ehTelefoneValido($data['VALOR'])) respostaHost('error', 'Formato de telefone de úsuario inválido');
     if ($data['INFORMACAO'] === 'EMAIL' && !ehEmailValido($data['VALOR'])) respostaHost('error', 'Formato de email de úsuario inválido');
