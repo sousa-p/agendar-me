@@ -24,7 +24,7 @@ require_once './imports/UserImports.php';
 require_once './imports/ComercioImports.php';
 
 // AÇÕES QUE NÃO NECESSITAM DE VALIDAÇÃO
-if ($route === 'User' && ($action === 'cadastrar' || $action === 'login')) {
+if ($action === 'cadastrar' || $action === 'login') {
   $classController->$action();
   exit();
 }

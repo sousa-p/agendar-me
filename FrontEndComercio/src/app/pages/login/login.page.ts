@@ -31,14 +31,17 @@ export class LoginPage implements OnInit {
           const dataExpCookie = new Date();
           dataExpCookie.setDate(dataExpCookie.getDate() + 15);
 
-          this.Cookie.set('token', response.JWT, dataExpCookie);
+          this.Cookie.set('token', response.JWT, {
+            expires: dataExpCookie,
+            domain: 'localhost',
+          });
           this.loginForm.reset();
           this.router.navigate(['/home']);
         }
         this.Toast.mostrarToast(response.retorno, 3000, response.mensagem);
       },
       (error) => {
-        console.error(error.error.text);
+        console.error(error);
       }
     );
   }

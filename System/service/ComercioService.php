@@ -34,7 +34,49 @@ class ComercioService
     ];
   }
 
-  public function getComercioInfos() {}
+  public function gerarTokenJwt()
+  {
+    $secret = $this->model->__get('SECRET_COMERCIO');
+    $header = $this->base64url_encode('{"alg": "HS256", "type": "JWT"}');
+    $exp = strtotime('+15 days');
+    $payload = $this->base64url_encode('{"ID_COMERCIO": "' . (int)$this->model->__get('ID_COMERCIO') . '", "IP": "' . password_hash($this->getIp(), PASSWORD_DEFAULT) . '", "exp": "' . $exp . '"}');
+    $signature = hash_hmac('sha256', $header . '.' . $payload, $secret);
+    return $header . '.' . $payload . '.' . $signature;
+  }
 
-  public function gerarTokenJwt() {}
+  public function base64url_encode($data)
+  {
+    return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($data));
+  }
+
+  public function getIp()
+  {
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+      // Caso o usuário possua proxy
+      $listaIp = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+      $ip = $listaIp[0];
+    } else {
+      $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return password_hash($ip, PASSWORD_DEFAULT);
+  }
+
+  public function getSecret()
+  {
+    $select = 'SELECT SECRET_COMERCIO FROM COMERCIO WHERE ID_COMERCIO = :ID_COMERCIO';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':ID_COMERCIO', (int)$this->model->__get('ID_COMERCIO'));
+    $stmt->execute();
+    return $stmt->fetch()->SECRET_COMERCIO;
+  }
+
+  public function getComercioInfos()
+  {
+    $select = 'SELECT * FROM COMERCIO WHERE TEL_COMERCIO = :TEL_COMERCIO AND CNPJ_COMERCIO = :CNPJ_COMERCIO';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':TEL_COMERCIO', $this->model->__get('TEL_COMERCIO'));
+    $stmt->bindValue(':CNPJ_COMERCIO', $this->model->__get('CNPJ_COMERCIO'));
+    $stmt->execute();
+    return $stmt->fetch();
+  }
 }
