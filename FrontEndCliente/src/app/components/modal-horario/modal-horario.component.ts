@@ -3,6 +3,7 @@ import { Agendamento } from 'src/app/core/interface/Agendamento';
 import { AgendamentoService } from 'src/app/core/service/agendamento.service';
 import { DateService } from 'src/app/core/controller/date.service';
 import { ToastService } from 'src/app/core/controller/toast.service';
+import { WhatsappService } from 'src/app/core/service/whatsapp.service';
 @Component({
   selector: 'app-modal-horario',
   templateUrl: './modal-horario.component.html',
@@ -12,7 +13,8 @@ export class ModalHorarioComponent implements OnInit {
   constructor(
     public Date: DateService,
     private Agendamento: AgendamentoService,
-    private Toast: ToastService
+    private Toast: ToastService,
+    private Whatsapp: WhatsappService
   ) {}
 
   @Input() agendamento?: Agendamento;
@@ -42,10 +44,12 @@ export class ModalHorarioComponent implements OnInit {
     ).subscribe(
       (response) => {
         const tempo = 1000;
+        const mensagem = this.gerarMensagem();
         this.Toast.mostrarToast(response.retorno, tempo, response.mensagem);
         if (response.retorno === 'success') {
           setTimeout(() => {
             location.reload();
+            this.Whatsapp.mandarMensagem(mensagem);
           }, tempo);
         }
       },
@@ -53,5 +57,9 @@ export class ModalHorarioComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+  gerarMensagem(): string {
+    return `🚫 *AGENDAMENTO CANCELADO*\n📆 Data: ${this.Date.formatarDataString(this.agendamento?.DATA_AGENDAMENTO, 'dd/MM/yyyy')}\n⏰ Horário: ${this.agendamento?.HORARIO_AGENDAMENTO}`;
   }
 }
