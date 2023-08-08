@@ -21,6 +21,7 @@ $action = $data['action'];
 
 require_once './imports/RouteClassImports.php';
 require_once './imports/UserImports.php';
+require_once './imports/ComercioImports.php';
 
 // AÇÕES QUE NÃO NECESSITAM DE VALIDAÇÃO
 if ($route === 'User' && ($action === 'cadastrar' || $action === 'login')) {
@@ -34,7 +35,11 @@ if (!isset($httpHeader['Authorization']) || !ehDadoValido($httpHeader['Authoriza
   respostaHost('error', 'Algo deu errado :(');
 
 $bearer = explode(' ', $httpHeader['Authorization'])[1];
-$userController->validarToken($bearer);
+
+if ($route !== 'Comercio')
+  $userController->validarToken($bearer);
+else if ($route === 'Comercio')
+  $comercioController->validarToken($bearer);
 
 if ($action === 'validarToken') {
   respostaHost('success', 'Token Válido');

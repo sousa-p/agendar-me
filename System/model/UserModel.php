@@ -9,6 +9,7 @@ class UserModel
   private $TEL_USER;
   private $EMAIL_USER;
   private $SENHA_USER;
+  private $SECRET_USER;
 
   public function __get($atributo)
   {

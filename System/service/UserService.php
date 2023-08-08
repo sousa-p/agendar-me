@@ -17,7 +17,7 @@ class UserService
 
   public function save()
   {
-    $insert = 'INSERT INTO USER VALUES (0, :NOME_USER, :TEL_USER, :EMAIL_USER, :SENHA_USER, :SECRET_USER)';
+    $insert = 'INSERT INTO USER (NOME_USER, TEL_USER, EMAIL_USER, SENHA_USER, SECRET_USER) VALUES (:NOME_USER, :TEL_USER, :EMAIL_USER, :SENHA_USER, :SECRET_USER)';
     $stmt = $this->conn->prepare($insert);
     $stmt->bindValue(':NOME_USER', $this->model->__get('NOME_USER'));
     $stmt->bindValue(':TEL_USER', $this->model->__get('TEL_USER'));
@@ -113,7 +113,7 @@ class UserService
 
   public function getUserInfos()
   {
-    $select = 'SELECT * FROM USER wHERE EMAIL_USER = :EMAIL_USER AND TEL_USER = :TEL_USER';
+    $select = 'SELECT * FROM USER WHERE EMAIL_USER = :EMAIL_USER AND TEL_USER = :TEL_USER';
     $stmt = $this->conn->prepare($select);
     $stmt->bindValue(':EMAIL_USER', $this->model->__get('EMAIL_USER'));
     $stmt->bindValue(':TEL_USER', $this->model->__get('TEL_USER'));
@@ -164,7 +164,7 @@ class UserService
   }
   public function alterarEMAIL()
   {
-    
+
     if ($this->emailDisponivel()) {
       $update = 'UPDATE USER SET EMAIL_USER = :VALOR WHERE ID_USER = :ID_USER';
       $stmt = $this->conn->prepare($update);

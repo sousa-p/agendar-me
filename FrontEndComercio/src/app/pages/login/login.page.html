@@ -32,15 +32,14 @@
         <ion-input
           ngModel
           required
-          email
+          pattern="^\d{14}$"
+          maxlength="14"
           clearInput="true"
-          name="EMAIL_USER"
-          label="Email"
-          autocomplete="email"
+          name="CNPJ_COMERCIO"
+          label="Cnpj"
           label-placement="floating"
           fill="outline"
-          type="email"
-          maxlength="150"
+          type="text"
         ></ion-input>
         <ion-input
           ngModel

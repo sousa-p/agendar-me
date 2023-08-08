@@ -22,7 +22,8 @@ class ServicosService
     return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
 
-  public function saveServicoAgendamento () {
+  public function saveServicoAgendamento()
+  {
     $insert = 'INSERT INTO SERVICO_AGENDAMENTOS VALUES (:ID_SERVICO, :ID_AGENDAMENTO)';
     $stmt = $this->conn->prepare($insert);
     $stmt->bindValue(':ID_SERVICO', (int)$this->model->ID_SERVICO);
@@ -30,7 +31,8 @@ class ServicosService
     $stmt->execute();
   }
 
-  public function getTodosServicosAgendamento() {
+  public function getTodosServicosAgendamento()
+  {
     $select = 'SELECT SERVICOS.ID_SERVICO, NOME_SERVICO, PRECO_SERVICO FROM SERVICOS
     INNER JOIN SERVICOS_AGENDAMENTO
     ON SERVICOS_AGENDAMENTO.ID_SERVICO = SERVICOS.ID_SERVICO

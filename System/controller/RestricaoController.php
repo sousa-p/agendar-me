@@ -8,7 +8,7 @@ class RestricaoController
 {
   private $model;
   private $service;
-  
+
   public function __construct($data, $model, $service)
   {
     foreach ($data as $chave => $valor) {

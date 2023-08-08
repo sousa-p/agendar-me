@@ -3,7 +3,7 @@ date_default_timezone_set('America/Sao_Paulo');
 
 function limparDados($data)
 {
-  return strip_tags(stripcslashes(trim((String)$data)));
+  return strip_tags(stripcslashes(trim((string)$data)));
 }
 
 function ehDadoValido($data)
@@ -85,10 +85,16 @@ function ehHoraPossivelIntervalo($hora, $intervaloMin)
   return ($hora % $intervaloMin) === 0;
 }
 
-function calcIntervaloData($data, $hora='00:00:00', $formato='days')
+function calcIntervaloData($data, $hora = '00:00:00', $formato = 'days')
 {
   $now = new DateTime();
   $intervalo = $now->diff(new DateTime("$data $hora"));
 
   return $intervalo->$formato;
+}
+
+function ehCnpjValido($cnpj)
+{
+  $regexCnpj = "/^\d{14}$/";
+  return preg_match($regexCnpj, $cnpj);
 }

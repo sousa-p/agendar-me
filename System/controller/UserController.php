@@ -36,11 +36,11 @@ class UserController
     // Validação de dados
     if (temDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos de cadastro estão preenchidos');
     if (!ehStrValida($data['NOME_USER'])) respostaHost('error', 'Nome de úsuario inválido');
-    if (strlen($data['NOME_USER'] < 75)) respostaHost('error', 'Nome muito longo :(');
+    if (strlen($data['NOME_USER']) > 75) respostaHost('error', 'Nome muito longo :(');
     if (!ehTelefoneValido($data['TEL_USER'])) respostaHost('error', 'Formato de telefone de úsuario inválido');
-    if (strlen($data['EMAIL_USER'] < 150)) respostaHost('error', 'Email muito longo :(');
+    if (strlen($data['EMAIL_USER']) > 150) respostaHost('error', 'Email muito longo :(');
     if (!ehEmailValido($data['EMAIL_USER'])) respostaHost('error', 'Formato de email de úsuario inválido');
-    if (strlen($data['SENHA_USER']) < 8) respostaHost('error', 'Senha deve conter 8 caracteres');
+    if (strlen($data['SENHA_USER']) < 8) respostaHost('error', 'Senha deve conter no mínimo 8 caracteres');
 
     $data['SENHA_USER'] = password_hash($data['SENHA_USER'], PASSWORD_DEFAULT);
     $this->colocarDadosModel($data);
@@ -85,14 +85,13 @@ class UserController
     $payload = $parts[1];
     $dataToken = json_decode(base64_decode(limparDados($payload)));
 
-
     if (!isset($dataToken->ID_USER) || !ehDadoValido($dataToken->ID_USER))
       respostaHost('error', 'Token de acesso inválido');
 
     $this->model->__set('ID_USER', (int)$dataToken->ID_USER);
     $this->model->__set('SECRET_USER', $this->service->getSecret());
 
-    if(!ehDadoValido($this->model->__get('SECRET_USER')) || !$this->model->__get('SECRET_USER')) respostaHost('access_error', 'Token de acesso inválido');
+    if (!ehDadoValido($this->model->__get('SECRET_USER')) || !$this->model->__get('SECRET_USER')) respostaHost('access_error', 'Token de acesso inválido');
 
     $signature = hash_hmac('sha256', $header . '.' . $payload, $this->model->__get('SECRET_USER'));
 
@@ -104,12 +103,12 @@ class UserController
       respostaHost('access_error', 'Token de acesso inválido');
     if (!isset($dataToken->IP) || !ehDadoValido($dataToken->IP))
       respostaHost('access_error', 'Token de acesso inválido');
-    
+
     $exp = (int)$dataToken->exp;
     $ipToken = limparDados($dataToken->IP);
     unset($dataToken->exp);
     unset($dataToken->IP);
-    
+
     if (time() > (int)$exp)
       respostaHost('access_error', 'Token de acesso expirou');
     if (password_verify($ipToken, $this->service->getIp()))
@@ -117,12 +116,14 @@ class UserController
     $this->colocarDadosModel($dataToken);
   }
 
-  public function getUserInfosId() {
+  public function getUserInfosId()
+  {
     echo json_encode($this->service->getUserInfosId());
     exit();
   }
 
-  public function alterarInfo() {
+  public function alterarInfo()
+  {
     $data = [
       'INFORMACAO' => limparDados($this->INFORMACAO),
       'VALOR' => $this->VALOR
@@ -140,9 +141,9 @@ class UserController
     if ($data['INFORMACAO'] === 'SENHA' && strlen($data['VALOR']['NOVA_SENHA_USER']) < 8) respostaHost('error', 'Senha nova deve conter 8 caracteres');
 
     $this->colocarDadosModel($data);
-    $this->model->__set($data['INFORMACAO'].'_USER', $data['VALOR']);
-    $metodo = 'alterar'.$data['INFORMACAO'];
+    $this->model->__set($data['INFORMACAO'] . '_USER', $data['VALOR']);
+    $metodo = 'alterar' . $data['INFORMACAO'];
     echo json_encode($this->service->$metodo());
     exit();
-  } 
+  }
 }

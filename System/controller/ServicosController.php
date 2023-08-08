@@ -39,9 +39,9 @@ class ServicosController
 
     if (!ehDadoValido($data['ID_USER'])) respostaHost('error', 'Algo deu errado :(');
     if (!ehDadoValido($data['ID_AGENDAMENTO'])) respostaHost('error', 'Algo deu errado :(');
-    
+
     $this->model->__set('ID_AGENDAMENTO', (int)$data['ID_AGENDAMENTO']);
-    
+
     echo json_encode($this->service->getTodosServicosAgendamento());
     exit();
   }

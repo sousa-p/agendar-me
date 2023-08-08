@@ -1,7 +1,9 @@
 <?php
 // DB CONNECTION
 require_once './db/Conn.php';
+
 use System\Database\Conn as Conn;
+
 $conn = Conn::getInstance();
 
 // MODEL IMPORT
