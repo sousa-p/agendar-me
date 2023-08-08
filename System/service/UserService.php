@@ -28,11 +28,6 @@ class UserService
     $stmt->execute();
   }
 
-  public function base64url_encode($data)
-  {
-    return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($data));
-  }
-
   public function gerarTokenJwt()
   {
     $secret = $this->model->__get('SECRET_USER');
@@ -41,6 +36,11 @@ class UserService
     $payload = $this->base64url_encode('{"ID_USER": "' . (int)$this->model->__get('ID_USER') . '", "IP": "' . password_hash($this->getIp(), PASSWORD_DEFAULT) . '", "exp": "' . $exp . '"}');
     $signature = hash_hmac('sha256', $header . '.' . $payload, $secret);
     return $header . '.' . $payload . '.' . $signature;
+  }
+
+  public function base64url_encode($data)
+  {
+    return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($data));
   }
 
   public function getIp()
@@ -64,6 +64,47 @@ class UserService
     return $stmt->fetch()->SECRET_USER;
   }
 
+  public function checarInfosLogin()
+  {
+    $userInfos = $this->getUserInfos();
+    if ($userInfos && password_verify($this->model->__get('SENHA_USER'), $userInfos->SENHA_USER)) {
+      $this->model->__set('ID_USER', (int)$userInfos->ID_USER);
+      $this->model->__set('SECRET_USER', $userInfos->SECRET_USER);
+      return [
+        'retorno' => 'success',
+        'mensagem' => 'Login realizado com sucesso',
+        'JWT' => $this->gerarTokenJwt()
+      ];
+    }
+
+    return [
+      'retorno' => 'error',
+      'mensagem' => 'Informações de login incorretas!'
+    ];
+  }
+
+  public function getUserInfos()
+  {
+    $select = 'SELECT * FROM USER WHERE EMAIL_USER = :EMAIL_USER AND TEL_USER = :TEL_USER';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':EMAIL_USER', $this->model->__get('EMAIL_USER'));
+    $stmt->bindValue(':TEL_USER', $this->model->__get('TEL_USER'));
+    $stmt->execute();
+    return $stmt->fetch();
+  }
+
+
+  public function getUserInfosId()
+  {
+    $select = 'SELECT NOME_USER, EMAIL_USER, TEL_USER FROM USER WHERE ID_USER = :ID_USER';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_OBJ);
+  }
+
+  
   public function getId()
   {
     $select = 'SELECT ID_USER FROM USER WHERE EMAIL_USER = :EMAIL_USER AND TEL_USER = :TEL_USER';
@@ -72,15 +113,6 @@ class UserService
     $stmt->bindValue(':TEL_USER', $this->model->__get('TEL_USER'));
     $stmt->execute();
     return (int)$stmt->fetch()->ID_USER;
-  }
-
-  public function emailDisponivel()
-  {
-    $select = 'SELECT * FROM USER WHERE EMAIL_USER = :EMAIL_USER';
-    $stmt = $this->conn->prepare($select);
-    $stmt->bindValue(':EMAIL_USER', $this->model->__get('EMAIL_USER'));
-    $stmt->execute();
-    return !$stmt->fetch();
   }
 
   public function getSenha()
@@ -102,54 +134,6 @@ class UserService
     return $stmt->fetch()->SENHA_USER;
   }
 
-  public function telDisponivel()
-  {
-    $select = 'SELECT * FROM USER WHERE TEL_USER = :TEL_USER';
-    $stmt = $this->conn->prepare($select);
-    $stmt->bindValue(':TEL_USER', $this->model->__get('TEL_USER'));
-    $stmt->execute();
-    return !$stmt->fetch();
-  }
-
-  public function getUserInfos()
-  {
-    $select = 'SELECT * FROM USER WHERE EMAIL_USER = :EMAIL_USER AND TEL_USER = :TEL_USER';
-    $stmt = $this->conn->prepare($select);
-    $stmt->bindValue(':EMAIL_USER', $this->model->__get('EMAIL_USER'));
-    $stmt->bindValue(':TEL_USER', $this->model->__get('TEL_USER'));
-    $stmt->execute();
-    return $stmt->fetch();
-  }
-
-  public function checarInfosLogin()
-  {
-    $userInfos = $this->getUserInfos();
-    if ($userInfos && password_verify($this->model->__get('SENHA_USER'), $userInfos->SENHA_USER)) {
-      $this->model->__set('ID_USER', $userInfos->ID_USER);
-      $this->model->__set('SECRET_USER', $userInfos->SECRET_USER);
-      return [
-        'retorno' => 'success',
-        'mensagem' => 'Login realizado com sucesso',
-        'JWT' => $this->gerarTokenJwt()
-      ];
-    }
-
-    return [
-      'retorno' => 'error',
-      'mensagem' => 'Informações de login incorretas!'
-    ];
-  }
-
-  public function getUserInfosId()
-  {
-    $select = 'SELECT NOME_USER, EMAIL_USER, TEL_USER FROM USER WHERE ID_USER = :ID_USER';
-    $stmt = $this->conn->prepare($select);
-    $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
-    $stmt->execute();
-
-    return $stmt->fetch(PDO::FETCH_OBJ);
-  }
-
   public function alterarNOME()
   {
     $update = 'UPDATE USER SET NOME_USER = :VALOR WHERE ID_USER = :ID_USER';
@@ -162,6 +146,7 @@ class UserService
       'mensagem' => 'Nome alterado com sucesso!'
     ];
   }
+
   public function alterarEMAIL()
   {
 
@@ -181,6 +166,16 @@ class UserService
       'mensagem' => 'Email não esta disponível'
     ];
   }
+
+  public function emailDisponivel()
+  {
+    $select = 'SELECT * FROM USER WHERE EMAIL_USER = :EMAIL_USER';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':EMAIL_USER', $this->model->__get('EMAIL_USER'));
+    $stmt->execute();
+    return !$stmt->fetch();
+  }
+
   public function alterarTEL()
   {
     if ($this->telDisponivel()) {
@@ -199,13 +194,23 @@ class UserService
       'mensagem' => 'Telefone não esta disponível'
     ];
   }
+
+  public function telDisponivel()
+  {
+    $select = 'SELECT * FROM USER WHERE TEL_USER = :TEL_USER';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':TEL_USER', $this->model->__get('TEL_USER'));
+    $stmt->execute();
+    return !$stmt->fetch();
+  }
+
   public function alterarSENHA()
   {
     if (password_verify($this->model->__get('VALOR')['ANTIGA_SENHA_USER'], $this->getSenhaID())) {
       $update = 'UPDATE USER SET SENHA_USER = :NOVA_SENHA_USER WHERE ID_USER = :ID_USER';
       $stmt = $this->conn->prepare($update);
       $stmt->bindValue(':NOVA_SENHA_USER', password_hash($this->model->__get('VALOR')['NOVA_SENHA_USER'], PASSWORD_DEFAULT));
-      $stmt->bindValue(':ID_USER', $this->model->__get('ID_USER'));
+      $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
       $stmt->execute();
       return [
         'retorno' => 'success',
