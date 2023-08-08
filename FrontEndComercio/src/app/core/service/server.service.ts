@@ -11,11 +11,12 @@ export class ServerService {
   constructor(private http: HttpClient, private Cookie: CookieService) { }
 
   url: string = 'http://localhost/agendar/System/';
-
+  
   request (data: any): Observable<any> {
+    data['autor'] = 'Comercio';
     const token = this.Cookie.get('token');
     if (token !== '') {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${ token }`)
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${ token }`);
       return this.http.post(this.url, JSON.stringify(data), {headers});
     }
     return this.http.post(this.url, JSON.stringify(data));

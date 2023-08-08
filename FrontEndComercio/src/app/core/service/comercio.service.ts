@@ -5,7 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class ComercioService {
 
   constructor(private router: Router, private Cookie: CookieService) { }
   

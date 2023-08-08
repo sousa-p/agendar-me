@@ -1,0 +1,16 @@
+.carousel-container {
+  overflow: hidden;
+}
+
+.slide {
+  opacity: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  position: absolute;
+  transition: all 0.75s ease;
+
+  &.active{
+    opacity: 1  ;
+  }
+}

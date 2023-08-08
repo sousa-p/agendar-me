@@ -1,0 +1,31 @@
+.invalido {
+  opacity: 0.8;
+  background: repeating-linear-gradient( 45deg, var(--ion-color-secondary), var(--ion-color-secondary) 3px, transparent 3px, transparent 53px);
+}
+
+.linha-agendamento {
+  height: 75px;
+  width: 100%;
+  transition: all .3s ease;
+  cursor: pointer;
+  border-bottom: 1px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));
+
+  ion-icon {
+    color: transparent;
+    transition: all .3s ease;
+  }
+
+  &:hover {
+    background-color:  var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));
+    
+    ion-icon {
+      color: var(--ion-color-primary);
+    }
+  }
+  &__infos {
+    &__horas {
+      margin: 0 25px;
+    }
+    border-right: 1px solid var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.13))));
+  }
+}

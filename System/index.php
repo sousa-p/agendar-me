@@ -12,12 +12,15 @@ $data = file_get_contents('php://input');
 $data = json_decode($data, true);
 
 if (!isset($data['route']) || !ehDadoValido($data['route']))
-  respostaHost('error', 'Rota inválido');
+  respostaHost('error', 'Route inválido');
 if (!isset($data['action']) || !ehDadoValido($data['action']))
   respostaHost('error', 'Action inválido');
+if (!isset($data['autor']) || !ehDadoValido($data['autor']))
+  respostaHost('error', 'Autor inválido');
 
 $route = $data['route'];
 $action = $data['action'];
+$autor = $data['autor'];
 
 require_once './imports/RouteClassImports.php';
 require_once './imports/UserImports.php';
@@ -36,15 +39,21 @@ if (!isset($httpHeader['Authorization']) || !ehDadoValido($httpHeader['Authoriza
 
 $bearer = explode(' ', $httpHeader['Authorization'])[1];
 
-if ($route !== 'Comercio')
+if ($autor === 'User') {
   $userController->validarToken($bearer);
-else if ($route === 'Comercio')
+  $classModel->__set('ID_USER', $userModel->ID_USER);
+}
+else if ($autor === 'Comercio') {
   $comercioController->validarToken($bearer);
-
+  $classModel->__set('ID_COMERCIO', $comercioModel->ID_COMERCIO);
+}
+else {
+  respostaHost('error', 'Autor inválido');
+  exit();
+}
 if ($action === 'validarToken') {
   respostaHost('success', 'Token Válido');
   exit();
 }
 
-$classModel->__set('ID_USER', $userModel->ID_USER);
 $classController->$action();

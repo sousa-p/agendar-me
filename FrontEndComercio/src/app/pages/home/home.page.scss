@@ -1,0 +1,21 @@
+.section {
+  min-height: calc(100vh - 56px);
+}
+
+#logo {
+  margin: 0 auto;
+  width: 175px;
+  cursor: pointer;
+}
+
+#slide {
+  width: 100%;
+  min-height: 200px;
+  max-height: 300px;
+  height: calc(100% - 360px);
+}
+
+#calendario {
+  max-width: 1000px !important;
+  margin: 0 auto;
+}

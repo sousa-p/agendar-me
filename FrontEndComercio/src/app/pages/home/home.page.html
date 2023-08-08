@@ -1,12 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Home</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/agendamentos">
+        <ion-icon class="ion-margin" name="calendar-outline"></ion-icon>
+      </ion-button>
+      <ion-button routerLink="/configuracao">
+        <ion-icon class="ion-margin" name="cog-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="this.comercio.logout()">
+        <ion-icon class="ion-margin" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content [fullscreen]="true">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Agendar</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-row>
-    <ion-col size="12">
-      
+  <ion-row class="section ion-justify-content-center" *ngIf="restricoes">
+    <ion-col>
+      <ion-row id="slide">
+        <ion-col size="12">
+          <app-carrossel
+            [images]="[
+              'https://images.unsplash.com/photo-1554147090-e1221a04a025?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=848&q=80',
+              'https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8d2FsbHBhcGVyfGVufDB8MHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
+              'https://images.unsplash.com/photo-1485470733090-0aae1788d5af?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHdhbGxwYXBlcnxlbnwwfDB8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
+            ]"
+          ></app-carrossel>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-datetime
+            id="calendario"
+            mode="md"
+            (ionChange)="this.clicarDia($event)"
+            [isDateEnabled]="this.ehRestrita"
+            [min]="this.Date.getISOTodayDate()"
+            [max]="this.Date.getUltimaDataAgendamento()"
+            presentation="date"
+            locale="pt-BR"
+          ></ion-datetime>
+        </ion-col>
+      </ion-row>
     </ion-col>
   </ion-row>
+  <app-loading [condicao]="!this.restricoes"></app-loading>
 </ion-content>
