@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="11.637 14.051 104.727 104.507" xmlns="http://www.w3.org/2000/svg">
+  <title/>
+  <g data-name="Calender" id="f843e5c3-8972-4620-9d72-230521dc7d60">
+    <path d="M16,44h96a0,0,0,0,1,0,0v69a5,5,0,0,1-5,5H21a5,5,0,0,1-5-5V44A0,0,0,0,1,16,44Z" fill="#c7c7c7"/>
+    <path d="M95,113l-74,5a5,5,0,0,1-5-5V44h96v57C112,103.76,109,113,95,113Z" fill="#fafafa"/>
+    <rect fill="#c7c7c7" height="10" width="96" x="16" y="44"/>
+    <path d="M18,25h92a6,6,0,0,1,6,6V49a0,0,0,0,1,0,0H12a0,0,0,0,1,0,0V31A6,6,0,0,1,18,25Z" style="fill: rgb(198, 35, 104);"/>
+    <path d="M28,17V30.33a3,3,0,0,1-6,0V17a3,3,0,0,1,6,0Z" fill="#c7c7c7"/>
+    <path d="M25,14V33.33a3,3,0,0,1-3-3V17A3,3,0,0,1,25,14Z" fill="#b3b3b3"/>
+    <path d="M106,17V30.33a3,3,0,0,1-6,0V17a3,3,0,0,1,6,0Z" fill="#c7c7c7"/>
+    <path d="M103,14V33.33a3,3,0,0,1-3-3V17A3,3,0,0,1,103,14Z" fill="#b3b3b3"/>
+    <text style="fill: #efefef; font-family: Arial, sans-serif; font-size: 14px; font-weight: 700; white-space: pre;" x="38.861" y="41.935">ERROR</text>
+    <text style="fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 40px; font-weight: 700; white-space: pre;" x="31.836" y="90.236">404</text>
+  </g>
+</svg>

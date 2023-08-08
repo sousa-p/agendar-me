@@ -1,0 +1,65 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-img
+      routerLink="/"
+      id="logo"
+      src="../../../assets/images/logo.png"
+      alt="Agendar.Me"
+    ></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-row class="ion-align-items-center ion-justify-content-center section">
+    <div id="wrapper_login">
+      <ion-text class="ion-text-center">
+        <h1>Entre agora!</h1>
+      </ion-text>
+      <form #loginForm="ngForm">
+        <ion-input
+          ngModel
+          required
+          pattern="^[1-9]{2}9?[0-9]{8}$"
+          maxlength="11"
+          clearInput="true"
+          name="TEL_USER"
+          label="Telefone"
+          autocomplete="tel"
+          label-placement="floating"
+          fill="outline"
+          type="tel"
+        ></ion-input>
+        <ion-input
+          ngModel
+          required
+          email
+          clearInput="true"
+          name="EMAIL_USER"
+          label="Email"
+          autocomplete="email"
+          label-placement="floating"
+          fill="outline"
+          type="email"
+          maxlength="150"
+        ></ion-input>
+        <ion-input
+          ngModel
+          required
+          name="SENHA_USER"
+          label="Senha"
+          label-placement="floating"
+          fill="outline"
+          type="password"
+          minlength="8"
+        ></ion-input>
+        <ion-button
+          id="entrar"
+          type="submit"
+          [disabled]="!this.loginForm.valid"
+        >
+          Entrar
+        </ion-button>
+      </form>
+    </div>
+  </ion-row>
+</ion-content>
