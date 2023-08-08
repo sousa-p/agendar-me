@@ -13,7 +13,7 @@ export class ServerService {
   url: string = 'http://localhost/agendar/System/';
 
   request (data: any): Observable<any> {
-    data['autor'] = 'Cliente';
+    data['autor'] = 'User';
     const token = this.Cookie.get('token');
     if (token !== '') {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${ token }`)
