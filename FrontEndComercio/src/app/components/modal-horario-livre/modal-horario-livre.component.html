@@ -1,3 +1,27 @@
-<p>
-  modal-horario-livre works!
-</p>
+<ion-modal backdropDismiss="false" [isOpen]="this.isModalOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          <ion-icon *ngIf="this.horario.restrito" name="lock-closed" size="large"></ion-icon>
+          <ion-icon *ngIf="!this.horario.restrito" name="lock-open" size="large"></ion-icon>
+        </ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="this.fechar.emit('fechar')">
+            <ion-icon name="close-outline" size="large"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item>
+          <ion-text>
+            <h3>Horário:</h3>
+            <p>{{ this.horario.horas }}</p>
+          </ion-text>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>

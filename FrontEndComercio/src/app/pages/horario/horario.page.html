@@ -59,13 +59,14 @@
         <ng-container *ngFor="let horario of this.horariosPagina!">
           <app-linha-horario
             [horario]="horario"
-            (click)="this.setHorarioOpen(true)"
+            (click)="this.clicarHorario(horario)"
           ></app-linha-horario>
         </ng-container>
-        <app-modal-horario
+        <app-modal-horario-livre
+          [horario]="this.horarioSelecionado"
           [isModalOpen]="this.isModalHorarioOpen"
-          (fechar)="this.setHorarioOpen(false); this.agendamentoSelecionado = undefined"
-        ></app-modal-horario>
+          (fechar)="this.setHorarioOpen(false)"
+        ></app-modal-horario-livre>
       </ng-container>
       <ng-container *ngIf="!loading && !horarios.length">
         <ion-text color="primary" class="ion-text-center">

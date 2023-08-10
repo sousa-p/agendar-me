@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-modal-horario-livre',
@@ -8,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class ModalHorarioLivreComponent  implements OnInit {
 
   constructor() { }
+  @Input() horario?: any;
+  @Input() isModalOpen?: boolean;
+  @Output() fechar = new EventEmitter();
 
   ngOnInit() {}
 

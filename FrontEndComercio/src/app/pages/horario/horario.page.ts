@@ -30,7 +30,7 @@ export class HorarioPage implements OnInit {
   horarioAtual: number = 0;
 
   date?: string;
-  horario?: string;
+  horarioSelecionado?: any;
 
   isModalHorarioOpen: boolean = false;
   isModalAgendamentoOpen: boolean = false;
@@ -152,5 +152,10 @@ export class HorarioPage implements OnInit {
         console.error(error);
       }
     )
+  }
+
+  clicarHorario(horario: any) {
+    this.horarioSelecionado = horario;
+    this.setHorarioOpen(true);
   }
 }
