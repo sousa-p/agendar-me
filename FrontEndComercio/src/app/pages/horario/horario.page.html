@@ -1,13 +1,84 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>horario</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button
+        color="primary"
+        defaultHref="#"
+        routerLink="/home"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Horários</ion-title>
+    <ion-buttons slot="end">
+      <ion-title color="primary"
+        >{{ this.Date.formatarDataString(this.date!, 'dd/MM/yyyy') }}</ion-title
+      >
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">horario</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-row class="section">
+    <!-- AGENDAMENTOS REALIZADOS  -->
+    <ion-col size="12" *ngIf="!loading && this.agendamentosRealizados!.length">
+      <ion-text>
+        <h3>Horários Ocupados</h3>
+      </ion-text>
+      <ng-container
+        *ngIf="this.restricoes && this.agendamentosRealizados && this.horarios.length > 0"
+      >
+        <ng-container *ngFor="let agendamento of this.agendamentosRealizados!">
+          <app-linha-agendamento
+            [horario]="agendamento!.slice(0, 5)"
+            (click)="this.clicarAgendamento(this.date!, agendamento)"
+          ></app-linha-agendamento>
+        </ng-container>
+        <app-modal-horario
+          [agendamento]="this.agendamentoSelecionado"
+          [isModalOpen]="this.isModalAgendamentoOpen"
+          (fechar)="this.setAgendamentoOpen(false)"
+        ></app-modal-horario>
+      </ng-container>
+      <ion-infinite-scroll
+        (ionInfinite)="carregarAgendamentosPagina($event)"
+        [disabled]="this.agendamentoAtual >= this.agendamentosRealizados!.length"
+      >
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+      <app-loading [condicao]="loading"></app-loading>
+    </ion-col>
+
+    <!-- HORÁRIOS LIVRES -->
+    <ion-col size="12">
+      <ion-text *ngIf="!loading">
+        <h3>Horários Livres</h3>
+      </ion-text>
+
+      <ng-container
+        *ngIf="this.restricoes && this.agendamentosRealizados && this.horarios.length > 0"
+      >
+        <ng-container *ngFor="let horario of this.horariosPagina!">
+          <app-linha-horario
+            [horario]="horario"
+            (click)="this.setHorarioOpen(true)"
+          ></app-linha-horario>
+        </ng-container>
+        <app-modal-horario
+          [isModalOpen]="this.isModalHorarioOpen"
+          (fechar)="this.setHorarioOpen(false); this.agendamentoSelecionado = undefined"
+        ></app-modal-horario>
+      </ng-container>
+      <ng-container *ngIf="!loading && !horarios.length">
+        <ion-text color="primary" class="ion-text-center">
+          <h2>Não há horários livres...</h2>
+        </ion-text>
+      </ng-container>
+      <ion-infinite-scroll
+        (ionInfinite)="carregarHorarioPagina($event)"
+        [disabled]="this.horarioAtual >= this.horarios!.length"
+      >
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+      <app-loading [condicao]="loading"></app-loading>
+    </ion-col>
+  </ion-row>
 </ion-content>

@@ -61,11 +61,11 @@ export class AgendamentoService {
     return this.Server.request(data);
   }
 
-  ehDataRestrita(date: string) {
+  ehDataRestrita(dataString: string) {
     const data = {
       route: 'Agendamento',
       action: 'ehDataRestrita',
-      DATA_AGENDAMENTO: date,
+      DATA_AGENDAMENTO: dataString,
     };
 
     return this.Server.request(data);

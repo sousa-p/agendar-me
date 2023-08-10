@@ -15,7 +15,7 @@ class AgendamentoService
   }
   public function getTodosAgendamentosData()
   {
-    $select = 'SELECT HORARIO_AGENDAMENTO FROM AGENDAMENTO WHERE DATA_AGENDAMENTO = :DATA_AGENDAMENTO';
+    $select = 'SELECT HORARIO_AGENDAMENTO FROM AGENDAMENTO WHERE DATA_AGENDAMENTO = :DATA_AGENDAMENTO ORDER BY HORARIO_AGENDAMENTO';
     $stmt = $this->conn->prepare($select);
     $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->__get('DATA_AGENDAMENTO'));
     $stmt->execute();
@@ -113,5 +113,30 @@ class AgendamentoService
       'retorno' => 'success',
       'mensagem' => 'Agendamento removido com sucesso!'
     ];
+  }
+
+  public function deleteAgendamentoComercio()
+  {
+    $delete = 'DELETE FROM AGENDAMENTO WHERE ID_AGENDAMENTO = :ID_AGENDAMENTO';
+    $stmt = $this->conn->prepare($delete);
+    $stmt->bindValue(':ID_AGENDAMENTO', (int)$this->model->__get('ID_AGENDAMENTO'));
+    $stmt->execute();
+    return [
+      'retorno' => 'success',
+      'mensagem' => 'Agendamento removido com sucesso!'
+    ];
+  }
+
+  public function getAgendamentoInfos()
+  {
+    $select = "SELECT ID_AGENDAMENTO, NOME_USER, TEL_USER, DATA_CRIACAO_AGENDAMENTO, DATA_AGENDAMENTO, HORARIO_AGENDAMENTO FROM AGENDAMENTO
+    INNER JOIN USER
+    ON AGENDAMENTO.ID_USER = USER.ID_USER
+    WHERE DATA_AGENDAMENTO = :DATA_AGENDAMENTO AND HORARIO_AGENDAMENTO = :HORARIO_AGENDAMENTO";
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->DATA_AGENDAMENTO);
+    $stmt->bindValue(':HORARIO_AGENDAMENTO', $this->model->HORARIO_AGENDAMENTO);
+    $stmt->execute();
+    return $stmt->fetch();
   }
 }

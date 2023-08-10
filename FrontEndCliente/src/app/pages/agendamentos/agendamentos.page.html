@@ -18,13 +18,13 @@
         <ng-container *ngFor="let agendamento of this.agendamentosRealizadosPagina">
           <app-linha-agendamento
             [agendamento]="agendamento"
-            (click)="clicarAgendamento(agendamento)"
+            (click)="this.clicarAgendamento(agendamento)"
           ></app-linha-agendamento>
         </ng-container>
         <app-modal-horario
           [agendamento]="this.agendamentoSelecionado!"
           [isModalOpen]="this.isModalOpen"
-          (fechar)="this.setOpen(false)"
+          (fechar)="this.setOpen(false); this.agendamentoSelecionado = undefined"
         ></app-modal-horario>
       </ng-container>
       <ion-infinite-scroll

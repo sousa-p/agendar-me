@@ -45,4 +45,19 @@ class ServicosController
     echo json_encode($this->service->getTodosServicosAgendamento());
     exit();
   }
+
+  public function getServicosAgendamentoCliente()
+  {
+    $data = [
+      'ID_AGENDAMENTO' => $this->ID_AGENDAMENTO
+    ];
+
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+    if (!ehDadoValido($data['ID_AGENDAMENTO'])) respostaHost('error', 'Algo deu errado :(');
+
+    $this->model->__set('ID_AGENDAMENTO', (int)$data['ID_AGENDAMENTO']);
+
+    echo json_encode($this->service->getTodosServicosAgendamentoCliente());
+    exit();
+  }
 }

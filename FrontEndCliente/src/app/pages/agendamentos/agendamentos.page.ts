@@ -14,13 +14,13 @@ export class AgendamentosPage implements OnInit {
   constructor(
     private Agendamento: AgendamentoService,
     public Date: DateService,
-    private Servicos: ServicosService,
+    private Servicos: ServicosService
   ) {}
-  
+
   agendamentoSelecionado?: Agendamento;
   agendamentosRealizados?: Agendamento[];
 
-  agendamentosRealizadosPagina?: Agendamento[]= [];
+  agendamentosRealizadosPagina?: Agendamento[] = [];
   agendamentoAtual: number = 0;
 
   isModalOpen = false;
@@ -30,8 +30,9 @@ export class AgendamentosPage implements OnInit {
   }
 
   clicarAgendamento(agendamento: Agendamento) {
-    this.setOpen(true)
-    
+    this.setOpen(true);
+    this.agendamentoSelecionado = agendamento;
+
     this.Servicos.getServicosAgendamento(agendamento.ID_AGENDAMENTO).subscribe(
       (response) => {
         agendamento.SERVICOS = response;
@@ -40,9 +41,7 @@ export class AgendamentosPage implements OnInit {
       (error) => {
         console.error(error);
       }
-    )
-
-    this.agendamentoSelecionado = agendamento;
+    );
   }
 
   ngOnInit() {

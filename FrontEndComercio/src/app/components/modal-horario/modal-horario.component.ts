@@ -49,7 +49,7 @@ export class ModalHorarioComponent implements OnInit {
         if (response.retorno === 'success') {
           setTimeout(() => {
             location.reload();
-            this.Whatsapp.mandarMensagem(mensagem);
+            this.Whatsapp.mandarMensagem(mensagem, '55'+this.agendamento!.TEL_USER);
           }, tempo);
         }
       },
@@ -60,6 +60,6 @@ export class ModalHorarioComponent implements OnInit {
   }
 
   gerarMensagem(): string {
-    return `🚫 *AGENDAMENTO CANCELADO*\n📆 Data: ${this.Date.formatarDataString(this.agendamento?.DATA_AGENDAMENTO, 'dd/MM/yyyy')}\n⏰ Horário: ${this.agendamento?.HORARIO_AGENDAMENTO}`;
+    return `🚫 *AGENDAMENTO CANCELADO*\n📆 Data: ${this.Date.formatarDataString(this.agendamento?.DATA_AGENDAMENTO, 'dd/MM/yyyy')}\n⏰ Horário: ${this.agendamento?.HORARIO_AGENDAMENTO.slice(0,5)}`;
   }
 }

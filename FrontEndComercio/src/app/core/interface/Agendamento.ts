@@ -6,5 +6,7 @@ export interface Agendamento {
   DATA_AGENDAMENTO?: string;
   HORARIO_AGENDAMENTO: string;
   TIPO_PAGAMENTO?: string;
-  SERVICOS?: Servicos[]
+  SERVICOS?: Servicos[];
+  NOME_USER?: string;
+  TEL_USER?: string;
 }

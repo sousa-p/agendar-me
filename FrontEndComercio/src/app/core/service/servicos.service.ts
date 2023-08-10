@@ -18,10 +18,10 @@ export class ServicosService {
     return this.Server.request(data);
   }
 
-  getServicosAgendamento(idAgendamento: number | undefined): Observable<Servicos[]> {
+  getServicosAgendamentoCliente(idAgendamento: number | undefined): Observable<Servicos[]> {
     const data = {
       route: 'Servicos',
-      action: 'getServicosAgendamento',
+      action: 'getServicosAgendamentoCliente',
       ID_AGENDAMENTO: idAgendamento,
     };
 

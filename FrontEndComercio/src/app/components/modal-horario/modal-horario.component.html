@@ -11,23 +11,55 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-list *ngIf="this.agendamento?.SERVICOS !== undefined">
+      <ion-list *ngIf="this.agendamento !== undefined && this.agendamento!.SERVICOS !== undefined">
         <ion-item>
           <ion-text>
             <h3>Data:</h3>
-            <p>{{this.Date.formatarDataString(this.agendamento!.DATA_AGENDAMENTO, 'dd/MM/yyyy')}}</p>
+            <p>
+              {{
+                this.Date.formatarDataString(
+                  this.agendamento!.DATA_AGENDAMENTO,
+                  "dd/MM/yyyy"
+                )
+              }}
+            </p>
           </ion-text>
         </ion-item>
         <ion-item>
           <ion-text>
             <h3>Horário:</h3>
-            <p>Ás {{this.agendamento!.HORARIO_AGENDAMENTO}}</p>
+            <p>Ás {{ this.agendamento!.HORARIO_AGENDAMENTO }}</p>
+          </ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text>
+            <h3>Cliente:</h3>
+            <p>{{ this.agendamento!.NOME_USER }}</p>
+          </ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text>
+            <h3>Telefone:</h3>
+            <a
+              href="https://wa.me/55{{ this.agendamento!.TEL_USER }}"
+              target="_blank"
+              ><h4>
+                {{ this.agendamento!.TEL_USER }}
+                <ion-icon
+                  name="chatbubble-ellipses-outline"
+                  size="large"
+                ></ion-icon>
+              </h4>
+            </a>
           </ion-text>
         </ion-item>
         <ion-item>
           <ion-text>
             <h3>Serviços</h3>
-            <ion-row class="ion-align-items-center" *ngFor="let servico of this.agendamento?.SERVICOS">
+            <ion-row
+              class="ion-align-items-center"
+              *ngFor="let servico of this.agendamento?.SERVICOS"
+            >
               <ion-col size="auto">
                 <ion-text>
                   <p>{{ servico.NOME_SERVICO }}:</p>
@@ -43,9 +75,7 @@
         </ion-item>
         <ion-row class="ion-align-items-center ion-justify-content-center">
           <ion-col size="auto">
-            <ion-button id="cancelar">
-              Cancelar
-            </ion-button>
+            <ion-button id="cancelar"> Cancelar </ion-button>
             <ion-alert
               mode="mode"
               trigger="cancelar"
@@ -60,6 +90,5 @@
         [condicao]="this.agendamento?.SERVICOS === undefined"
       ></app-loading>
     </ion-content>
-    
   </ng-template>
 </ion-modal>

@@ -47,4 +47,18 @@ class ServicosService
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
+
+  public function getTodosServicosAgendamentoCliente()
+  {
+    $select = 'SELECT SERVICOS.ID_SERVICO, NOME_SERVICO, PRECO_SERVICO FROM SERVICOS
+    INNER JOIN SERVICOS_AGENDAMENTO
+    ON SERVICOS_AGENDAMENTO.ID_SERVICO = SERVICOS.ID_SERVICO
+    INNER JOIN AGENDAMENTO
+    ON AGENDAMENTO.ID_AGENDAMENTO = SERVICOS_AGENDAMENTO.ID_AGENDAMENTO
+    WHERE AGENDAMENTO.ID_AGENDAMENTO = :ID_AGENDAMENTO';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':ID_AGENDAMENTO', (int)$this->model->ID_AGENDAMENTO);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+  }
 }

@@ -42,18 +42,18 @@ $bearer = explode(' ', $httpHeader['Authorization'])[1];
 if ($autor === 'User') {
   $userController->validarToken($bearer);
   $classModel->__set('ID_USER', $userModel->ID_USER);
-}
-else if ($autor === 'Comercio') {
+} else if ($autor === 'Comercio') {
   $comercioController->validarToken($bearer);
   $classModel->__set('ID_COMERCIO', $comercioModel->ID_COMERCIO);
-}
-else {
+} else {
   respostaHost('error', 'Autor inválido');
   exit();
 }
+
 if ($action === 'validarToken') {
   respostaHost('success', 'Token Válido');
   exit();
 }
 
+$classModel->__set('AUTOR', $autor);
 $classController->$action();

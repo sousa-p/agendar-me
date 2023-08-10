@@ -27,6 +27,11 @@ export class DateService {
     return isValid(parseISO(dateString));
   }
 
+  isValidateHour(horaString: string): boolean {
+    const regex = /^([0-1][0-9]|2[0-3]):([0-5][0-9])$/;
+    return regex.test(horaString);
+  }
+
   isPastDate(dateString: string, considerarHoras: boolean=false): boolean {
     const now = new Date();
     const date = new Date(dateString);
@@ -77,7 +82,7 @@ export class DateService {
     restricoes: any,
     agendamentos: any
   ): string[] {
-    const horarios: string[] = [];
+    const horarios: any = [];
     let ultimoHorario = addMinutes(startOfDay(new Date()), -intervalo);
 
     for (let i = 0; i < this.getQtddMaxHorarios(intervalo); i++) {
@@ -97,7 +102,12 @@ export class DateService {
         format(horario, 'HH:mm') + ':00'
       );
 
-      if (ehValido && !estaAgendado) horarios.push(format(horario, 'HH:mm'));
+      if (!estaAgendado) {
+        horarios.push({
+          horas: format(horario, 'HH:mm'),
+          restrito: !ehValido
+        })
+      }
 
       ultimoHorario = horario;
     }

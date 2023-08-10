@@ -91,6 +91,21 @@ class AgendamentoController
     exit();
   }
 
+
+  public function deleteAgendamentoComercio()
+  {
+    $data = [
+      'ID_AGENDAMENTO' => (int)$this->ID_AGENDAMENTO
+    ];
+    
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+    if (!ehDadoValido($data['ID_AGENDAMENTO'])) respostaHost('error', 'Algo deu errado :(');
+    
+    $this->colocarDadosModel($data);
+    echo json_encode($this->service->deleteAgendamentoComercio());
+    exit();
+  }
+
   public function ehDataRestrita()
   {
     $data = [
@@ -105,5 +120,23 @@ class AgendamentoController
     if ($this->service->ehDataRestrita()) respostaHost('error', 'É data restrita');
 
     respostaHost('success', 'Não é data restrita');
+  }
+
+  public function getAgendamentoInfos()
+  {
+    $data = [
+      'DATA_AGENDAMENTO' => limparDados($this->DATA_AGENDAMENTO),
+      'HORARIO_AGENDAMENTO' => limparDados($this->HORARIO_AGENDAMENTO)
+    ];
+
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+    if (temDadosVazios($data)) respostaHost('error', 'Dados vazios');
+    if (!ehDataValida($data['DATA_AGENDAMENTO'])) respostaHost('error', 'Data inválida');
+    if (!ehHoraValida($data['HORARIO_AGENDAMENTO'])) respostaHost('error', 'Horário inválido');
+    
+    $this->colocarDadosModel($data);
+    
+    echo(json_encode($this->service->getAgendamentoInfos()));
+    exit();
   }
 }

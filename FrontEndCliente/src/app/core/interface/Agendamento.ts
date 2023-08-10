@@ -1,4 +1,4 @@
-import { Servicos } from "./Servicos";
+import { Servicos } from './Servicos';
 
 export interface Agendamento {
   ID_AGENDAMENTO?: number;

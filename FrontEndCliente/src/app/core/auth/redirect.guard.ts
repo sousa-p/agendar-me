@@ -3,10 +3,11 @@ import { CanActivate, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ServerService } from '../service/server.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class RedirectGuard implements CanActivate {
-  constructor(private Server: ServerService, private router: Router) {}
+  constructor(private Server: ServerService, private router: Router, private Cookie: CookieService) {}
 
   canActivate(): Observable<boolean> {
     const data = {
@@ -15,8 +16,10 @@ export class RedirectGuard implements CanActivate {
     };
     return this.Server.request(data).pipe(
       map((response: any) => {
-        if (response.retorno !== 'success')
+        if (response.retorno !== 'success') {
+          this.Cookie.deleteAll();
           return true;
+        }
         this.router.navigate(['/home']);
         return false;
       })
