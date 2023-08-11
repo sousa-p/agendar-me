@@ -30,7 +30,9 @@ class RestricaoController
     $data = [
       'DATA_AGENDAMENTO' => limparDados($this->DATA_AGENDAMENTO),
     ];
+
     if (!ehDataValida($data['DATA_AGENDAMENTO'])) respostaHost('error', 'Data inválida');
+
     $this->colocarDadosModel($data);
     echo json_encode($this->service->getTodasRestricoesNaData());
     exit();
@@ -44,6 +46,38 @@ class RestricaoController
       'DATAS_ESPECIAIS' => $this->service->getTodasDatasEspeciais()
     ];
     echo json_encode($response);
+    exit();
+  }
+
+  public function restringirHorario()
+  {
+    $data = [
+      'DATA' => limparDados($this->DATA),
+      'HORARIO' => limparDados($this->HORARIO)
+    ];
+
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+    if (!ehDataValida($data['DATA'])) respostaHost('error', 'Data inválida');
+    if (!ehHoraValida($data['HORARIO'])) respostaHost('error', 'Horário inválido');
+
+    $this->colocarDadosModel($data);
+    echo json_encode($this->service->restringirHorario());
+    exit();
+  }
+
+  public function tirarRestricaoHorario ()
+  {
+    $data = [
+      'DATA' => limparDados($this->DATA),
+      'HORARIO' => limparDados($this->HORARIO)
+    ];
+
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+    if (!ehDataValida($data['DATA'])) respostaHost('error', 'Data inválida');
+    if (!ehHoraValida($data['HORARIO'])) respostaHost('error', 'Horário inválido');
+
+    $this->colocarDadosModel($data);
+    echo json_encode($this->service->tirarRestricaoHorario());
     exit();
   }
 }

@@ -22,6 +22,8 @@ export class HorarioPage implements OnInit {
     private Restricao: RestricaoService,
     private Servicos: ServicosService
   ) {}
+  
+    paginaEstaRestrita: boolean = false;
 
   intervalo: number = 30;
   restricoes: any = [];
@@ -56,20 +58,15 @@ export class HorarioPage implements OnInit {
       if (
         this.date === undefined ||
         this.date === null ||
-        !this.Date.isValideDate(this.date) ||
-        this.Date.isPastDate(this.date) ||
-        this.Date.ehDepois(
-          new Date(this.date),
-          new Date(this.Date.getUltimaDataAgendamento())
-        )
+        !this.Date.isValideDate(this.date)
       )
         this.router.navigate(['/home']);
       else {
         this.Agendamento.ehDataRestrita(this.date).subscribe(
           (response) => {
-            response.retorno === 'error'
-              ? this.router.navigate(['/home'])
-              : this.carregarPagina();
+            if (response.retorno === 'error') this.router.navigate(['/home']);
+            this.paginaEstaRestrita = true;
+            this.carregarPagina();
           },
           (error) => {
             console.error(error);
@@ -134,24 +131,29 @@ export class HorarioPage implements OnInit {
   }
 
   clicarAgendamento(agendamento: string, horario: string) {
-    this.setAgendamentoOpen(true)
-    
-    this.Agendamento.getAgendamentoInfos(agendamento, horario.slice(0, 5)).subscribe(
+    this.setAgendamentoOpen(true);
+
+    this.Agendamento.getAgendamentoInfos(
+      agendamento,
+      horario.slice(0, 5)
+    ).subscribe(
       (response) => {
         this.agendamentoSelecionado = response;
-        this.Servicos.getServicosAgendamentoCliente(response.ID_AGENDAMENTO).subscribe(
+        this.Servicos.getServicosAgendamentoCliente(
+          response.ID_AGENDAMENTO
+        ).subscribe(
           (response) => {
             this.agendamentoSelecionado!.SERVICOS = response;
           },
           (error) => {
             console.log(error);
           }
-        )
+        );
       },
       (error) => {
         console.error(error);
       }
-    )
+    );
   }
 
   clicarHorario(horario: any) {

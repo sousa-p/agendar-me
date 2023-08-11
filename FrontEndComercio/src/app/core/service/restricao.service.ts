@@ -33,4 +33,24 @@ export class RestricaoService {
     }
     return this.Server.request(data);
   }
+
+  restringirHorario(dataString: string, horarioString: string) {
+    const data = {
+      route: 'Restricao',
+      action: 'restringirHorario',
+      DATA: dataString,
+      HORARIO: horarioString
+    };
+    return this.Server.request(data);
+  }
+
+  tirarRestricaoHorario(dataString: string, horarioString: string) {
+    const data = {
+      route: 'Restricao',
+      action: 'tirarRestricaoHorario',
+      DATA: dataString,
+      HORARIO: horarioString
+    };
+    return this.Server.request(data);
+  }
 }

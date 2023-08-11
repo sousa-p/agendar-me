@@ -22,6 +22,20 @@
           </ion-text>
         </ion-item>
       </ion-list>
+      <ion-row class="ion-align-items-center ion-justify-content-center ion-margin">
+        <ion-col size="auto">
+          <ion-button id="toggle-restringir">
+            {{ (this.horario.restrito)  ? 'Tirar Restrição' : 'Restringir'}}
+          </ion-button>
+          <ion-alert
+            mode="mode"
+            trigger="toggle-restringir"
+            header="Alerta!"
+            subHeader="Deseja mesmo realizar esta ação?"
+            [buttons]="this.alertButtons"
+          ></ion-alert>
+        </ion-col>
+      </ion-row>
     </ion-content>
   </ng-template>
 </ion-modal>

@@ -63,6 +63,7 @@
           ></app-linha-horario>
         </ng-container>
         <app-modal-horario-livre
+          [data]="this.date"
           [horario]="this.horarioSelecionado"
           [isModalOpen]="this.isModalHorarioOpen"
           (fechar)="this.setHorarioOpen(false)"
