@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ToastService } from 'src/app/core/controller/toast.service';
+import { User } from 'src/app/core/interface/User';
+import { ComercioService } from 'src/app/core/service/comercio.service';
 
 @Component({
   selector: 'app-modal-cliente',
@@ -7,8 +10,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalClienteComponent  implements OnInit {
 
-  constructor() { }
+  constructor(private Comercio: ComercioService, private Toast: ToastService) { }
+
+  @Input() cliente?: User;
+  @Input() isModalOpen?: boolean;
+  @Output() fechar = new EventEmitter();
 
   ngOnInit() {}
 
+  public alertButtons = [
+    {
+      text: 'Não',
+      role: 'cancel',
+    },
+    {
+      text: 'Sim',
+      role: 'confirm',
+      handler: () => {
+        this.deleteCliente();
+      },
+    },
+  ];
+
+  deleteCliente() {
+    this.Comercio.deleteCliente(this.cliente?.ID_USER!).subscribe(
+      (response) => {
+        const tempo = 1000;
+        this.Toast.mostrarToast(response.retorno, tempo, response.mensagem);
+        if (response.retorno === 'success') {
+          setTimeout(() => {
+            location.reload();
+          }, tempo);
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
 }

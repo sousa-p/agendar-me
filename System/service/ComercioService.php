@@ -80,9 +80,38 @@ class ComercioService
     return $stmt->fetch();
   }
 
-  public function getClientes() {
-    $select = 'SELECT NOME_USER,  EMAIL_USER, TEL_USER FROM USER';
+  public function getClientes()
+  {
+    $select = 'SELECT ID_USER, NOME_USER,  EMAIL_USER, TEL_USER FROM USER';
     $stmt = $this->conn->query($select);
-    return $stmt->fetchAll(PDO::FETCH_OBJ); 
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+  }
+
+  public function deleteCliente()
+  {
+    $delete = 'DELETE SERVICOS_AGENDAMENTO
+    FROM SERVICOS_AGENDAMENTO
+    INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_AGENDAMENTO = SERVICOS_AGENDAMENTO.ID_AGENDAMENTO
+    INNER JOIN USER ON AGENDAMENTO.ID_USER = USER.ID_USER
+    WHERE USER.ID_USER = :ID_USER';
+
+    $stmt = $this->conn->prepare($delete);
+    $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
+    $stmt->execute();
+
+    $delete = 'DELETE FROM AGENDAMENTO WHERE ID_USER = :ID_USER';
+    $stmt = $this->conn->prepare($delete);
+    $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
+    $stmt->execute();
+
+    $delete = 'DELETE FROM USER WHERE ID_USER = :ID_USER';
+    $stmt = $this->conn->prepare($delete);
+    $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
+    $stmt->execute();
+
+    return [
+      'retorno' => 'success',
+      'mensagem' => 'Cliente removido com sucesso!'
+    ];
   }
 }

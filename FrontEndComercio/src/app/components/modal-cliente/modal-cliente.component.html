@@ -1,3 +1,62 @@
-<p>
-  modal-cliente works!
-</p>
+<ion-modal backdropDismiss="false" [isOpen]="this.isModalOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Informações do Cliente</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="this.fechar.emit('fechar')"
+            ><ion-icon name="close-outline" size="large"></ion-icon
+          ></ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item>
+          <ion-text>
+            <h3>Nome</h3>
+            <p>{{ this.cliente?.NOME_USER }}</p>
+          </ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text>
+            <h3>Telefone</h3>
+            <a
+              class="modal__tel"
+              href="https://wa.me/55{{ this.cliente!.TEL_USER }}"
+              target="_blank"
+              ><h4>
+                +55 {{ this.cliente!.TEL_USER }}
+                <ion-icon name="logo-whatsapp" size="large"></ion-icon>
+              </h4>
+            </a>
+          </ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-text>
+            <h3>Email</h3>
+            <p>{{ this.cliente?.EMAIL_USER }}</p>
+          </ion-text>
+        </ion-item>
+        <ion-row class="ion-align-items-center ion-justify-content-center">
+          <ion-col size="auto">
+            <ion-button
+              class="modal__btn ion-margin"
+              id="excluir-cliente"
+              color="danger"
+            >
+              Excluir Cliente
+            </ion-button>
+            <ion-alert
+              mode="mode"
+              trigger="excluir-cliente"
+              header="Alerta!"
+              subHeader="Você tem certeza que gostaria de excluir este cliente?"
+              [buttons]="this.alertButtons"
+            ></ion-alert>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>

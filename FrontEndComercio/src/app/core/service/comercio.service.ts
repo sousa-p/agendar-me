@@ -24,4 +24,14 @@ export class ComercioService {
     
     return this.Server.request(data);
   }
+
+  deleteCliente(idUser: number) {
+    const data = {
+      'route': 'Comercio',
+      'action': 'deleteCliente',
+      'ID_USER': idUser,
+    };
+
+    return this.Server.request(data);
+  }
 }

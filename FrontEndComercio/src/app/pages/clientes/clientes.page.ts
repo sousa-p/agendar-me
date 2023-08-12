@@ -23,4 +23,16 @@ export class ClientesPage implements OnInit {
   }
 
   clientes?: User[];
+  clienteSelecionado?: User;
+
+  isModalOpen: boolean = false;
+
+  clicarCliente(cliente: User) {
+    this.clienteSelecionado = cliente;
+    this.setModalOpen(true);
+  }
+
+  setModalOpen(open: boolean) {
+    this.isModalOpen = open;
+  }
 }

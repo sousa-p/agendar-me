@@ -90,4 +90,18 @@ class ComercioController
     echo json_encode($this->service->getClientes());
     exit();
   }
+
+  public function deleteCliente() {
+    $data = [
+      'ID_USER' => $this->ID_USER
+    ] ;
+
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+    if (!ehDadoValido($data['ID_USER'])) respostaHost('error', 'Cliente inválido');
+    
+    $this->colocarDadosModel($data);
+
+    echo json_encode($this->service->deleteCliente());
+    exit();
+  }
 }

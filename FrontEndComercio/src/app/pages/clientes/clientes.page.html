@@ -8,6 +8,11 @@
       ></ion-back-button>
     </ion-buttons>
     <ion-title>Clientes</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/cadastrar-cliente">
+        <ion-icon name="add-circle" size="large" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -20,11 +25,27 @@
   <ion-row class="section">
     <ion-col size="12">
       <ng-container *ngFor="let perfil of this.clientes">
+        <ion-searchbar mode="ios" placeholder="Pesquisar Cliente"></ion-searchbar>
         <app-linha-perfil
           [perfil]="perfil"
+          (click)="this.clicarCliente(perfil)"
         ></app-linha-perfil>
+      </ng-container>
+      <ng-container *ngIf="this.clientes?.length === 0">
+        <ion-row class="ion-justify-content-center ion-align-items-center">
+          <ion-col size="auto">
+            <ion-text color="primary">
+              <h2>Não há clientes cadastrados</h2>
+            </ion-text>
+          </ion-col>
+        </ion-row>
       </ng-container>
       <app-loading [condicao]="this.clientes === undefined"></app-loading>
     </ion-col>
+    <app-modal-cliente
+      [cliente]="this.clienteSelecionado"
+      [isModalOpen]="this.isModalOpen"
+      (fechar)="this.setModalOpen(false)"
+    ></app-modal-cliente>
   </ion-row>
 </ion-content>

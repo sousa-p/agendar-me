@@ -9,6 +9,7 @@ import { ClientesPageRoutingModule } from './clientes-routing.module';
 import { ClientesPage } from './clientes.page';
 import { LinhaPerfilComponent } from 'src/app/components/linha-perfil/linha-perfil.component';
 import { LoadingModule } from 'src/app/components/loading/loading.module';
+import { ModalClienteComponent } from 'src/app/components/modal-cliente/modal-cliente.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { LoadingModule } from 'src/app/components/loading/loading.module';
     ClientesPageRoutingModule,
     LoadingModule
   ],
-  declarations: [ClientesPage, LinhaPerfilComponent]
+  declarations: [ClientesPage, LinhaPerfilComponent, ModalClienteComponent]
 })
 export class ClientesPageModule {}

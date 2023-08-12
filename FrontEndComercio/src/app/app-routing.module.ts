@@ -48,6 +48,14 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'cadastrar-cliente',
+    loadChildren: () =>
+      import('./pages/cadastrar-cliente/cadastrar-cliente.module').then(
+        (m) => m.CadastrarClientePageModule
+      ),
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
