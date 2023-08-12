@@ -25,23 +25,36 @@
   <app-refresher></app-refresher>
   <ion-row class="section">
     <ion-col size="12">
-      <ng-container *ngIf="this.clientes!.length > 0">
-        <ion-searchbar mode="ios" placeholder="Pesquisar Cliente"></ion-searchbar>
-        <ng-container *ngFor="let perfil of this.clientes">
-          <app-linha-perfil
-            [perfil]="perfil"
-            (click)="this.clicarCliente(perfil)"
-          ></app-linha-perfil>
+      <ng-container *ngIf="this.clientes !== undefined">
+        <ng-container *ngIf="this.clientes!.length > 0">
+          <ion-searchbar
+            mode="ios"
+            placeholder="Pesquisar Cliente"
+            [debounce]="150"
+            (ionInput)="this.filtrar($event)"
+          ></ion-searchbar>
+          <ng-container *ngFor="let perfil of this.clientesPagina">
+            <app-linha-perfil
+              [perfil]="perfil"
+              (click)="this.clicarCliente(perfil)"
+            ></app-linha-perfil>
+          </ng-container>
+          <ion-infinite-scroll
+            (ionInfinite)="carregarClientesPagina($event)"
+            [disabled]="this.clienteAtual >= this.clientesFiltrados!.length"
+          >
+            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
         </ng-container>
-      </ng-container>
-      <ng-container *ngIf="this.clientes?.length === 0">
-        <ion-row class="ion-justify-content-center ion-align-items-center">
-          <ion-col size="auto">
-            <ion-text color="primary">
-              <h2>Não há clientes cadastrados</h2>
-            </ion-text>
-          </ion-col>
-        </ion-row>
+        <ng-container *ngIf="this.clientes?.length === 0">
+          <ion-row class="ion-justify-content-center ion-align-items-center">
+            <ion-col size="auto">
+              <ion-text color="primary">
+                <h2>Não há clientes cadastrados</h2>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ng-container>
       </ng-container>
       <app-loading [condicao]="this.clientes === undefined"></app-loading>
     </ion-col>

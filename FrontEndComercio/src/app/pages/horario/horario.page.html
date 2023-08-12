@@ -76,12 +76,12 @@
         </ion-text>
       </ng-container>
       <ion-infinite-scroll
-        (ionInfinite)="carregarHorarioPagina($event)"
+        (ionInfinite)="this.carregarHorarioPagina($event)"
         [disabled]="this.horarioAtual >= this.horarios!.length"
       >
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
-      <app-loading [condicao]="loading"></app-loading>
+      <app-loading [condicao]="this.loading"></app-loading>
     </ion-col>
   </ion-row>
 </ion-content>
