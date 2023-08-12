@@ -33,10 +33,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'configuracao',
+    path: 'configuracoes',
     loadChildren: () =>
-      import('./pages/configuracao/configuracao.module').then(
-        (m) => m.ConfiguracaoPageModule
+      import('./pages/configuracoes/configuracoes.module').then(
+        (m) => m.ConfiguracoesPageModule
       ),
     canActivate: [AuthGuard],
   },
@@ -56,6 +56,14 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'configuracoes',
+    loadChildren: () => import('./pages/configuracoes/configuracoes.module').then( m => m.ConfiguracoesPageModule)
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./pages/not-found/not-found.module').then( m => m.NotFoundPageModule)
+  }
 ];
 
 @NgModule({

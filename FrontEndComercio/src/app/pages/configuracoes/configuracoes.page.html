@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        color="primary"
+        defaultHref="#"
+        routerLink="/home"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Configurações</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Configurações</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-row class="ion-justify-content-center ion-align-items-center">
+    <ion-col size="12" sizeMd="11" sizeLg="10">
+      <ion-item mode="ios"   button>
+        <ion-label class="ion-padding">Restrições semanais</ion-label>
+      </ion-item>
+      <ion-item mode="ios" button>
+        <ion-label class="ion-padding">Restrições de datas</ion-label>
+      </ion-item>
+      <ion-item mode="ios" button>
+        <ion-label class="ion-padding">Datas especiais</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-content>

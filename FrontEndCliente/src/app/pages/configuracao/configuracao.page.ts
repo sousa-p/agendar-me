@@ -17,4 +17,9 @@ export class ConfiguracaoPage implements OnInit {
   }
 
   ngOnInit() {}
+
+  clicarItem(attr: string) {
+    this.informacaoSelecionada = attr;
+    this.setOpen(true);
+  }
 }
