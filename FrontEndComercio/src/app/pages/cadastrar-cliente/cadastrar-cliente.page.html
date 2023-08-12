@@ -1,13 +1,94 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>cadastrar-cliente</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button
+        color="primary"
+        defaultHref="#"
+        routerLink="/clientes"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Cadastrar clientes</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">cadastrar-cliente</ion-title>
+      <ion-title size="large">Cadastrar clientes</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-row class="ion-justify-content-center section">
+    <div id="wrapper_cadastrar">
+      <ion-text class="ion-text-center">
+        <h1>Cadastre agora!</h1>
+      </ion-text>
+      <form #cadastrarForm="ngForm" (ngSubmit)="this.cadastrar()">
+        <ion-input
+          ngModel
+          required
+          clearInput="true"
+          name="NOME_USER"
+          label="Nome"
+          label-placement="floating"
+          fill="outline"
+          type="text"
+          maxlength="75"
+        ></ion-input>
+        <ion-input
+          ngModel
+          required
+          pattern="^[1-9]{2}9?[0-9]{8}$"
+          maxlength="11"
+          clearInput="true"
+          name="TEL_USER"
+          label="Telefone"
+          autocomplete="tel"
+          label-placement="floating"
+          fill="outline"
+          type="tel"
+        ></ion-input>
+        <ion-input
+          ngModel
+          required
+          email
+          clearInput="true"
+          name="EMAIL_USER"
+          label="Email"
+          autocomplete="email"
+          label-placement="floating"
+          fill="outline"
+          type="email"
+          maxlength="150"
+        ></ion-input>
+        <ion-input
+          ngModel
+          required
+          name="SENHA_USER"
+          label="Senha"
+          label-placement="floating"
+          fill="outline"
+          type="password"
+          minlength="8"
+        ></ion-input>
+        <ion-input
+          ngModel
+          required
+          pattern="{{ this.cadastrarForm.form.value.SENHA_USER }}"
+          name="CONFIRMA_SENHA_USER"
+          label="Confirmar Senha"
+          label-placement="floating"
+          fill="outline"
+          type="password"
+          minlength="8"
+        ></ion-input>
+        <ion-button
+          id="cadastrar"
+          type="submit"
+          [disabled]="!this.cadastrarForm.valid"
+        >
+          Cadastrar
+        </ion-button>
+      </form>
+    </div>
+  </ion-row>
 </ion-content>

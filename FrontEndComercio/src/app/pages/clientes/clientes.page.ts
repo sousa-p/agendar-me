@@ -22,7 +22,7 @@ export class ClientesPage implements OnInit {
     )
   }
 
-  clientes?: User[];
+  clientes: User[] = [];
   clienteSelecionado?: User;
 
   isModalOpen: boolean = false;

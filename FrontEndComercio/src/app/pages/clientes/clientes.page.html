@@ -24,12 +24,14 @@
   </ion-header>
   <ion-row class="section">
     <ion-col size="12">
-      <ng-container *ngFor="let perfil of this.clientes">
+      <ng-container *ngIf="this.clientes!.length > 0">
         <ion-searchbar mode="ios" placeholder="Pesquisar Cliente"></ion-searchbar>
-        <app-linha-perfil
-          [perfil]="perfil"
-          (click)="this.clicarCliente(perfil)"
-        ></app-linha-perfil>
+        <ng-container *ngFor="let perfil of this.clientes">
+          <app-linha-perfil
+            [perfil]="perfil"
+            (click)="this.clicarCliente(perfil)"
+          ></app-linha-perfil>
+        </ng-container>
       </ng-container>
       <ng-container *ngIf="this.clientes?.length === 0">
         <ion-row class="ion-justify-content-center ion-align-items-center">
