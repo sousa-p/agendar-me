@@ -12,6 +12,7 @@ import { LinhaAgendamentoComponent } from 'src/app/components/linha-agendamento/
 import { ModalHorarioComponent } from 'src/app/components/modal-horario/modal-horario.component';
 import { LinhaHorarioComponent } from 'src/app/components/linha-horario/linha-horario.component';
 import { ModalHorarioLivreComponent } from 'src/app/components/modal-horario-livre/modal-horario-livre.component';
+import { RefresherModule } from 'src/app/components/refresher/refresher.module';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { ModalHorarioLivreComponent } from 'src/app/components/modal-horario-liv
     IonicModule,
     HorarioPageRoutingModule,
     LoadingModule,
+    RefresherModule
   ],
   declarations: [
     HorarioPage,

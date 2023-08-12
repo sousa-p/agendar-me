@@ -10,6 +10,7 @@ import { HorarioPage } from './horario.page';
 import { LinhaHorarioComponent } from 'src/app/components/linha-horario/linha-horario.component';
 import { LoadingModule } from 'src/app/components/loading/loading.module';
 import { ModalAgendarComponent } from 'src/app/components/modal-agendar/modal-agendar.component';
+import { RefresherModule } from 'src/app/components/refresher/refresher.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ModalAgendarComponent } from 'src/app/components/modal-agendar/modal-ag
     FormsModule,
     IonicModule,
     HorarioPageRoutingModule,
-    LoadingModule
+    LoadingModule,
+    RefresherModule,
   ],
   declarations: [HorarioPage, LinhaHorarioComponent, ModalAgendarComponent],
 })

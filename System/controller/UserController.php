@@ -129,7 +129,7 @@ class UserController
       'VALOR' => $this->VALOR
     ];
 
-    if ($this->model->__get('AUTOR') !== 'Cliente') respostaHost('error', 'Sem permissão');
+    if ($this->model->__get('AUTOR') !== 'User') respostaHost('error', 'Sem permissão');
     
     $infosValidas = ['NOME', 'EMAIL', 'TEL', 'SENHA'];
     if (!in_array($data['INFORMACAO'], $infosValidas)) respostaHost('error', 'Informação inválida');

@@ -29,7 +29,6 @@ export class HomePage implements OnInit {
       }
     );
   }
-
   clicarDia(event: any) {
     const date = event.detail.value.split('T')[0];
     this.router.navigate(['/horario', date]);

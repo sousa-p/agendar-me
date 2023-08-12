@@ -10,6 +10,7 @@ import { ClientesPage } from './clientes.page';
 import { LinhaPerfilComponent } from 'src/app/components/linha-perfil/linha-perfil.component';
 import { LoadingModule } from 'src/app/components/loading/loading.module';
 import { ModalClienteComponent } from 'src/app/components/modal-cliente/modal-cliente.component';
+import { RefresherModule } from 'src/app/components/refresher/refresher.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ModalClienteComponent } from 'src/app/components/modal-cliente/modal-cl
     FormsModule,
     IonicModule,
     ClientesPageRoutingModule,
-    LoadingModule
+    LoadingModule,
+    RefresherModule
   ],
   declarations: [ClientesPage, LinhaPerfilComponent, ModalClienteComponent]
 })

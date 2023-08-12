@@ -9,6 +9,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 import { CarrosselComponent } from 'src/app/components/carrossel/carrossel.component';
 import { LoadingModule } from 'src/app/components/loading/loading.module';
+import { RefresherModule } from 'src/app/components/refresher/refresher.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -16,6 +17,7 @@ import { LoadingModule } from 'src/app/components/loading/loading.module';
     IonicModule,
     HomePageRoutingModule,
     LoadingModule,
+    RefresherModule
   ],
   declarations: [HomePage, CarrosselComponent],
 })

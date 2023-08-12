@@ -10,6 +10,7 @@ import { AgendamentosPage } from './agendamentos.page';
 import { LinhaAgendamentoComponent } from 'src/app/components/linha-agendamento/linha-agendamento.component';
 import { LoadingModule } from 'src/app/components/loading/loading.module';
 import { ModalHorarioComponent } from 'src/app/components/modal-horario/modal-horario.component';
+import { RefresherModule } from 'src/app/components/refresher/refresher.module';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { ModalHorarioComponent } from 'src/app/components/modal-horario/modal-ho
     IonicModule,
     AgendamentosPageRoutingModule,
     LoadingModule,
+    RefresherModule,
   ],
   declarations: [
     AgendamentosPage,
