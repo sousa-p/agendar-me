@@ -38,6 +38,15 @@ const routes: Routes = [
       import('./pages/configuracao/configuracao.module').then(
         (m) => m.ConfiguracaoPageModule
       ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'clientes',
+    loadChildren: () =>
+      import('./pages/clientes/clientes.module').then(
+        (m) => m.ClientesPageModule
+      ),
+    canActivate: [AuthGuard],
   },
 ];
 

@@ -87,13 +87,12 @@ export class ModalAgendarComponent implements OnInit {
   }
 
   gerarMensagem() {
-    let mensagem = `🗓️ *AGENDAMENTO*\n📆 Data: ${this.Date.formatarDataString(
-      this.dataAgendamento,
-      'dd/MM/yyyy'
-    )}\n⏰ Horário: ${this.horario}\n\n💼 *SERVIÇOS*  \n`;
+    let mensagem = `🗓️ *AGENDAMENTO*\n📆 Data: ${this.Date.formatarDataString(this.dataAgendamento,'dd/MM/yyyy')}\n⏰ Horário: ${this.horario}\n\n💼 *SERVIÇOS*  \n`;
+    
     this.servicosSelecionados!.forEach((servico) => {
       mensagem += `📌 ${servico.NOME_SERVICO}: R$ ${servico.PRECO_SERVICO}\n`;
     });
+    
     mensagem += `💵 *Total:* R$ ${this.total.toFixed(2).replace('-', '')}`;
 
     return mensagem;

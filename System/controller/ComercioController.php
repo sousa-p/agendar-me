@@ -83,4 +83,11 @@ class ComercioController
       respostaHost('access_error', 'Token de acesso negado');
     $this->colocarDadosModel($dataToken);
   }
+
+  public function getClientes() {
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+    
+    echo json_encode($this->service->getClientes());
+    exit();
+  }
 }

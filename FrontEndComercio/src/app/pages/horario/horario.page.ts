@@ -58,7 +58,9 @@ export class HorarioPage implements OnInit {
       if (
         this.date === undefined ||
         this.date === null ||
-        !this.Date.isValideDate(this.date)
+        !this.Date.isValideDate(this.date) ||
+        this.Date.isPastDate(this.date) ||
+        this.Date.ehDepois(new Date(this.date), new Date(this.Date.getUltimaDataAgendamento()))
       )
         this.router.navigate(['/home']);
       else {

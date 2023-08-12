@@ -44,7 +44,7 @@ export class ModalHorarioComponent implements OnInit {
     ).subscribe(
       (response) => {
         const tempo = 1000;
-        const mensagem = this.gerarMensagem();
+        const mensagem = this.gerarMensagemDeleteAgendamento  ();
         this.Toast.mostrarToast(response.retorno, tempo, response.mensagem);
         if (response.retorno === 'success') {
           setTimeout(() => {
@@ -58,8 +58,28 @@ export class ModalHorarioComponent implements OnInit {
       }
     );
   }
-
-  gerarMensagem(): string {
+  
+  gerarMensagemDeleteAgendamento(): string {
     return `🚫 *AGENDAMENTO CANCELADO*\n📆 Data: ${this.Date.formatarDataString(this.agendamento?.DATA_AGENDAMENTO, 'dd/MM/yyyy')}\n⏰ Horário: ${this.agendamento?.HORARIO_AGENDAMENTO.slice(0,5)}`;
   }
+
+  lembrarCliente() {
+    const mensagem = this.gerarMensagemLembrarCliente();
+    this.Whatsapp.mandarMensagem(mensagem, '55'+this.agendamento!.TEL_USER);
+  }
+
+  gerarMensagemLembrarCliente() {
+    let total: number = 0;
+    let mensagem = `*🚨 LEMBRETE 🚨*\nVocê tem um agendamento comigo 😉\n\n📆 Data: ${this.Date.formatarDataString(this.agendamento?.DATA_AGENDAMENTO,'dd/MM/yyyy')}\n⏰ Horário: ${this.agendamento?.HORARIO_AGENDAMENTO.slice(0,5)}\n\n💼 *SERVIÇOS*  \n`;
+
+    this.agendamento?.SERVICOS!.forEach((servico) => {
+      mensagem += `📌 ${servico.NOME_SERVICO}: R$ ${servico.PRECO_SERVICO}\n`;
+      total += Number(servico.PRECO_SERVICO);
+    });
+
+    mensagem += `💵 *Total:* R$ ${total.toFixed(2).replace('-', '')}`;
+
+    return mensagem;
+  }
+
 }

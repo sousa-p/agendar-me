@@ -79,4 +79,10 @@ class ComercioService
     $stmt->execute();
     return $stmt->fetch();
   }
+
+  public function getClientes() {
+    $select = 'SELECT NOME_USER,  EMAIL_USER, TEL_USER FROM USER';
+    $stmt = $this->conn->query($select);
+    return $stmt->fetchAll(PDO::FETCH_OBJ); 
+  }
 }
