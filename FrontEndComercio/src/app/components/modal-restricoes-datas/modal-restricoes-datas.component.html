@@ -1,3 +1,30 @@
-<p>
-  modal-restricoes-datas works!
-</p>
+<ion-modal backdropDismiss="false" [isOpen]="this.isModalOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Restrições de datas</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="this.fechar.emit('fechar')">
+            <ion-icon name="close-outline" size="large"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ng-container *ngIf="this.restricoesDatas !== undefined">
+        <ng-container *ngIf="this.restricoesDatas!.length === 0">
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="auto">
+              <ion-text color="primary">
+                <h3>Não há restrições de datas</h3>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+      </ng-container>
+      <app-loading
+        [condicao]="this.restricoesDatas === undefined"
+      ></app-loading>
+    </ion-content>
+  </ng-template>
+</ion-modal>

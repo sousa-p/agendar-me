@@ -53,4 +53,30 @@ export class RestricaoService {
     };
     return this.Server.request(data);
   }
+
+  getRestricoesSemanais(): Observable<Restricao[]> {
+    const data = {
+      route: 'Restricao',
+      action: 'getRestricoesSemanais'
+    };
+    return this.Server.request(data);
+  }
+
+  retringirDiaSemana(diaSemana: number) {
+    const data = {
+      route: 'Restricao',
+      action: 'restringirDiaSemana',
+      DIA_SEMANA: diaSemana
+    };
+    return this.Server.request(data);
+  }
+
+  tirarRestricaoDiaSemana(diaSemana: number) {
+    const data = {
+      route: 'Restricao',
+      action: 'tirarRestricaoDiaSemana',
+      DIA_SEMANA: diaSemana
+    };
+    return this.Server.request(data);
+  }
 }

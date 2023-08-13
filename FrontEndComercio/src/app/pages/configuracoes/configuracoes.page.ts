@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./configuracoes.page.scss'],
 })
 export class ConfiguracoesPage implements OnInit {
+  constructor() {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-
+  isModalDatasEspeciaisOpen: boolean = false;
+  isModalRestricoesDataOpen: boolean = false;
+  isModalRestricoesSemanaisOpen: boolean = false;
 }

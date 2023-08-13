@@ -86,7 +86,38 @@ class RestricaoService
 
     return [
       'retorno' => 'success',
-      'mensagem' => 'Horário remoção da restrição realizado com sucesso'
+      'mensagem' => 'Horário remoção da restrição realizado com sucesso!'
+    ];
+  }
+
+  public function getRestricoesSemanais() {
+    $select = 'SELECT * FROM RESTRICAO WHERE DIA_SEMANA IS NOT NULL';
+    $stmt = $this->conn->query($select);
+
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+  }
+
+  public function restringirDiaSemana() {
+    $insert = 'INSERT INTO RESTRICAO (DIA_SEMANA) VALUES (:DIA_SEMANA)';
+    $stmt = $this->conn->prepare($insert);
+    $stmt->bindValue(':DIA_SEMANA', (int)$this->model->__get('DIA_SEMANA'));
+    $stmt->execute();
+
+    return [
+      'retorno' => 'success',
+      'mensagem' => 'Dia da semana restringido com sucesso!'
+    ];
+  }
+
+  public function tirarRestricaoDiaSemana () {
+    $insert = 'DELETE FROM RESTRICAO WHERE DIA_SEMANA = :DIA_SEMANA';
+    $stmt = $this->conn->prepare($insert);
+    $stmt->bindValue(':DIA_SEMANA', (int)$this->model->__get('DIA_SEMANA'));
+    $stmt->execute();
+
+    return [
+      'retorno' => 'success',
+      'mensagem' => 'Restrição removida com sucesso!'
     ];
   }
 }

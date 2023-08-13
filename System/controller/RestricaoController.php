@@ -80,4 +80,37 @@ class RestricaoController
     echo json_encode($this->service->tirarRestricaoHorario());
     exit();
   }
+
+  public function getRestricoesSemanais() {
+    echo json_encode($this->service->getRestricoesSemanais());
+    exit();
+  }
+
+  public function restringirDiaSemana() {
+    $data = [
+      'DIA_SEMANA' => $this->DIA_SEMANA
+    ];
+
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+    if ((int)$data['DIA_SEMANA'] < 0 && (int)$data['DIA_SEMANA'] > 6) respostaHost('error', 'Dia da semana inválida');
+    
+    $this->model->__set('DIA_SEMANA', (int)$data['DIA_SEMANA']);
+
+    echo json_encode($this->service->restringirDiaSemana());
+    exit();
+  }
+
+  public function tirarRestricaoDiaSemana() {
+    $data = [
+      'DIA_SEMANA' => $this->DIA_SEMANA
+    ];
+
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+    if ((int)$data['DIA_SEMANA'] < 0 && (int)$data['DIA_SEMANA'] > 6) respostaHost('error', 'Dia da semana inválida');
+    
+    $this->model->__set('DIA_SEMANA', (int)$data['DIA_SEMANA']);
+
+    echo json_encode($this->service->tirarRestricaoDiaSemana());
+    exit();
+  }
 }
