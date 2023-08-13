@@ -113,4 +113,39 @@ class RestricaoController
     echo json_encode($this->service->tirarRestricaoDiaSemana());
     exit();
   }
+
+  public function getTodasDatasEspeciais() {
+    echo json_encode($this->service->getTodasDatasEspeciais());
+    exit();
+  }
+
+  public function adicionarDataEspecial() {
+    $data = [
+      'DATA_ESPECIAL' => limparDados($this->DATA_ESPECIAL)
+    ];
+
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+    if (!ehDataValida($data['DATA_ESPECIAL'])) respostaHost('error', 'Data inválida');
+    if (ehDataPassado($data['DATA_ESPECIAL'])) respostaHost('error', 'Data inválida');
+
+    $this->colocarDadosModel($data);
+
+    if ($this->service->ehDataEspecial()) respostaHost('error', 'Data especial já cadastrada!');
+
+    echo json_encode($this->service->adicionarDataEspecial());
+    exit();
+  }
+
+  public function removerDataEspecial() {
+    $data = [
+      'DATA_ESPECIAL' => limparDados($this->DATA_ESPECIAL)
+    ];
+
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+
+    $this->model->__set('DATA_ESPECIAL', $data['DATA_ESPECIAL']);
+
+    echo json_encode($this->service->removerDataEspecial());
+    exit();
+  }
 }

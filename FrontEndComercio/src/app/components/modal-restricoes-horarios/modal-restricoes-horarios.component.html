@@ -1,0 +1,30 @@
+<ion-modal backdropDismiss="false" [isOpen]="this.isModalOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Restrições de horários</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="this.fechar.emit('fechar')">
+            <ion-icon name="close-outline" size="large"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ng-container *ngIf="this.restricoesHorarios !== undefined">
+        <ng-container *ngIf="this.restricoesHorarios!.length === 0">
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="auto">
+              <ion-text color="primary">
+                <h3>Não há restrições de datas</h3>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+      </ng-container>
+      <app-loading
+        [condicao]="this.restricoesHorarios === undefined"
+      ></app-loading>
+    </ion-content>
+  </ng-template>
+</ion-modal>

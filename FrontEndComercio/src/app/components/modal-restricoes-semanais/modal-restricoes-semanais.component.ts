@@ -32,6 +32,13 @@ export class ModalRestricoesSemanaisComponent implements OnInit {
   ];
 
   ngOnInit() {
+    this.carregarPagina();
+  }
+
+  carregarPagina() {
+    this.restricoesSemanais = undefined;
+    this.diasRestantes = [0, 1, 2, 3, 4, 5, 6];
+
     this.Restricao.getRestricoesSemanais().subscribe(
       (response: Restricao[]) => {
         this.restricoesSemanais = response;
@@ -52,12 +59,9 @@ export class ModalRestricoesSemanaisComponent implements OnInit {
   restringirDiaSemana(ev: any) {
     this.Restricao.retringirDiaSemana(Number(ev.detail.value)).subscribe(
       (response) => {
-        const tempo = 1000;
-        this.Toast.mostrarToast(response.retorno, tempo, response.mensagem);
+        this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);
         if (response.retorno === 'success') {
-          setTimeout(() => {
-            location.reload();
-          }, tempo);
+          this.carregarPagina();
         }
       },
       (error) => {
@@ -69,12 +73,9 @@ export class ModalRestricoesSemanaisComponent implements OnInit {
   tirarRestricaoDiaSemana(diaSemana: number) {
     this.Restricao.tirarRestricaoDiaSemana(diaSemana).subscribe(
       (response) => {
-        const tempo = 1000;
-        this.Toast.mostrarToast(response.retorno, tempo, response.mensagem);
+        this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);
         if (response.retorno === 'success') {
-          setTimeout(() => {
-            location.reload();
-          }, tempo);
+          this.carregarPagina();
         }
       },
       (error) => {

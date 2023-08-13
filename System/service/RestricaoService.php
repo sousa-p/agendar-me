@@ -90,14 +90,16 @@ class RestricaoService
     ];
   }
 
-  public function getRestricoesSemanais() {
+  public function getRestricoesSemanais()
+  {
     $select = 'SELECT * FROM RESTRICAO WHERE DIA_SEMANA IS NOT NULL';
     $stmt = $this->conn->query($select);
 
     return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
 
-  public function restringirDiaSemana() {
+  public function restringirDiaSemana()
+  {
     $insert = 'INSERT INTO RESTRICAO (DIA_SEMANA) VALUES (:DIA_SEMANA)';
     $stmt = $this->conn->prepare($insert);
     $stmt->bindValue(':DIA_SEMANA', (int)$this->model->__get('DIA_SEMANA'));
@@ -109,7 +111,8 @@ class RestricaoService
     ];
   }
 
-  public function tirarRestricaoDiaSemana () {
+  public function tirarRestricaoDiaSemana()
+  {
     $insert = 'DELETE FROM RESTRICAO WHERE DIA_SEMANA = :DIA_SEMANA';
     $stmt = $this->conn->prepare($insert);
     $stmt->bindValue(':DIA_SEMANA', (int)$this->model->__get('DIA_SEMANA'));
@@ -118,6 +121,41 @@ class RestricaoService
     return [
       'retorno' => 'success',
       'mensagem' => 'Restrição removida com sucesso!'
+    ];
+  }
+
+  public function ehDataEspecial()
+  {
+    $select = 'SELECT * FROM DATAS_ESPECIAIS WHERE DATA_ESPECIAL = :DATA_ESPECIAL';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':DATA_ESPECIAL', $this->model->__get('DATA_ESPECIAL'));
+    $stmt->execute();
+
+    return $stmt->rowCount() > 0;
+  }
+
+  public function adicionarDataEspecial()
+  {
+    $insert = 'INSERT INTO DATAS_ESPECIAIS (DATA_ESPECIAL) VALUES (:DATA_ESPECIAL)';
+    $stmt = $this->conn->prepare($insert);
+    $stmt->bindValue(':DATA_ESPECIAL', $this->model->__get('DATA_ESPECIAL'));
+    $stmt->execute();
+
+    return [
+      'retorno' => 'success',
+      'mensagem' => 'Data especial adicionada com sucesso!'
+    ];
+  }
+
+  public function removerDataEspecial() {
+    $delete = 'DELETE FROM DATAS_ESPECIAIS WHERE DATA_ESPECIAL = :DATA_ESPECIAL';
+    $stmt = $this->conn->prepare($delete);
+    $stmt->bindValue(':DATA_ESPECIAL', $this->model->__get('DATA_ESPECIAL'));
+    $stmt->execute();
+
+    return [
+      'retorno' => 'success',
+      'mensagem' => 'Data especial removida com sucesso!'
     ];
   }
 }

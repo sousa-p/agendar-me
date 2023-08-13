@@ -36,6 +36,13 @@
           <ion-label class="ion-padding">Restrições de datas</ion-label>
         </ion-item>
         <ion-item
+          (click)="this.isModalRestricoesHorariosOpen = true"
+          mode="ios"
+          button
+        >
+          <ion-label class="ion-padding">Restrições de horários</ion-label>
+        </ion-item>
+        <ion-item
           (click)="this.isModalDatasEspeciaisOpen = true"
           mode="ios"
           button
@@ -54,7 +61,12 @@
           [isModalOpen]="this.isModalRestricoesSemanaisOpen"
           (fechar)="this.isModalRestricoesSemanaisOpen = false"
         ></app-modal-restricoes-semanais>
+        <app-modal-restricoes-horarios
+          [isModalOpen]="this.isModalRestricoesHorariosOpen"
+          (fechar)="this.isModalRestricoesHorariosOpen = false"
+        ></app-modal-restricoes-horarios>
       </ng-container>
     </ion-col>
   </ion-row>
+  <app-refresher></app-refresher>
 </ion-content>

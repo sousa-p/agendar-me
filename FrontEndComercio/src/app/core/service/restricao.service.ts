@@ -79,4 +79,33 @@ export class RestricaoService {
     };
     return this.Server.request(data);
   }
+
+  getTodasDatasEspeciais() {
+    const data = {
+      route: 'Restricao',
+      action: 'getTodasDatasEspeciais'
+    }
+
+    return this.Server.request(data);
+  }
+
+  adicionarDataEspecial(dataString: string) {
+    const data = {
+      route: 'Restricao',
+      action: 'adicionarDataEspecial',
+      DATA_ESPECIAL: dataString
+    }
+
+    return this.Server.request(data);
+  }
+
+  removerDataEspecial(dataString: string) {
+    const data = {
+      route: 'Restricao',
+      action: 'removerDataEspecial',
+      DATA_ESPECIAL: dataString
+    }
+
+    return this.Server.request(data);
+  }
 }

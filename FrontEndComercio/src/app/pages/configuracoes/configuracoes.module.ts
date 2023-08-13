@@ -10,7 +10,9 @@ import { ConfiguracoesPage } from './configuracoes.page';
 import { ModalDatasEspeciaisComponent } from 'src/app/components/modal-datas-especiais/modal-datas-especiais.component';
 import { ModalRestricoesDatasComponent } from 'src/app/components/modal-restricoes-datas/modal-restricoes-datas.component';
 import { ModalRestricoesSemanaisComponent } from 'src/app/components/modal-restricoes-semanais/modal-restricoes-semanais.component';
+import { ModalRestricoesHorariosComponent } from 'src/app/components/modal-restricoes-horarios/modal-restricoes-horarios.component';
 import { LoadingModule } from 'src/app/components/loading/loading.module';
+import { RefresherModule } from 'src/app/components/refresher/refresher.module';
 
 @NgModule({
   imports: [
@@ -19,12 +21,14 @@ import { LoadingModule } from 'src/app/components/loading/loading.module';
     IonicModule,
     ConfiguracoesPageRoutingModule,
     LoadingModule,
+    RefresherModule
   ],
   declarations: [
     ConfiguracoesPage,
     ModalDatasEspeciaisComponent,
     ModalRestricoesDatasComponent,
     ModalRestricoesSemanaisComponent,
+    ModalRestricoesHorariosComponent,
   ],
 })
 export class ConfiguracoesPageModule {}

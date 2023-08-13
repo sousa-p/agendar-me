@@ -11,9 +11,49 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="auto">
+          <ion-datetime
+            id="calendario"
+            mode="md"
+            [min]="this.Date.getISOTodayDate()"
+            [max]="this.Date.getUltimaDataAgendamento()"
+            presentation="date"
+            locale="pt-BR"
+            [highlightedDates]="this.highlightedDates"
+            (ionChange)="selecionarData($event)"
+          ></ion-datetime>
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="auto">
+              <ion-button
+                [disabled]="
+                  this.dataSelecionada === undefined ||
+                  this.datasEspeciais?.includes(this.dataSelecionada)
+                "
+                (click)="this.adicionarDataEspecial()"
+                class="adicionar__btn"
+                >Adicionar</ion-button
+              >
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
       <ng-container *ngIf="this.datasEspeciais !== undefined">
-        <ng-container *ngFor=""> </ng-container>
-
+        <ion-list>
+          <h4>Datas Especiais</h4>
+          <ion-item *ngFor="let dataEspecial of this.datasEspeciais">
+            <ion-toolbar>
+              <p>
+                {{ this.Date.formatarDataString(dataEspecial, "dd/MM/yyyy") }}
+              </p>
+              <ion-buttons slot="end">
+                <ion-button (click)="this.removerDataEspecial(dataEspecial)">
+                  <ion-icon name="close-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-item>
+        </ion-list>
         <ng-container *ngIf="this.datasEspeciais!.length === 0">
           <ion-row class="ion-justify-content-center">
             <ion-col size="auto">

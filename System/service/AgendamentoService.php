@@ -23,7 +23,7 @@ class AgendamentoService
   }
   public function ehDataEspecial()
   {
-    $select = "SELECT * FROM DATAS_ESPECIAIS WHERE DATA_ESPECIAL = :DATA_AGENDAMENTO";
+    $select = 'SELECT * FROM DATAS_ESPECIAIS WHERE DATA_ESPECIAL = :DATA_AGENDAMENTO';
     $stmt = $this->conn->prepare($select);
     $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->__get('DATA_AGENDAMENTO'));
     $stmt->execute();
@@ -33,14 +33,14 @@ class AgendamentoService
   {
     $DIA_SEMANA = date('N', strtotime($this->model->__get('DATA_AGENDAMENTO')));
     $DIA_SEMANA = (int)$DIA_SEMANA;
-    $select = "SELECT *
+    $select = 'SELECT *
     FROM RESTRICAO
     INNER JOIN DATAS_ESPECIAIS ON DATA_ESPECIAL != :DATA_AGENDAMENTO
     WHERE 
       (:DIA_SEMANA = RESTRICAO.DIA_SEMANA)
     OR 
       ((HORARIO_INICIO IS NULL AND HORARIO_FIM IS NULL) AND (RESTRICAO.DATA_INICIO <= :DATA_AGENDAMENTO AND (:DATA_AGENDAMENTO <= RESTRICAO.DATA_FIM OR RESTRICAO.DATA_FIM IS NULL)));    
-";
+';
     $stmt = $this->conn->prepare($select);
     $stmt->bindValue(':DIA_SEMANA', $DIA_SEMANA);
     $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->__get('DATA_AGENDAMENTO'));
@@ -129,10 +129,10 @@ class AgendamentoService
 
   public function getAgendamentoInfos()
   {
-    $select = "SELECT ID_AGENDAMENTO, NOME_USER, TEL_USER, DATA_CRIACAO_AGENDAMENTO, DATA_AGENDAMENTO, HORARIO_AGENDAMENTO FROM AGENDAMENTO
+    $select = 'SELECT ID_AGENDAMENTO, NOME_USER, TEL_USER, DATA_CRIACAO_AGENDAMENTO, DATA_AGENDAMENTO, HORARIO_AGENDAMENTO FROM AGENDAMENTO
     INNER JOIN USER
     ON AGENDAMENTO.ID_USER = USER.ID_USER
-    WHERE DATA_AGENDAMENTO = :DATA_AGENDAMENTO AND HORARIO_AGENDAMENTO = :HORARIO_AGENDAMENTO";
+    WHERE DATA_AGENDAMENTO = :DATA_AGENDAMENTO AND HORARIO_AGENDAMENTO = :HORARIO_AGENDAMENTO';
     $stmt = $this->conn->prepare($select);
     $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->DATA_AGENDAMENTO);
     $stmt->bindValue(':HORARIO_AGENDAMENTO', $this->model->HORARIO_AGENDAMENTO);

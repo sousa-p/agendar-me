@@ -13,4 +13,5 @@ export class ConfiguracoesPage implements OnInit {
   isModalDatasEspeciaisOpen: boolean = false;
   isModalRestricoesDataOpen: boolean = false;
   isModalRestricoesSemanaisOpen: boolean = false;
+  isModalRestricoesHorariosOpen: boolean = false;
 }
