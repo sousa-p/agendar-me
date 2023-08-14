@@ -10,17 +10,93 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
+
     <ion-content class="ion-padding">
       <ng-container *ngIf="this.restricoesDatas !== undefined">
-        <ng-container *ngIf="this.restricoesDatas!.length === 0">
-          <ion-row class="ion-justify-content-center">
-            <ion-col size="auto">
-              <ion-text color="primary">
-                <h3>Não há restrições de datas</h3>
-              </ion-text>
-            </ion-col>
-          </ion-row>
-        </ng-container>
+        <ion-accordion-group>
+          <ion-accordion value="first">
+            <ion-item slot="header" color="light">
+              <ion-label>Cadastrar Data de Ínicio</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <ion-row class="ion-justify-content-center">
+                <ion-col size="auto">
+                  <ion-datetime
+                    id="calendario"
+                    mode="md"
+                    [min]="this.Date.getISOTodayDate()"
+                    presentation="date"
+                    locale="pt-BR"
+                    (ionChange)="this.marcarDataInicio($event)"
+                  ></ion-datetime>
+                </ion-col>
+              </ion-row>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="second">
+            <ion-item slot="header" color="light">
+              <ion-label>Cadastrar Data de Fim</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <ion-row class="ion-justify-content-center">
+                <ion-col size="auto">
+                  <ion-datetime
+                    id="calendario"
+                    mode="md"
+                    [min]="(this.dataInicio) ? this.dataInicio.split('T')[0] : this.Date.getISOTodayDate()"
+                    presentation="date"
+                    locale="pt-BR"
+                    (ionChange)="this.marcarDataFim($event)"
+                  ></ion-datetime>
+                </ion-col>
+              </ion-row>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="auto">
+            <ion-button class="adicionar__btn" (click)="this.adicionarRestricaoData()" [disabled]="!this.dataInicio || !this.dataFim">Adicionar</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-list>
+          <h4 *ngIf="this.restricoesDatas.length">Restrições</h4>
+          <ion-item *ngFor="let restricao of this.restricoesDatas">
+            <ion-toolbar>
+              <p>
+                Começa às
+                {{
+                  this.Date.formatarDataString(
+                    restricao.DATA_INICIO,
+                    "dd/MM/yyyy"
+                  )
+                }}
+                Termina às
+                {{
+                  this.Date.formatarDataString(restricao.DATA_FIM, "dd/MM/yyyy")
+                }}
+              </p>
+              <ion-buttons slot="end">
+                <ion-button
+                  (click)="this.removerRestricao(restricao.ID_RESTRICAO!)"
+                >
+                  <ion-icon name="close-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-item>
+        </ion-list>
+      </ng-container>
+
+      <ng-container *ngIf="this.restricoesDatas!.length === 0">
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="auto">
+            <ion-text color="primary">
+              <h3>Não há restrições de datas</h3>
+            </ion-text>
+          </ion-col>
+        </ion-row>
       </ng-container>
       <app-loading
         [condicao]="this.restricoesDatas === undefined"

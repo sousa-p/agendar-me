@@ -34,7 +34,7 @@ class RestricaoService
 
   public function getTodasDatas()
   {
-    $select = 'SELECT DATA_INICIO, DATA_FIM FROM RESTRICAO WHERE DATA_INICIO IS NOT NULL AND DATA_FIM IS NOT NULL AND (HORARIO_INICIO IS NULL OR HORARIO_FIM IS NULL)';
+    $select = 'SELECT DATA_INICIO, DATA_FIM, ID_RESTRICAO FROM RESTRICAO WHERE DATA_INICIO IS NOT NULL AND DATA_FIM IS NOT NULL AND (HORARIO_INICIO IS NULL OR HORARIO_FIM IS NULL)';
     $stmt = $this->conn->query($select);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -156,6 +156,31 @@ class RestricaoService
     return [
       'retorno' => 'success',
       'mensagem' => 'Data especial removida com sucesso!'
+    ];
+  }
+
+  public function removerRestricao() {
+    $delete = 'DELETE FROM RESTRICAO WHERE ID_RESTRICAO = :ID_RESTRICAO';
+    $stmt = $this->conn->prepare($delete);
+    $stmt->bindValue(':ID_RESTRICAO', (int)$this->model->__get('ID_RESTRICAO'));
+    $stmt->execute();
+
+    return [
+      'retorno' => 'success',
+      'mensagem' => 'Restrição removida com sucesso'
+    ];
+  }
+
+  public function adicionarRestricaoData() {
+    $insert = 'INSERT INTO RESTRICAO (ID_RESTRICAO, DATA_INICIO, DATA_FIM) VALUES (0, :DATA_INICIO, :DATA_FIM)';
+    $stmt = $this->conn->prepare($insert);
+    $stmt->bindValue(':DATA_INICIO', $this->model->__get('DATA_INICIO'));
+    $stmt->bindValue(':DATA_FIM', $this->model->__get('DATA_FIM'));
+    $stmt->execute();
+
+    return [
+      'retorno' => 'success',
+      'mensagem' => 'Restrição adicionada com sucesso'
     ];
   }
 }

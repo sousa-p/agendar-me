@@ -148,4 +148,41 @@ class RestricaoController
     echo json_encode($this->service->removerDataEspecial());
     exit();
   }
+
+  public function getTodasRestricoesDeData() {
+    echo json_encode($this->service->getTodasDatas());
+    exit();
+  }
+  
+  public function removerRestricao() {
+    $data = [
+      'ID_RESTRICAO' => (int)$this->ID_RESTRICAO
+    ];
+
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+    
+    $this->model->__set('ID_RESTRICAO', $data['ID_RESTRICAO']);
+
+    echo json_encode($this->service->removerRestricao());
+    exit();
+  }
+
+  public function adicionarRestricaoData() {
+    $data = [
+      'DATA_INICIO' => limparDados($this->DATA_INICIO),
+      'DATA_FIM' => limparDados($this->DATA_FIM)
+    ];
+
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+    if (!ehDataValida($data['DATA_INICIO'])) respostaHost('error', 'Data de início inválido');
+    if (!ehDataValida($data['DATA_FIM'])) respostaHost('error', 'Data de fim inválido');
+    if (ehDataPassado($data['DATA_INICIO'])) respostaHost('error', 'Data inválida');
+    if (ehDataDepois($data['DATA_INICIO'], $data['DATA_FIM'])) respostaHost('error', 'Data de início deve ser anterior a data de fim');
+    
+    $this->colocarDadosModel($data);
+
+    echo json_encode($this->service->adicionarRestricaoData());
+    exit();
+
+  }
 }

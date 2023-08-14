@@ -40,7 +40,7 @@
       </ion-row>
       <ng-container *ngIf="this.datasEspeciais !== undefined">
         <ion-list>
-          <h4>Datas Especiais</h4>
+          <h4 *ngIf="this.datasEspeciais.length">Datas Especiais</h4>
           <ion-item *ngFor="let dataEspecial of this.datasEspeciais">
             <ion-toolbar>
               <p>

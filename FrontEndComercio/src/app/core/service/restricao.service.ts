@@ -108,4 +108,34 @@ export class RestricaoService {
 
     return this.Server.request(data);
   }
+
+  getTodasRestricoesDeData() {
+    const data = {
+      route: 'Restricao',
+      action: 'getTodasRestricoesDeData'
+    }
+
+    return this.Server.request(data);
+  }
+
+  removerRestricao(idRestricao: number) {
+    const data = {
+      route: 'Restricao',
+      action: 'removerRestricao',
+      ID_RESTRICAO: idRestricao
+    }
+
+    return this.Server.request(data);
+  }
+
+  adicionarRestricaoData(dataInicio:  string, dataFim: string) {
+    const data = {
+      route: 'Restricao',
+      action: 'adicionarRestricaoData',
+      DATA_INICIO: dataInicio,
+      DATA_FIM: dataFim
+    }
+
+    return this.Server.request(data);
+  }
 }

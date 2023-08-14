@@ -62,6 +62,10 @@ function ehDataPassado($data)
   return strtotime($now) > strtotime($data);
 }
 
+function ehDataDepois($data, $dataCompare) {
+  return strtotime($data) > strtotime($dataCompare);
+}
+
 function ehDataHoje($data)
 {
   $now = date('Y-m-d');
