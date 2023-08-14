@@ -12,6 +12,142 @@
     </ion-header>
     <ion-content class="ion-padding">
       <ng-container *ngIf="this.restricoesHorarios !== undefined">
+        <ion-accordion-group>
+          <ion-accordion value="first">
+            <ion-item slot="header" color="light">
+              <ion-label>Cadastrar Data de Ínicio</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <ion-row class="ion-justify-content-center">
+                <ion-col size="auto">
+                  <ion-datetime
+                    mode="md"
+                    presentation="date"
+                    locale="pt-BR"
+                    [min]="this.Date.getISOTodayDate()"
+                    (ionChange)="this.marcarDataInicio($event)"
+                  ></ion-datetime>
+                </ion-col>
+              </ion-row>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="second">
+            <ion-item slot="header" color="light">
+              <ion-label>Cadastrar Horário de Início</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <ion-row class="ion-justify-content-center">
+                <ion-col size="auto">
+                  <ion-datetime
+                    mode="md"
+                    presentation="time"
+                    locale="pt-BR"
+                    [hourValues]="this.horas"
+                    [minuteValues]="this.minutos"
+                    (ionChange)="this.marcarHorarioInicio($event)"
+                  ></ion-datetime>
+                </ion-col>
+              </ion-row>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="third">
+            <ion-item slot="header" color="light">
+              <ion-label>Cadastrar Horário de Fim</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <ion-row class="ion-justify-content-center">
+                <ion-col size="auto">
+                  <ion-datetime
+                    mode="md"
+                    presentation="time"
+                    locale="pt-BR"
+                    [minuteValues]="this.minutos"
+                    [hourValues]="this.horasRestantes"
+                    (ionChange)="this.marcarHorarioFim($event)"
+                  ></ion-datetime>
+                </ion-col>
+              </ion-row>
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="fourty">
+            <ion-item slot="header" color="light">
+              <ion-label>Cadastrar Data de Fim</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <ion-row class="ion-justify-content-center">
+                <ion-col size="auto">
+                  <ion-datetime
+                    #datetime
+                    mode="md"
+                    presentation="date"
+                    locale="pt-BR"
+                    [min]="this.dataInicio ? this.dataInicio :this.Date.getISOTodayDate()"
+                    (ionChange)="this.marcarDataFim($event)"
+                  >
+                  </ion-datetime>
+                </ion-col>
+              </ion-row>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="auto">
+            <ion-button
+              class="adicionar__btn"
+              (click)="this.adicionarRestricaoHorario()"
+              [disabled]="
+                !(this.dataInicio && this.horarioFim && this.horarioInicio)
+              "
+              >Adicionar</ion-button
+            >
+          </ion-col>
+        </ion-row>
+
+        <ion-list>
+          <h4 *ngIf="this.restricoesHorarios.length">Restrições</h4>
+          <ion-item *ngFor="let restricao of this.restricoesHorarios">
+            <ion-toolbar>
+              <ion-text>
+                <p>
+                  Começa no dia
+                  {{
+                    this.Date.formatarDataString(
+                      restricao.DATA_INICIO,
+                      "dd/MM/yyyy"
+                    )
+                  }}
+                  Termina no dia 
+                  {{
+                    restricao.DATA_FIM
+                      ? this.Date.formatarDataString(
+                          restricao.DATA_FIM,
+                          "dd/MM/yyyy"
+                        )
+                      : "Indefinido"
+                  }}
+                </p>
+                <p>
+                  Horário de Início
+                  {{ restricao.HORARIO_INICIO!.slice(0, 5) }}
+                  Termina às
+                  {{ restricao.HORARIO_FIM!.slice(0, 5) }}
+                </p>
+              </ion-text>
+              <ion-buttons slot="end">
+                <ion-button
+                  (click)="this.removerRestricao(restricao.ID_RESTRICAO!)"
+                >
+                  <ion-icon name="close-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-item>
+        </ion-list>
+
         <ng-container *ngIf="this.restricoesHorarios!.length === 0">
           <ion-row class="ion-justify-content-center">
             <ion-col size="auto">

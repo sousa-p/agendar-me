@@ -44,7 +44,7 @@ class RestricaoService
   {
     $select = 'SELECT DATA_ESPECIAL FROM DATAS_ESPECIAIS';
     $stmt = $this->conn->query($select);
-    $stmt->execute();
+
     return $stmt->fetchAll(PDO::FETCH_COLUMN);
   }
 
@@ -147,7 +147,8 @@ class RestricaoService
     ];
   }
 
-  public function removerDataEspecial() {
+  public function removerDataEspecial()
+  {
     $delete = 'DELETE FROM DATAS_ESPECIAIS WHERE DATA_ESPECIAL = :DATA_ESPECIAL';
     $stmt = $this->conn->prepare($delete);
     $stmt->bindValue(':DATA_ESPECIAL', $this->model->__get('DATA_ESPECIAL'));
@@ -159,7 +160,8 @@ class RestricaoService
     ];
   }
 
-  public function removerRestricao() {
+  public function removerRestricao()
+  {
     $delete = 'DELETE FROM RESTRICAO WHERE ID_RESTRICAO = :ID_RESTRICAO';
     $stmt = $this->conn->prepare($delete);
     $stmt->bindValue(':ID_RESTRICAO', (int)$this->model->__get('ID_RESTRICAO'));
@@ -171,11 +173,40 @@ class RestricaoService
     ];
   }
 
-  public function adicionarRestricaoData() {
+  public function adicionarRestricaoData()
+  {
     $insert = 'INSERT INTO RESTRICAO (ID_RESTRICAO, DATA_INICIO, DATA_FIM) VALUES (0, :DATA_INICIO, :DATA_FIM)';
     $stmt = $this->conn->prepare($insert);
     $stmt->bindValue(':DATA_INICIO', $this->model->__get('DATA_INICIO'));
     $stmt->bindValue(':DATA_FIM', $this->model->__get('DATA_FIM'));
+    $stmt->execute();
+
+    return [
+      'retorno' => 'success',
+      'mensagem' => 'Restrição adicionada com sucesso'
+    ];
+  }
+
+  public function getTodasRestricoesDeHorario()
+  {
+    $select = 'SELECT ID_RESTRICAO, HORARIO_INICIO, HORARIO_FIM, DATA_INICIO, DATA_FIM FROM RESTRICAO WHERE HORARIO_INICIO IS NOT NULL AND HORARIO_FIM IS NOT NULL AND DATA_INICIO IS NOT NULL';
+    $stmt = $this->conn->query($select);
+
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+  }
+
+  public function adicionarRestricaoHorario()
+  {
+    $insert = 'INSERT INTO RESTRICAO (ID_RESTRICAO, DATA_INICIO, DATA_FIM, HORARIO_INICIO, HORARIO_FIM) VALUES (0, :DATA_INICIO, :DATA_FIM, :HORARIO_INICIO, :HORARIO_FIM)';
+    $stmt = $this->conn->prepare($insert);
+    $stmt->bindValue(':DATA_INICIO', $this->model->__get('DATA_INICIO'));
+
+    $DATA_FIM = ($this->model->__get('DATA_FIM') !== null) ? $this->model->__get('DATA_FIM') : null;
+
+    $stmt->bindValue(':DATA_FIM', $DATA_FIM);
+    $stmt->bindValue(':HORARIO_INICIO', $this->model->__get('HORARIO_INICIO'));
+    $stmt->bindValue(':HORARIO_FIM', $this->model->__get('HORARIO_FIM'));
+
     $stmt->execute();
 
     return [

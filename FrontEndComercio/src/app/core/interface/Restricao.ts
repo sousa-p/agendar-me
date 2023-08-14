@@ -4,4 +4,6 @@ export interface Restricao {
   DIA_SEMANA?: number;
   DATA_INICIO?: string;
   DATA_FIM?: string;
+  HORARIO_INICIO?: string;
+  HORARIO_FIM?: string;
 }

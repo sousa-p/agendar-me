@@ -5,22 +5,21 @@ import { Restricao } from '../interface/Restricao';
 import { DateService } from '../controller/date.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RestricaoService {
+  constructor(private Server: ServerService, private Date: DateService) {}
 
-  constructor(private Server: ServerService, private Date: DateService) { }
-  
   getTodasRestricoesData(date: string): Observable<Restricao[]> {
-    if(this.Date.isValideDate(date)) {
+    if (this.Date.isValideDate(date)) {
       const data = {
         route: 'Restricao',
         action: 'getRestricoesData',
-        DATA_AGENDAMENTO: date
-      }
+        DATA_AGENDAMENTO: date,
+      };
       return this.Server.request(data);
     }
-    return new Observable<Restricao[]>(observer => {
+    return new Observable<Restricao[]>((observer) => {
       observer.next([]);
       observer.complete();
     });
@@ -29,8 +28,8 @@ export class RestricaoService {
   getDiasRestricoes(): Observable<Restricao[]> {
     const data = {
       route: 'Restricao',
-      action: 'getDiasRestricoes'
-    }
+      action: 'getDiasRestricoes',
+    };
     return this.Server.request(data);
   }
 
@@ -39,7 +38,7 @@ export class RestricaoService {
       route: 'Restricao',
       action: 'restringirHorario',
       DATA: dataString,
-      HORARIO: horarioString
+      HORARIO: horarioString,
     };
     return this.Server.request(data);
   }
@@ -49,7 +48,7 @@ export class RestricaoService {
       route: 'Restricao',
       action: 'tirarRestricaoHorario',
       DATA: dataString,
-      HORARIO: horarioString
+      HORARIO: horarioString,
     };
     return this.Server.request(data);
   }
@@ -57,7 +56,7 @@ export class RestricaoService {
   getRestricoesSemanais(): Observable<Restricao[]> {
     const data = {
       route: 'Restricao',
-      action: 'getRestricoesSemanais'
+      action: 'getRestricoesSemanais',
     };
     return this.Server.request(data);
   }
@@ -66,7 +65,7 @@ export class RestricaoService {
     const data = {
       route: 'Restricao',
       action: 'restringirDiaSemana',
-      DIA_SEMANA: diaSemana
+      DIA_SEMANA: diaSemana,
     };
     return this.Server.request(data);
   }
@@ -75,7 +74,7 @@ export class RestricaoService {
     const data = {
       route: 'Restricao',
       action: 'tirarRestricaoDiaSemana',
-      DIA_SEMANA: diaSemana
+      DIA_SEMANA: diaSemana,
     };
     return this.Server.request(data);
   }
@@ -83,8 +82,8 @@ export class RestricaoService {
   getTodasDatasEspeciais() {
     const data = {
       route: 'Restricao',
-      action: 'getTodasDatasEspeciais'
-    }
+      action: 'getTodasDatasEspeciais',
+    };
 
     return this.Server.request(data);
   }
@@ -93,8 +92,8 @@ export class RestricaoService {
     const data = {
       route: 'Restricao',
       action: 'adicionarDataEspecial',
-      DATA_ESPECIAL: dataString
-    }
+      DATA_ESPECIAL: dataString,
+    };
 
     return this.Server.request(data);
   }
@@ -103,8 +102,8 @@ export class RestricaoService {
     const data = {
       route: 'Restricao',
       action: 'removerDataEspecial',
-      DATA_ESPECIAL: dataString
-    }
+      DATA_ESPECIAL: dataString,
+    };
 
     return this.Server.request(data);
   }
@@ -112,8 +111,8 @@ export class RestricaoService {
   getTodasRestricoesDeData() {
     const data = {
       route: 'Restricao',
-      action: 'getTodasRestricoesDeData'
-    }
+      action: 'getTodasRestricoesDeData',
+    };
 
     return this.Server.request(data);
   }
@@ -122,19 +121,46 @@ export class RestricaoService {
     const data = {
       route: 'Restricao',
       action: 'removerRestricao',
-      ID_RESTRICAO: idRestricao
-    }
+      ID_RESTRICAO: idRestricao,
+    };
 
     return this.Server.request(data);
   }
 
-  adicionarRestricaoData(dataInicio:  string, dataFim: string) {
+  adicionarRestricaoData(dataInicio: string, dataFim: string) {
     const data = {
       route: 'Restricao',
       action: 'adicionarRestricaoData',
       DATA_INICIO: dataInicio,
-      DATA_FIM: dataFim
-    }
+      DATA_FIM: dataFim,
+    };
+
+    return this.Server.request(data);
+  }
+
+  getTodasRestricoesDeHorarios() {
+    const data = {
+      route: 'Restricao',
+      action: 'getTodasRestricoesDeHorario',
+    };
+
+    return this.Server.request(data);
+  }
+
+  adicionarRestricaoHorario(
+    dataInicio: string,
+    dataFim: string,
+    horarioInicio: string,
+    horarioFim: string
+  ) {
+    const data = {
+      route: 'Restricao',
+      action: 'adicionarRestricaoHorario',
+      DATA_INICIO: dataInicio,
+      DATA_FIM: dataFim,
+      HORARIO_INICIO: horarioInicio,
+      HORARIO_FIM: horarioFim
+    };
 
     return this.Server.request(data);
   }

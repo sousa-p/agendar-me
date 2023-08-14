@@ -22,7 +22,6 @@
               <ion-row class="ion-justify-content-center">
                 <ion-col size="auto">
                   <ion-datetime
-                    id="calendario"
                     mode="md"
                     [min]="this.Date.getISOTodayDate()"
                     presentation="date"
@@ -42,9 +41,8 @@
               <ion-row class="ion-justify-content-center">
                 <ion-col size="auto">
                   <ion-datetime
-                    id="calendario"
                     mode="md"
-                    [min]="(this.dataInicio) ? this.dataInicio.split('T')[0] : this.Date.getISOTodayDate()"
+                    [min]="(this.dataInicio) ? this.dataInicio : this.Date.getISOTodayDate()"
                     presentation="date"
                     locale="pt-BR"
                     (ionChange)="this.marcarDataFim($event)"
@@ -57,26 +55,28 @@
 
         <ion-row class="ion-justify-content-center">
           <ion-col size="auto">
-            <ion-button class="adicionar__btn" (click)="this.adicionarRestricaoData()" [disabled]="!this.dataInicio || !this.dataFim">Adicionar</ion-button>
+            <ion-button class="adicionar__btn" (click)="this.adicionarRestricaoData()" [disabled]="!(this.dataInicio && this.dataFim)">Adicionar</ion-button>
           </ion-col>
         </ion-row>
         <ion-list>
           <h4 *ngIf="this.restricoesDatas.length">Restrições</h4>
           <ion-item *ngFor="let restricao of this.restricoesDatas">
             <ion-toolbar>
-              <p>
-                Começa às
-                {{
-                  this.Date.formatarDataString(
-                    restricao.DATA_INICIO,
-                    "dd/MM/yyyy"
-                  )
-                }}
-                Termina às
-                {{
-                  this.Date.formatarDataString(restricao.DATA_FIM, "dd/MM/yyyy")
-                }}
-              </p>
+              <ion-text>
+                <p>
+                  Começa no dia
+                  {{
+                    this.Date.formatarDataString(
+                      restricao.DATA_INICIO,
+                      "dd/MM/yyyy"
+                    )
+                  }}
+                  Termina no dia 
+                  {{
+                    this.Date.formatarDataString(restricao.DATA_FIM, "dd/MM/yyyy")
+                  }}
+                </p>
+              </ion-text>
               <ion-buttons slot="end">
                 <ion-button
                   (click)="this.removerRestricao(restricao.ID_RESTRICAO!)"

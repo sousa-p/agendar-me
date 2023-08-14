@@ -31,22 +31,27 @@ class AgendamentoService
   }
   public function ehDataRestrita()
   {
-    $DIA_SEMANA = date('N', strtotime($this->model->__get('DATA_AGENDAMENTO')));
-    $DIA_SEMANA = (int)$DIA_SEMANA;
-    $select = 'SELECT *
-    FROM RESTRICAO
-    INNER JOIN DATAS_ESPECIAIS ON DATA_ESPECIAL != :DATA_AGENDAMENTO
-    WHERE 
-      (:DIA_SEMANA = RESTRICAO.DIA_SEMANA)
-    OR 
-      ((HORARIO_INICIO IS NULL AND HORARIO_FIM IS NULL) AND (RESTRICAO.DATA_INICIO <= :DATA_AGENDAMENTO AND (:DATA_AGENDAMENTO <= RESTRICAO.DATA_FIM OR RESTRICAO.DATA_FIM IS NULL)));    
-';
-    $stmt = $this->conn->prepare($select);
-    $stmt->bindValue(':DIA_SEMANA', $DIA_SEMANA);
-    $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->__get('DATA_AGENDAMENTO'));
-    $stmt->execute();
-    return $stmt->rowCount() > 0;
+    if (!$this->ehDataEspecial()) {
+      $DIA_SEMANA = date('N', strtotime($this->model->__get('DATA_AGENDAMENTO')));
+      $DIA_SEMANA = (int)$DIA_SEMANA;
+
+      $select = 'SELECT * FROM RESTRICAO
+      WHERE
+        HORARIO_INICIO IS NULL AND HORARIO_FIM IS NULL
+      AND
+        (RESTRICAO.DIA_SEMANA = :DIA_SEMANA
+      OR 
+        (RESTRICAO.DATA_INICIO <= :DATA_AGENDAMENTO AND RESTRICAO.DATA_FIM >= :DATA_AGENDAMENTO))';    
+  
+      $stmt = $this->conn->prepare($select);
+      $stmt->bindValue(':DIA_SEMANA', $DIA_SEMANA);
+      $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->__get('DATA_AGENDAMENTO'));
+      $stmt->execute();
+      return $stmt->rowCount() > 0;
+    }
+    return false;
   }
+  
   public function existeAgendamento()
   {
     $select = 'SELECT * FROM AGENDAMENTO WHERE DATA_AGENDAMENTO = :DATA_AGENDAMENTO AND HORARIO_AGENDAMENTO = :HORARIO_AGENDAMENTO';

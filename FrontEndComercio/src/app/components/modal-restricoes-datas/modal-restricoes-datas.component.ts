@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DateService } from 'src/app/core/controller/date.service';
 import { Restricao } from 'src/app/core/interface/Restricao';
 import { RestricaoService } from 'src/app/core/service/restricao.service';
-import { parseISO } from 'date-fns';
 import { ToastService } from 'src/app/core/controller/toast.service';
 
 @Component({
@@ -39,11 +38,11 @@ export class ModalRestricoesDatasComponent implements OnInit {
   }
 
   marcarDataInicio(event: any) {
-    this.dataInicio = event.detail.value;
+    this.dataInicio = this.Date.formatarDataString(event.detail.value, 'yyyy-MM-dd');
   }
 
   marcarDataFim(event: any) {
-    this.dataFim = event.detail.value;
+    this.dataFim = this.Date.formatarDataString(event.detail.value, 'yyyy-MM-dd');
   }
 
   removerRestricao(idRestricao: number) {
@@ -61,13 +60,13 @@ export class ModalRestricoesDatasComponent implements OnInit {
   }
 
   adicionarRestricaoData() {
-    const fDataInicio = this.Date.formatarDataString(this.dataInicio!, 'yyyy-MM-dd');
-    const fDataFim = this.Date.formatarDataString(this.dataFim!, 'yyyy-MM-dd');
-
-    this.Restricao.adicionarRestricaoData(fDataInicio, fDataFim).subscribe(
+    this.Restricao.adicionarRestricaoData(this.dataInicio!, this.dataFim!).subscribe(
       (response) => {
         this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);
         if (response.retorno === 'success') {
+          this.dataInicio = undefined;
+          this.dataFim = undefined;
+          
           this.carregarPagina();
         }
       },
