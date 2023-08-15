@@ -11,9 +11,9 @@ export class ComercioService {
   constructor(private router: Router, private Cookie: CookieService, private Server: ServerService) { }
   
   logout() {
-    location.reload();
     this.Cookie.delete('token');
     this.router.navigate(['/login']);
+    location.reload();
   }
 
   getClientes() {

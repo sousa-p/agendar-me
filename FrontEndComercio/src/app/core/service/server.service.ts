@@ -15,10 +15,7 @@ export class ServerService {
   request (data: any): Observable<any> {
     data['autor'] = 'Comercio';
     const token = this.Cookie.get('token');
-    if (token !== '') {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${ token }`);
-      return this.http.post(this.url, JSON.stringify(data), {headers});
-    }
+    if (token !== '') data['Authorization'] = `Bearer ${token}`;
     return this.http.post(this.url, JSON.stringify(data));
   }
 }

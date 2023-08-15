@@ -2,8 +2,7 @@
 //HEADERS
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Headers: *');
 header('Access-Control-Allow-Methods: POST');
 
 require_once '../System/controller/CheckFields.php';
@@ -33,11 +32,10 @@ if ($action === 'cadastrar' || $action === 'login') {
 }
 
 // VALIDAÇÃO TOKEN JWT
-$httpHeader = apache_request_headers();
-if (!isset($httpHeader['Authorization']) || !ehDadoValido($httpHeader['Authorization']))
+if (!isset($data['Authorization']) || !ehDadoValido($data['Authorization']))
   respostaHost('error', 'Algo deu errado :(');
 
-$bearer = explode(' ', $httpHeader['Authorization'])[1];
+$bearer = explode(' ', $data['Authorization'])[1];
 
 if ($autor === 'User') {
   $userController->validarToken($bearer);

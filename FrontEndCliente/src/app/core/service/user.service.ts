@@ -17,9 +17,9 @@ export class UserService {
   }
 
   logout() {
-    location.reload();
     this.Cookie.delete('token');
     this.router.navigate(['/login']);
+    location.reload();
   }
 
   getInfos() {
