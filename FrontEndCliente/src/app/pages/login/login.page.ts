@@ -33,7 +33,6 @@ export class LoginPage implements OnInit {
 
           this.Cookie.set('token', response.JWT, {
             expires: dataExpCookie,
-            domain: 'localhost',
           });
           this.loginForm.reset();
           this.router.navigate(['/home']);
