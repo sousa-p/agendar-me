@@ -41,7 +41,6 @@ export class ModalRestricoesHorariosComponent implements OnInit {
   carregarPagina() {
     this.Restricao.getTodasRestricoesDeHorarios().subscribe(
       (response) => {
-        console.log(response);
         this.restricoesHorarios = response;
       },
       (error) => {
@@ -58,7 +57,6 @@ export class ModalRestricoesHorariosComponent implements OnInit {
       this.horarioFim!
     ).subscribe(
       (response) => {
-        console.log(response);
         this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);
         if (response.retorno === 'success') {
           this.dataInicio = undefined;
@@ -90,7 +88,6 @@ export class ModalRestricoesHorariosComponent implements OnInit {
   }
 
   marcarDataInicio(event: any) {
-    console.log(event)
     this.dataInicio = this.Date.formatarDataString(
       event.detail.value,
       'yyyy-MM-dd'
@@ -98,7 +95,6 @@ export class ModalRestricoesHorariosComponent implements OnInit {
   }
 
   marcarDataFim(event: any) {
-    console.log(event)
     this.dataFim = this.Date.formatarDataString(
       event.detail.value,
       'yyyy-MM-dd'
