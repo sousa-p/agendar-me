@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./configuracao.page.scss'],
 })
 export class ConfiguracaoPage implements OnInit {
-  constructor() {}
+  constructor(private location: Location) {}
 
   isModalOpen: boolean = false;
   informacaoSelecionada?: string;
@@ -16,7 +17,11 @@ export class ConfiguracaoPage implements OnInit {
     this.isModalOpen = isOpen;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.location.onUrlChange((url: string) => {
+      if (this.isModalOpen) location.reload();
+    });
+  }
 
   clicarItem(attr: string) {
     this.informacaoSelecionada = attr;

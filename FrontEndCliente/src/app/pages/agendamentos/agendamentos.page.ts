@@ -4,6 +4,7 @@ import { Agendamento } from 'src/app/core/interface/Agendamento';
 import { AgendamentoService } from 'src/app/core/service/agendamento.service';
 import { DateService } from 'src/app/core/controller/date.service';
 import { ServicosService } from 'src/app/core/service/servicos.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-agendamentos',
@@ -14,7 +15,8 @@ export class AgendamentosPage implements OnInit {
   constructor(
     private Agendamento: AgendamentoService,
     public Date: DateService,
-    private Servicos: ServicosService
+    private Servicos: ServicosService,
+    private location: Location
   ) {}
 
   agendamentoSelecionado?: Agendamento;
@@ -45,6 +47,10 @@ export class AgendamentosPage implements OnInit {
   }
 
   ngOnInit() {
+    this.location.onUrlChange((url: string) => {
+      if (this.isModalOpen) location.reload();
+    });
+
     this.Agendamento.getAgendamentosRealizados().subscribe(
       (response) => {
         this.agendamentosRealizados = response;

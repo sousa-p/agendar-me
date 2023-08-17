@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./configuracoes.page.scss'],
 })
 export class ConfiguracoesPage implements OnInit {
-  constructor() {}
+  constructor(private location: Location) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.location.onUrlChange((url: string) => {
+      if (
+        this.isModalDatasEspeciaisOpen ||
+        this.isModalRestricoesDataOpen ||
+        this.isModalRestricoesSemanaisOpen ||
+        this.isModalRestricoesHorariosOpen
+      )
+        location.reload();
+    });
+  }
 
   isModalDatasEspeciaisOpen: boolean = false;
   isModalRestricoesDataOpen: boolean = false;

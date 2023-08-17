@@ -39,6 +39,7 @@ export class ModalAgendarComponent implements OnInit {
   servicos?: Servicos[];
   servicosSelecionados: Servicos[] = [];
   total: number = 0;
+
   ngOnInit() {
     this.Servicos.getServicos().subscribe(
       (response) => {
@@ -49,7 +50,7 @@ export class ModalAgendarComponent implements OnInit {
       }
     );
   }
-
+  
   attServicosSelecionados(event: any) {
     const servico: any = event.detail.value;
     if (event.detail.checked) {

@@ -1,9 +1,4 @@
-ion-content {
-  max-height: 100%;
-  overflow-y: hidden;
-}
-.section {
-  min-height: calc(100vh - 68px);
+.ion-page {
   background-image: url("../../../assets/images/blob_scene.svg");
   background-size: cover;
   background-position: center;
@@ -16,6 +11,8 @@ ion-content {
 }
 
 #wrapper_login {
+  margin-top: 34px;
+
   h1 {
     font-size: 2.15em;
     font-weight: bolder;

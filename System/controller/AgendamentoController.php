@@ -80,7 +80,7 @@ class AgendamentoController
       'ID_AGENDAMENTO' => (int)$this->ID_AGENDAMENTO
     ];
 
-    if ($this->model->__get('AUTOR') !== 'Cliente') respostaHost('error', 'Sem permissão');
+    if ($this->model->__get('AUTOR') !== 'User') respostaHost('error', 'Sem permissão');
 
     if (!ehDadoValido($data['ID_AGENDAMENTO'])) respostaHost('error', 'Algo deu errado :(');
 

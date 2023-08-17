@@ -29,12 +29,12 @@
             (click)="this.horario = horaLivre; this.setOpen(true)"
           ></app-linha-horario>
         </ng-container>
-        <app-modal-agendar
-          [isModalOpen]="this.isModalOpen"
-          [dataAgendamento]="this.date!"
-          [horario]="this.horario!"
-          (fechar)="this.setOpen(false)"
-        ></app-modal-agendar>
+          <app-modal-agendar
+            [isModalOpen]="this.isModalOpen"
+            [dataAgendamento]="this.date!"
+            [horario]="this.horario!"
+            (fechar)="this.setOpen(false)"
+          ></app-modal-agendar>
       </ng-container>
       <ng-container *ngIf="!loading && !horariosLivres.length">
         <ion-text color="primary" class="ion-text-center">

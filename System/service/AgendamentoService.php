@@ -109,6 +109,11 @@ class AgendamentoService
 
   public function deleteAgendamento()
   {
+    $delete = 'DELETE FROM SERVICOS_AGENDAMENTO WHERE ID_AGENDAMENTO = :ID_AGENDAMENTO';
+    $stmt = $this->conn->prepare($delete);
+    $stmt->bindValue(':ID_AGENDAMENTO', (int)$this->model->__get('ID_AGENDAMENTO'));
+    $stmt->execute(); 
+
     $delete = 'DELETE FROM AGENDAMENTO WHERE ID_USER = :ID_USER AND ID_AGENDAMENTO = :ID_AGENDAMENTO';
     $stmt = $this->conn->prepare($delete);
     $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
@@ -122,6 +127,11 @@ class AgendamentoService
 
   public function deleteAgendamentoComercio()
   {
+    $delete = 'DELETE FROM SERVICOS_AGENDAMENTO WHERE ID_AGENDAMENTO = :ID_AGENDAMENTO';
+    $stmt = $this->conn->prepare($delete);
+    $stmt->bindValue(':ID_AGENDAMENTO', (int)$this->model->__get('ID_AGENDAMENTO'));
+    $stmt->execute();
+
     $delete = 'DELETE FROM AGENDAMENTO WHERE ID_AGENDAMENTO = :ID_AGENDAMENTO';
     $stmt = $this->conn->prepare($delete);
     $stmt->bindValue(':ID_AGENDAMENTO', (int)$this->model->__get('ID_AGENDAMENTO'));

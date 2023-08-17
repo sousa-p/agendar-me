@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import { User } from 'src/app/core/interface/User';
@@ -9,9 +10,13 @@ import { ComercioService } from 'src/app/core/service/comercio.service';
   styleUrls: ['./clientes.page.scss'],
 })
 export class ClientesPage implements OnInit {
-  constructor(private Comercio: ComercioService) {}
+  constructor(private Comercio: ComercioService, private location: Location) {}
 
   ngOnInit() {
+    this.location.onUrlChange((url: string) => {
+      if (this.isModalOpen) location.reload();
+    });
+
     this.Comercio.getClientes().subscribe(
       (response) => {
         this.clientes = response;
@@ -58,8 +63,12 @@ export class ClientesPage implements OnInit {
   filtrar(event: any) {
     const pesquisa = event.target.value.toLowerCase();
     this.clientesFiltrados = this.clientes!.filter(
-      (d) => {
-        return d.NOME_USER.toLocaleLowerCase().startsWith(pesquisa.trim().toLowerCase());
+      (cliente) => {
+        const nomeLimpado = cliente.NOME_USER.toLocaleLowerCase().trim();
+        const telLimpado = cliente.TEL_USER.trim();
+        const regex = /[+]?55[ ]?/
+        const pesquisaLimpada = pesquisa.trim().toLowerCase().replace(regex,'').replace();
+        return nomeLimpado.startsWith(pesquisaLimpada) || telLimpado.startsWith(pesquisaLimpada);
       }
     );
     this.clienteAtual = 0;

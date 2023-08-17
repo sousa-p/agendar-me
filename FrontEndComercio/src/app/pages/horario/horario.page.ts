@@ -7,6 +7,7 @@ import { DateService } from 'src/app/core/controller/date.service';
 import { RestricaoService } from 'src/app/core/service/restricao.service';
 import { Agendamento } from 'src/app/core/interface/Agendamento';
 import { ServicosService } from 'src/app/core/service/servicos.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-horario',
@@ -20,7 +21,8 @@ export class HorarioPage implements OnInit {
     public Date: DateService,
     private Agendamento: AgendamentoService,
     private Restricao: RestricaoService,
-    private Servicos: ServicosService
+    private Servicos: ServicosService,
+    private location: Location
   ) {}
   
     paginaEstaRestrita: boolean = false;
@@ -53,6 +55,10 @@ export class HorarioPage implements OnInit {
   }
 
   ngOnInit() {
+    this.location.onUrlChange((url: string) => {
+      if (this.isModalHorarioOpen || this.isModalAgendamentoOpen) location.reload();
+    });
+
     this.route.params.subscribe((params) => {
       this.date = params['date'];
       if (

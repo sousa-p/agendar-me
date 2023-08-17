@@ -6,6 +6,7 @@ import { Restricao } from 'src/app/core/interface/Restricao';
 import { AgendamentoService } from 'src/app/core/service/agendamento.service';
 import { DateService } from 'src/app/core/controller/date.service';
 import { RestricaoService } from 'src/app/core/service/restricao.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-horario',
@@ -18,7 +19,8 @@ export class HorarioPage implements OnInit {
     private router: Router,
     public Date: DateService,
     private Agendamento: AgendamentoService,
-    private Restricao: RestricaoService
+    private Restricao: RestricaoService,
+    private location: Location
   ) {}
 
   intervalo: number = 30;
@@ -39,6 +41,10 @@ export class HorarioPage implements OnInit {
   }
 
   ngOnInit() {
+    this.location.onUrlChange((url: string) => {
+      if (this.isModalOpen) location.reload();
+    });
+
     this.route.params.subscribe((params) => {
       this.date = params['date'];
       if (
@@ -46,7 +52,10 @@ export class HorarioPage implements OnInit {
         this.date === null ||
         !this.Date.isValideDate(this.date) ||
         this.Date.isPastDate(this.date) ||
-        this.Date.ehDepois(new Date(this.date), new Date(this.Date.getUltimaDataAgendamento()))
+        this.Date.ehDepois(
+          new Date(this.date),
+          new Date(this.Date.getUltimaDataAgendamento())
+        )
       )
         this.router.navigate(['/home']);
       else {
