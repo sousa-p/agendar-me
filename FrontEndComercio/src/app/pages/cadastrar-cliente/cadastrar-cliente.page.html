@@ -1,29 +1,21 @@
-<ion-header [translucent]="true">
+<ion-header translucent="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button
-        color="primary"
-        defaultHref="#"
-        routerLink="/clientes"
-      ></ion-back-button>
-    </ion-buttons>
+    <ion-img
+      routerLink="/clientes"
+      id="logo"
+      src="../../../assets/images/logo.png"
+      alt="Agendar.Me"
+    ></ion-img>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Cadastrar clientes</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-row class="ion-page">
+  <ion-row class="ion-page ion-justify-content-center ion-align-items-center">
     <ion-col size="auto">
-
       <ion-row class="ion-justify-content-center">
         <div id="wrapper_cadastrar">
           <ion-text class="ion-text-center">
-            <h1>Cadastre agora!</h1>
+            <h1>Crie sua conta!</h1>
           </ion-text>
           <form #cadastrarForm="ngForm" (ngSubmit)="this.cadastrar()">
             <ion-input
