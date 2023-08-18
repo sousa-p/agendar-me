@@ -43,10 +43,10 @@ export class ModalRestricoesSemanaisComponent implements OnInit {
       (response: Restricao[]) => {
         this.restricoesSemanais = response;
         const idsRestricoesSemanais = this.restricoesSemanais.map((dia) => {
-          return dia.DIA_SEMANA;
+          return Number(dia.DIA_SEMANA);
         });
 
-        this.diasRestantes = this.diasRestantes.filter((dia) => {
+        this.diasRestantes = this.diasRestantes.filter((dia: number) => {
           return !idsRestricoesSemanais.includes(dia);
         });
       },
