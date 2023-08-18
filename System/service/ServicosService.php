@@ -92,4 +92,19 @@ class ServicosService
       'mensagem' => 'Serviço adicionado com sucesso!'
     ];
   }
+
+  public function editarServico() {
+    $insert =  'UPDATE SERVICOS SET NOME_SERVICO = :NOME_SERVICO, PRECO_SERVICO = :PRECO_SERVICO WHERE ID_SERVICO = :ID_SERVICO';
+    $stmt = $this->conn->prepare($insert);
+    $stmt->bindValue(':NOME_SERVICO', $this->model->__get('NOME_SERVICO'));
+    $stmt->bindValue(':PRECO_SERVICO', (float)$this->model->__get('PRECO_SERVICO'));
+    $stmt->bindValue(':ID_SERVICO', (int)$this->model->__get('ID_SERVICO'));
+
+    $stmt->execute();
+
+    return [
+      'retorno' => 'success',
+      'mensagem' => 'Serviço editado com sucesso!'
+    ];
+  }
 }

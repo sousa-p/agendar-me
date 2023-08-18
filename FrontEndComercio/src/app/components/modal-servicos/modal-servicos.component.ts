@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastService } from 'src/app/core/controller/toast.service';
 import { Servicos } from 'src/app/core/interface/Servicos';
@@ -9,17 +16,21 @@ import { ServicosService } from 'src/app/core/service/servicos.service';
   templateUrl: './modal-servicos.component.html',
   styleUrls: ['./modal-servicos.component.scss'],
 })
-export class ModalServicosComponent  implements OnInit {
-
-  constructor(private Servicos: ServicosService, private Toast: ToastService) { }
+export class ModalServicosComponent implements OnInit {
+  constructor(private Servicos: ServicosService, private Toast: ToastService) {}
 
   @ViewChild('servicoForm') servicoForm!: NgForm;
+  @ViewChild('servicoEditandoForm') servicoEditandoForm!: NgForm;
+
 
   @Input() isModalOpen?: boolean;
   @Output() fechar = new EventEmitter();
-  
+
   servicos?: Servicos[];
-  
+  servicoSelecionado?: Servicos;
+
+  editando: boolean = false;
+
   ngOnInit() {
     this.carregarPagina();
   }
@@ -34,7 +45,7 @@ export class ModalServicosComponent  implements OnInit {
       (error) => {
         console.error(error);
       }
-    )
+    );
   }
 
   deletarServico(idServico: number) {
@@ -48,7 +59,7 @@ export class ModalServicosComponent  implements OnInit {
       (error) => {
         console.error(error);
       }
-    )
+    );
   }
 
   adicionarServico() {
@@ -65,7 +76,25 @@ export class ModalServicosComponent  implements OnInit {
       (error) => {
         console.error(error);
       }
-    )
+    );
   }
 
+  setEditando(open: boolean) {
+    this.editando = open;
+  }
+
+  editarServico() {
+    this.Servicos.editarServico(this.servicoEditandoForm.form.value, this.servicoSelecionado!.ID_SERVICO).subscribe(
+      (response) => {
+        this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);
+        if (response.retorno === 'success') {
+          this.servicoEditandoForm.reset();
+          this.carregarPagina();
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    )
+  }
 }

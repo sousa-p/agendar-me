@@ -8,3 +8,11 @@ ion-input {
   height: 50px;
   margin: 25px 0;
 }
+
+p {
+  font-weight: bold;
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

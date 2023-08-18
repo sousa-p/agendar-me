@@ -44,6 +44,16 @@ export class ServicosService {
     data['route'] = 'Servicos';
     data['action'] = 'adicionarServico';
 
+
+    return this.Server.request(data);
+  }
+
+  editarServico(data: any, idServico: number) {
+    data['route'] = 'Servicos';
+    data['action'] = 'editarServico';
+    data['ID_SERVICO'] = idServico;
+
+
     return this.Server.request(data);
   }
 }

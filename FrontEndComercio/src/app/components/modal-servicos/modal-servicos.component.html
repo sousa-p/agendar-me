@@ -11,7 +11,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <form #servicoForm="ngForm" (ngSubmit)="this.adicionarServico()">
+      <form #servicoForm="ngForm" (ngSubmit)="this.adicionarServico()" *ngIf="!this.editando">
         <ion-input
           ngModel
           required
@@ -25,19 +25,81 @@
         ></ion-input>
         <ion-input
           ngModel
+          type="number"
           required
           clearInput="true"
           name="PRECO_SERVICO"
           label="Preço Serviço"
-          min="0"
           label-placement="floating"
           fill="outline"
-          type="number"
         ></ion-input>
         <ion-row class="ion-justify-content-center">
           <ion-col size="auto">
-            <ion-button class="adicionar__btn" type="submit" [disabled]="!this.servicoForm.valid"
+            <ion-button
+              class="adicionar__btn"
+              type="submit"
+              [disabled]="!this.servicoForm.valid"
               >Adicionar</ion-button
+            >
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center" *ngIf="this.editando">
+          <ion-col size="auto">
+            <ion-button
+              class="adicionar__btn"
+              type="submit"
+              [disabled]="!this.servicoEditandoForm.valid"
+              >Editar</ion-button
+            >
+          </ion-col>
+          <ion-col size="auto">
+            <ion-button
+              class="adicionar__btn"
+              fill="outline"
+              (click)="this.editando = false"
+              >Cancelar</ion-button
+            >
+          </ion-col>
+        </ion-row>
+      </form>
+
+      <form #servicoEditandoForm="ngForm" (ngSubmit)="this.editarServico()"  *ngIf="this.editando">
+        <ion-input
+          [ngModel]="this.servicoSelecionado!.NOME_SERVICO"
+          required
+          maxlength="75"
+          clearInput="true"
+          name="NOME_SERVICO"
+          label="Nome Serviço"
+          label-placement="floating"
+          fill="outline"
+          type="text"
+        ></ion-input>
+        <ion-input
+          [ngModel]="this.servicoSelecionado!.PRECO_SERVICO"
+          type="number"
+          required
+          clearInput="true"
+          name="PRECO_SERVICO"
+          label="Preço Serviço"
+          label-placement="floating"
+          fill="outline"
+        ></ion-input>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="auto">
+            <ion-button
+              class="adicionar__btn"
+              type="submit"
+              [disabled]="!this.servicoEditandoForm.valid"
+              >Editar</ion-button
+            >
+          </ion-col>
+          <ion-col size="auto">
+            <ion-button
+              class="adicionar__btn"
+              fill="outline"
+              (click)="this.setEditando(false)"
+              >Cancelar</ion-button
             >
           </ion-col>
         </ion-row>
@@ -49,17 +111,20 @@
             <ion-toolbar>
               <ion-buttons slot="start">
                 <ion-text>
-                  <b>
+                  <p>
                     {{ servico.NOME_SERVICO }}
-                  </b>
+                  </p>
                 </ion-text>
               </ion-buttons>
               <ion-title>
                 <ion-text color="primary">
-                  <ion-label> R$ {{ servico.PRECO_SERVICO }} </ion-label>
+                  <p> R$ {{ servico.PRECO_SERVICO }} </p>
                 </ion-text>
               </ion-title>
               <ion-buttons slot="end">
+                <ion-button (click)="this.servicoSelecionado = servico; this.setEditando(true)">
+                  <ion-icon name="create-outline"></ion-icon>
+                </ion-button>
                 <ion-button (click)="this.deletarServico(servico.ID_SERVICO)">
                   <ion-icon name="close-outline"></ion-icon>
                 </ion-button>
