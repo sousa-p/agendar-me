@@ -38,6 +38,12 @@ export class HomePage implements OnInit {
   ehRestrita = (dateString: string) => {
     const ehDiaEspecial = this.restricoes.DATAS_ESPECIAIS.includes(dateString);
     if (ehDiaEspecial) return true;
+
+    // Caso o host retorne os DIAS_SEMANA em string
+    this.restricoes.DIAS_SEMANA = this.restricoes.DIAS_SEMANA.map((d: any) => {
+      return Number(d);
+    });
+
     const ehDiaSemanaValido = !this.restricoes.DIAS_SEMANA.includes(
       parseISO(dateString).getDay()
     );
