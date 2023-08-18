@@ -89,6 +89,7 @@ export class ModalServicosComponent implements OnInit {
         this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);
         if (response.retorno === 'success') {
           this.servicoEditandoForm.reset();
+          this.editando = false;
           this.carregarPagina();
         }
       },
