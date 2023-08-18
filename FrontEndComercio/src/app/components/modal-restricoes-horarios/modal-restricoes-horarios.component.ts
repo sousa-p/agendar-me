@@ -23,20 +23,21 @@ export class ModalRestricoesHorariosComponent implements OnInit {
     this.carregarPagina();
   }
 
-  horarioInicio?: string;
-  horarioFim?: string;
-  dataInicio?: string;
-  dataFim?: string;
-
+  
   horas: number[] = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
     21, 22, 23,
   ];
   horasRestantes: number[] = this.horas;
-
-  minutos: number[] = [0, 30];
-
+  
+  minutos: any = [0, 30];
+  
   restricoesHorarios?: Restricao[];
+  
+  horarioInicio: string = `00:${String(this.minutos.at(0)).padStart(2, '0')}`;
+  horarioFim: string = `23:${String(this.minutos.at(-1)).padStart(2, '0')}`;
+  dataInicio?: string;
+  dataFim?: string;
 
   carregarPagina() {
     this.Restricao.getTodasRestricoesDeHorarios().subscribe(
@@ -61,8 +62,8 @@ export class ModalRestricoesHorariosComponent implements OnInit {
         if (response.retorno === 'success') {
           this.dataInicio = undefined;
           this.dataFim = undefined;
-          this.horarioInicio = undefined;
-          this.horarioFim = undefined;
+          this.horarioInicio = `00:${String(this.minutos.at(0)).padStart(2, '0')}`;
+          this.horarioFim = `23:${String(this.minutos.at(-1)).padStart(2, '0')}`;
 
           this.carregarPagina();
         }
@@ -103,6 +104,7 @@ export class ModalRestricoesHorariosComponent implements OnInit {
   }
 
   marcarHorarioInicio(event: any) {
+    console.log(event.detail.value)
     this.horarioInicio = this.Date.formatarDataString(
       event.detail.value,
       'HH:mm'

@@ -43,6 +43,8 @@ class UserController
     if (strlen($data['SENHA_USER']) < 8) respostaHost('error', 'Senha deve conter no mínimo 8 caracteres');
 
     $data['SENHA_USER'] = password_hash($data['SENHA_USER'], PASSWORD_DEFAULT);
+    $data['NOME_USER'] = ucwords(strtolower($data['NOME_USER']));
+
     $this->colocarDadosModel($data);
 
     if (!$this->service->telDisponivel()) respostaHost('error', 'Telefone ja esta em uso');
@@ -130,21 +132,23 @@ class UserController
     ];
 
     if ($this->model->__get('AUTOR') !== 'User') respostaHost('error', 'Sem permissão');
-    
+
     $infosValidas = ['NOME', 'EMAIL', 'TEL', 'SENHA'];
     if (!in_array($data['INFORMACAO'], $infosValidas)) respostaHost('error', 'Informação inválida');
     if ($data['INFORMACAO'] !== 'SENHA') $data['VALOR'] = limparDados($data['VALOR']);
     if ($data['INFORMACAO'] !== 'SENHA' && temDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos estão preenchidos');
     if ($data['INFORMACAO'] === 'SENHA' && temDadosVazios($data['VALOR'])) respostaHost('error', 'Verifique se todos os campos estão preenchidos');
     if ($data['INFORMACAO'] === 'NOME' && !ehStrValida($data['VALOR'])) respostaHost('error', 'Nome de úsuario inválido');
+    if ($data['INFORMACAO'] === 'NOME' && strlen($data['VALOR']) > 75) respostaHost('error', 'Nome muito longo :(');
+    if ($data['INFORMACAO'] === 'NOME') $data['VALOR'] = ucwords(strtolower($data['VALOR']));
     if ($data['INFORMACAO'] === 'TEL' && !ehTelefoneValido($data['VALOR'])) respostaHost('error', 'Formato de telefone de úsuario inválido');
     if ($data['INFORMACAO'] === 'EMAIL' && !ehEmailValido($data['VALOR'])) respostaHost('error', 'Formato de email de úsuario inválido');
     if ($data['INFORMACAO'] === 'SENHA' && strlen($data['VALOR']['ANTIGA_SENHA_USER']) < 8) respostaHost('error', 'Senha antiga deve conter 8 caracteres');
     if ($data['INFORMACAO'] === 'SENHA' && strlen($data['VALOR']['NOVA_SENHA_USER']) < 8) respostaHost('error', 'Senha nova deve conter 8 caracteres');
 
-    $this->colocarDadosModel($data);
     $this->model->__set($data['INFORMACAO'] . '_USER', $data['VALOR']);
     $metodo = 'alterar' . $data['INFORMACAO'];
+
     echo json_encode($this->service->$metodo());
     exit();
   }

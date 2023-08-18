@@ -1,5 +1,5 @@
 <ion-row
-  class="linha-perfil ion-align-items-center"
+  class="linha-perfil ion-align-items-center ion-justify-content-start"
 >
   <ion-col class="linha-perfil__tel ion-padding" size="auto">
     <ion-text>
@@ -7,8 +7,8 @@
     </ion-text>
   </ion-col>
   <ion-col class="linha-perfil__nome ion-padding" size="auto">
-    <ion-text>
-      <ion-label>{{ this.perfil?.NOME_USER }}</ion-label>
+    <ion-text text-wrap>
+      <p>{{ this.perfil?.NOME_USER }}</p>
     </ion-text>
   </ion-col>
 </ion-row>
