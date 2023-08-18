@@ -15,7 +15,8 @@ export class ConfiguracoesPage implements OnInit {
         this.isModalDatasEspeciaisOpen ||
         this.isModalRestricoesDataOpen ||
         this.isModalRestricoesSemanaisOpen ||
-        this.isModalRestricoesHorariosOpen
+        this.isModalRestricoesHorariosOpen ||
+        this.isModalServicosOpen
       )
         location.reload();
     });
@@ -25,4 +26,5 @@ export class ConfiguracoesPage implements OnInit {
   isModalRestricoesDataOpen: boolean = false;
   isModalRestricoesSemanaisOpen: boolean = false;
   isModalRestricoesHorariosOpen: boolean = false;
+  isModalServicosOpen: boolean = false;
 }

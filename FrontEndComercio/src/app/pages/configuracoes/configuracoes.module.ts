@@ -13,6 +13,7 @@ import { ModalRestricoesSemanaisComponent } from 'src/app/components/modal-restr
 import { ModalRestricoesHorariosComponent } from 'src/app/components/modal-restricoes-horarios/modal-restricoes-horarios.component';
 import { LoadingModule } from 'src/app/components/loading/loading.module';
 import { RefresherModule } from 'src/app/components/refresher/refresher.module';
+import { ModalServicosComponent } from 'src/app/components/modal-servicos/modal-servicos.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { RefresherModule } from 'src/app/components/refresher/refresher.module';
     ModalRestricoesDatasComponent,
     ModalRestricoesSemanaisComponent,
     ModalRestricoesHorariosComponent,
+    ModalServicosComponent
   ],
 })
 export class ConfiguracoesPageModule {}

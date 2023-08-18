@@ -18,12 +18,31 @@ export class ServicosService {
     return this.Server.request(data);
   }
 
-  getServicosAgendamentoCliente(idAgendamento: number | undefined): Observable<Servicos[]> {
+  getServicosAgendamentoCliente(
+    idAgendamento: number | undefined
+  ): Observable<Servicos[]> {
     const data = {
       route: 'Servicos',
       action: 'getServicosAgendamentoCliente',
       ID_AGENDAMENTO: idAgendamento,
     };
+
+    return this.Server.request(data);
+  }
+
+  deletarServico(idServico: number) {
+    const data = {
+      route: 'Servicos',
+      action: 'deletarServico',
+      ID_SERVICO: idServico,
+    };
+
+    return this.Server.request(data);
+  }
+
+  adicionarServico(data: any) {
+    data['route'] = 'Servicos';
+    data['action'] = 'adicionarServico';
 
     return this.Server.request(data);
   }

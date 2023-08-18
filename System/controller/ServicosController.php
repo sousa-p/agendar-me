@@ -60,4 +60,39 @@ class ServicosController
     echo json_encode($this->service->getTodosServicosAgendamentoCliente());
     exit();
   }
+
+  public function deletarServico()
+  {
+    $data = [
+      'ID_SERVICO' => $this->ID_SERVICO
+    ];
+
+    if (!ehDadoValido($data['ID_SERVICO'])) respostaHost('error', 'Dados inválidos');
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+
+    $this->model->__set('ID_SERVICO', (int)$data['ID_SERVICO']);
+
+    echo json_encode($this->service->deletarServico());
+    exit();
+  }
+
+  public function adicionarServico()
+  {
+    $data = [
+      'NOME_SERVICO' => limparDados($this->NOME_SERVICO),
+      'PRECO_SERVICO' => $this->PRECO_SERVICO
+    ];
+
+    if (!ehDadoValido($data['PRECO_SERVICO'])) respostaHost('error', 'Dados inváldos');
+    if (($this->model->__get('AUTOR')!== 'Comercio')) respostaHost('error', 'Sem permissão');
+    if (strlen($data['NOME_SERVICO']) > 75) respostaHost('error', 'Nome de serviço muito longo');
+
+    $data['NOME_SERVICO'] = ucwords(strtolower($data['NOME_SERVICO']));
+    $data['PRECO_SERVICO'] = (float)$data['PRECO_SERVICO'];
+
+    $this->colocarDadosModel($data);
+
+    echo json_encode($this->service->adicionarServico());
+    exit();
+  }
 }

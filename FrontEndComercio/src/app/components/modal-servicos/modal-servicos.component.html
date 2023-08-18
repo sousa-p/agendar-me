@@ -1,0 +1,83 @@
+<ion-modal backdropDismiss="false" [isOpen]="this.isModalOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Serviços</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="this.fechar.emit('fechar')">
+            <ion-icon name="close-outline" size="large"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <form #servicoForm="ngForm" (ngSubmit)="this.adicionarServico()">
+        <ion-input
+          ngModel
+          required
+          maxlength="75"
+          clearInput="true"
+          name="NOME_SERVICO"
+          label="Nome Serviço"
+          label-placement="floating"
+          fill="outline"
+          type="text"
+        ></ion-input>
+        <ion-input
+          ngModel
+          required
+          clearInput="true"
+          name="PRECO_SERVICO"
+          label="Preço Serviço"
+          min="0"
+          label-placement="floating"
+          fill="outline"
+          type="number"
+        ></ion-input>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="auto">
+            <ion-button class="adicionar__btn" type="submit" [disabled]="!this.servicoForm.valid"
+              >Adicionar</ion-button
+            >
+          </ion-col>
+        </ion-row>
+      </form>
+
+      <ng-container *ngIf="this.servicos !== undefined">
+        <ion-list>
+          <ion-item *ngFor="let servico of this.servicos">
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-text>
+                  <b>
+                    {{ servico.NOME_SERVICO }}
+                  </b>
+                </ion-text>
+              </ion-buttons>
+              <ion-title>
+                <ion-text color="primary">
+                  <ion-label> R$ {{ servico.PRECO_SERVICO }} </ion-label>
+                </ion-text>
+              </ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="this.deletarServico(servico.ID_SERVICO)">
+                  <ion-icon name="close-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-item>
+        </ion-list>
+        <ng-container *ngIf="this.servicos!.length === 0">
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="auto">
+              <ion-text color="primary">
+                <h3>Não há restrições semanais</h3>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+      </ng-container>
+      <app-loading [condicao]="this.servicos === undefined"></app-loading>
+    </ion-content>
+  </ng-template>
+</ion-modal>
