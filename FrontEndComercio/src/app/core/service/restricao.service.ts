@@ -10,7 +10,7 @@ import { DateService } from '../controller/date.service';
 export class RestricaoService {
   constructor(private Server: ServerService, private Date: DateService) {}
 
-  getTodasRestricoesData(date: string): Observable<Restricao[]> {
+  public getTodasRestricoesData(date: string): Observable<Restricao[]> {
     if (this.Date.isValideDate(date)) {
       const data = {
         route: 'Restricao',
@@ -25,7 +25,7 @@ export class RestricaoService {
     });
   }
 
-  getDiasRestricoes(): Observable<Restricao[]> {
+  public getDiasRestricoes(): Observable<Restricao[]> {
     const data = {
       route: 'Restricao',
       action: 'getDiasRestricoes',
@@ -33,7 +33,7 @@ export class RestricaoService {
     return this.Server.request(data);
   }
 
-  restringirHorario(dataString: string, horarioString: string) {
+  public restringirHorario(dataString: string, horarioString: string) {
     const data = {
       route: 'Restricao',
       action: 'restringirHorario',
@@ -43,7 +43,7 @@ export class RestricaoService {
     return this.Server.request(data);
   }
 
-  tirarRestricaoHorario(dataString: string, horarioString: string) {
+  public tirarRestricaoHorario(dataString: string, horarioString: string) {
     const data = {
       route: 'Restricao',
       action: 'tirarRestricaoHorario',
@@ -53,7 +53,7 @@ export class RestricaoService {
     return this.Server.request(data);
   }
 
-  getRestricoesSemanais(): Observable<Restricao[]> {
+  public getRestricoesSemanais(): Observable<Restricao[]> {
     const data = {
       route: 'Restricao',
       action: 'getRestricoesSemanais',
@@ -61,7 +61,7 @@ export class RestricaoService {
     return this.Server.request(data);
   }
 
-  retringirDiaSemana(diaSemana: number) {
+  public retringirDiaSemana(diaSemana: number) {
     const data = {
       route: 'Restricao',
       action: 'restringirDiaSemana',
@@ -70,7 +70,7 @@ export class RestricaoService {
     return this.Server.request(data);
   }
 
-  tirarRestricaoDiaSemana(diaSemana: number) {
+  public tirarRestricaoDiaSemana(diaSemana: number) {
     const data = {
       route: 'Restricao',
       action: 'tirarRestricaoDiaSemana',
@@ -79,7 +79,7 @@ export class RestricaoService {
     return this.Server.request(data);
   }
 
-  getTodasDatasEspeciais() {
+  public getTodasDatasEspeciais() {
     const data = {
       route: 'Restricao',
       action: 'getTodasDatasEspeciais',
@@ -88,7 +88,7 @@ export class RestricaoService {
     return this.Server.request(data);
   }
 
-  adicionarDataEspecial(dataString: string) {
+  public adicionarDataEspecial(dataString: string) {
     const data = {
       route: 'Restricao',
       action: 'adicionarDataEspecial',
@@ -98,7 +98,7 @@ export class RestricaoService {
     return this.Server.request(data);
   }
 
-  removerDataEspecial(dataString: string) {
+  public removerDataEspecial(dataString: string) {
     const data = {
       route: 'Restricao',
       action: 'removerDataEspecial',
@@ -108,7 +108,7 @@ export class RestricaoService {
     return this.Server.request(data);
   }
 
-  getTodasRestricoesDeData() {
+  public getTodasRestricoesDeData() {
     const data = {
       route: 'Restricao',
       action: 'getTodasRestricoesDeData',
@@ -117,7 +117,7 @@ export class RestricaoService {
     return this.Server.request(data);
   }
 
-  removerRestricao(idRestricao: number) {
+  public removerRestricao(idRestricao: number) {
     const data = {
       route: 'Restricao',
       action: 'removerRestricao',
@@ -127,7 +127,7 @@ export class RestricaoService {
     return this.Server.request(data);
   }
 
-  adicionarRestricaoData(dataInicio: string, dataFim: string) {
+  public adicionarRestricaoData(dataInicio: string, dataFim: string) {
     const data = {
       route: 'Restricao',
       action: 'adicionarRestricaoData',
@@ -138,7 +138,7 @@ export class RestricaoService {
     return this.Server.request(data);
   }
 
-  getTodasRestricoesDeHorarios() {
+  public getTodasRestricoesDeHorarios() {
     const data = {
       route: 'Restricao',
       action: 'getTodasRestricoesDeHorario',
@@ -147,7 +147,7 @@ export class RestricaoService {
     return this.Server.request(data);
   }
 
-  adicionarRestricaoHorario(
+  public adicionarRestricaoHorario(
     dataInicio: string,
     dataFim: string,
     horarioInicio: string,
@@ -159,7 +159,7 @@ export class RestricaoService {
       DATA_INICIO: dataInicio,
       DATA_FIM: dataFim,
       HORARIO_INICIO: horarioInicio,
-      HORARIO_FIM: horarioFim
+      HORARIO_FIM: horarioFim,
     };
 
     return this.Server.request(data);

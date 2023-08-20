@@ -11,7 +11,7 @@ export class RestricaoService {
 
   constructor(private Server: ServerService, private Date: DateService) { }
   
-  getTodasRestricoesData(date: string): Observable<Restricao[]> {
+  public getTodasRestricoesData(date: string): Observable<Restricao[]> {
     if(this.Date.isValideDate(date)) {
       const data = {
         route: 'Restricao',
@@ -26,7 +26,7 @@ export class RestricaoService {
     });
   }
 
-  getDiasRestricoes(): Observable<Restricao[]> {
+  public getDiasRestricoes(): Observable<Restricao[]> {
     const data = {
       route: 'Restricao',
       action: 'getDiasRestricoes'

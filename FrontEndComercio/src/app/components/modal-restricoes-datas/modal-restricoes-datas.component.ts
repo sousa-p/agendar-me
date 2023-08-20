@@ -16,42 +16,54 @@ export class ModalRestricoesDatasComponent implements OnInit {
     private Toast: ToastService
   ) {}
 
-  @Input() isModalOpen?: boolean;
+  @Input() public isModalOpen?: boolean;
   @Output() fechar = new EventEmitter();
 
   ngOnInit() {
     this.carregarPagina();
   }
 
-  restricoesDatas?: Restricao[];
+  public restricoesDatas: Restricao[] = [];
 
-  dataInicio?: string;
-  dataFim?: string;
+  public dataInicio?: string;
+  public dataFim?: string;
+
+  public loading: boolean = true;
+
+  private tempo: number = 1000;
 
   carregarPagina() {
+    this.loading = true;
+    this.restricoesDatas = [];
+    this.dataFim = undefined;
+    this.dataInicio = undefined;
+
     this.Restricao.getTodasRestricoesDeData().subscribe(
       (response) => {
         this.restricoesDatas = response;
+        this.loading = false;
       },
-      (error) => [console.error(error)]
+      (error) => {
+        console.error(error)
+      }
     );
   }
 
-  marcarDataInicio(event: any) {
+  public marcarDataInicio(event: any) {
     this.dataInicio = this.Date.formatarDataString(event.detail.value, 'yyyy-MM-dd');
   }
 
-  marcarDataFim(event: any) {
+  public marcarDataFim(event: any) {
     this.dataFim = this.Date.formatarDataString(event.detail.value, 'yyyy-MM-dd');
   }
 
-  removerRestricao(idRestricao: number) {
+  public removerRestricao(idRestricao: number) {
     this.Restricao.removerRestricao(idRestricao).subscribe(
       (response) => {
-        this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);
-        if (response.retorno === 'success') {
+        if (response.retorno === 'success')
           this.carregarPagina();
-        }
+        
+        this.Toast.mostrarToast(response.retorno, this.tempo, response.mensagem);
       },
       (error) => {
         console.error(error);
@@ -59,10 +71,10 @@ export class ModalRestricoesDatasComponent implements OnInit {
     );
   }
 
-  adicionarRestricaoData() {
+  public adicionarRestricaoData() {
     this.Restricao.adicionarRestricaoData(this.dataInicio!, this.dataFim!).subscribe(
       (response) => {
-        this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);
+        this.Toast.mostrarToast(response.retorno, this.tempo, response.mensagem);
         if (response.retorno === 'success') {
           this.dataInicio = undefined;
           this.dataFim = undefined;

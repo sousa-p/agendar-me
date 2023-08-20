@@ -10,19 +10,20 @@ export class UserService {
 
   constructor(private Server: ServerService, private router: Router, private Cookie: CookieService) { }
   
-  login(data: any) {
+  public login(data: any) {
     data['route'] = 'User';
     data['action'] = 'login';
+    
     return this.Server.request(data);
   }
 
-  logout() {
+  public logout() {
     this.Cookie.delete('token');
     this.router.navigate(['/login']);
     location.reload();
   }
 
-  getInfos() {
+  public getInfos() {
     const data = {
       'route': 'User',
       'action': 'getUserInfosId'
@@ -30,7 +31,7 @@ export class UserService {
     return this.Server.request(data);
   }
 
-  alterarInfo(informacao: string, valor: string) {
+  public alterarInfo(informacao: string, valor: string) {
     const data = {
       'route': 'User',
       'action': 'alterarInfo',

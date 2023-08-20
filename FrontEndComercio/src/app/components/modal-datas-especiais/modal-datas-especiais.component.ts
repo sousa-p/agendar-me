@@ -12,18 +12,25 @@ import { RestricaoService } from 'src/app/core/service/restricao.service';
 export class ModalDatasEspeciaisComponent implements OnInit {
   constructor(private Restricao: RestricaoService, public Date: DateService, private Toast: ToastService) {}
 
-  @Input() isModalOpen?: boolean;
+  @Input() public isModalOpen?: boolean;
   @Output() fechar = new EventEmitter();
 
-  datasEspeciais?: string[];
-  highlightedDates?: any;
-  dataSelecionada?: string;
+  public datasEspeciais: string[] = [];
+  public highlightedDates: any = [];
+  public dataSelecionada?: string;
+
+  public loading: boolean = true;
 
   ngOnInit() {
     this.carregarPagina();
   }
 
-  carregarPagina() {
+  private carregarPagina() {
+    this.loading = true;
+    this.datasEspeciais = [];
+    this.highlightedDates = [];
+    this.dataSelecionada = undefined;
+
     this.Restricao.getTodasDatasEspeciais().subscribe(
       (response) => {
         this.datasEspeciais = response;
@@ -34,6 +41,7 @@ export class ModalDatasEspeciaisComponent implements OnInit {
             backgroundColor: 'var(--ion-color-secondary)',
           };
         });
+        this.loading = false;
       },
       (error) => {
         console.error(error);
@@ -41,11 +49,11 @@ export class ModalDatasEspeciaisComponent implements OnInit {
     );
   }
 
-  selecionarData(event: any) {
+  public selecionarData(event: any) {
     this.dataSelecionada = event.detail.value.split('T')[0];
   }
 
-  adicionarDataEspecial() {
+  public adicionarDataEspecial() {
     this.Restricao.adicionarDataEspecial(this.dataSelecionada!).subscribe(
       (response) => {
         this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);
@@ -59,7 +67,7 @@ export class ModalDatasEspeciaisComponent implements OnInit {
     );
   }
 
-  removerDataEspecial(data: string) {
+  public removerDataEspecial(data: string) {
     this.Restricao.removerDataEspecial(data).subscribe(
       (response) => {
         this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);

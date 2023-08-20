@@ -28,29 +28,40 @@ export class ModalAgendarComponent implements OnInit {
     private Whatsapp: WhatsappService
   ) {}
 
-  @Input() isModalOpen: boolean = false;
-  @Input() dataAgendamento?: string;
-  @Input() horario?: string;
+  @Input() public isModalOpen: boolean = false;
+  @Input() public dataAgendamento?: string;
+  @Input() public horario?: string;
 
   @Output() fechar = new EventEmitter();
 
   @ViewChild('agendarForm') agendarForm!: NgForm;
 
-  servicos?: Servicos[];
-  servicosSelecionados: Servicos[] = [];
-  total: number = 0;
+  public servicos: Servicos[] = [];
+  public servicosSelecionados: Servicos[] = [];
+  public total: number = 0;
+  public loading: boolean = true;
 
   ngOnInit() {
+    this.carregarPagina();
+  }
+
+  private carregarPagina() {
+    this.loading = true;
+    this.servicos = [];
+    this.servicosSelecionados = [];
+    this.total = 0;
+
     this.Servicos.getServicos().subscribe(
       (response) => {
         this.servicos = response;
+        this.loading = false;
       },
       (error) => {
         console.error(error);
       }
     );
   }
-  
+
   attServicosSelecionados(event: any) {
     const servico: any = event.detail.value;
     if (event.detail.checked) {
@@ -88,12 +99,15 @@ export class ModalAgendarComponent implements OnInit {
   }
 
   gerarMensagem() {
-    let mensagem = `🗓️ *AGENDAMENTO*\n📆 Data: ${this.Date.formatarDataString(this.dataAgendamento,'dd/MM/yyyy')}\n⏰ Horário: ${this.horario}\n\n💼 *SERVIÇOS*  \n`;
-    
+    let mensagem = `🗓️ *AGENDAMENTO*\n📆 Data: ${this.Date.formatarDataString(
+      this.dataAgendamento,
+      'dd/MM/yyyy'
+    )}\n⏰ Horário: ${this.horario}\n\n💼 *SERVIÇOS*  \n`;
+
     this.servicosSelecionados!.forEach((servico) => {
       mensagem += `📌 ${servico.NOME_SERVICO}: R$ ${servico.PRECO_SERVICO}\n`;
     });
-    
+
     mensagem += `💵 *Total:* R$ ${this.total.toFixed(2).replace('-', '')}`;
 
     return mensagem;

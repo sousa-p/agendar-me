@@ -11,7 +11,7 @@ import { Servicos } from '../interface/Servicos';
 export class AgendamentoService {
   constructor(private Server: ServerService, private Date: DateService) {}
 
-  getTodosAgendamentosData(date: string): Observable<Agendamento[]> {
+  public getTodosAgendamentosData(date: string): Observable<Agendamento[]> {
     if (this.Date.isValideDate(date)) {
       const data = {
         route: 'Agendamento',
@@ -26,7 +26,7 @@ export class AgendamentoService {
     });
   }
 
-  realizarAgendamento(
+  public realizarAgendamento(
     dataAgendamento: string,
     horarioAgendamento: string,
     servicosAgendamento: Servicos[]
@@ -42,7 +42,7 @@ export class AgendamentoService {
     return this.Server.request(data);
   }
 
-  getAgendamentosRealizados(): Observable<Agendamento[]> {
+  public getAgendamentosRealizados(): Observable<Agendamento[]> {
     const data = {
       route: 'Agendamento',
       action: 'getAgendamentosRealizados',
@@ -51,7 +51,7 @@ export class AgendamentoService {
     return this.Server.request(data);
   }
 
-  deleteAgendamento(idAgendamento: number | undefined) {
+  public deleteAgendamento(idAgendamento: number | undefined) {
     const data = {
       route: 'Agendamento',
       action: 'deleteAgendamento',
@@ -61,7 +61,7 @@ export class AgendamentoService {
     return this.Server.request(data);
   }
 
-  ehDataRestrita(dataString: string) {
+  public ehDataRestrita(dataString: string) {
     const data = {
       route: 'Agendamento',
       action: 'ehDataRestrita',

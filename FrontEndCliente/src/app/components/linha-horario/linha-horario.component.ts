@@ -8,7 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class LinhaHorarioComponent  implements OnInit {
 
   constructor() { }
-  @Input() horas?: string;
+  
+  @Input() public horas?: string;
 
   ngOnInit() {}
 

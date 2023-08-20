@@ -6,10 +6,12 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./carrossel.component.scss'],
 })
 export class CarrosselComponent {
-  @Input() images: string[] = [];
-  @Input() time: number = 5000;
-  currentIndex = 0;
-  eventAutoPlay: any;
+  constructor() {}
+
+  @Input() public images: string[] = [];
+  @Input() private time: number = 5000;
+  public currentIndex = 0;
+  private eventAutoPlay?: any;
 
   ngOnInit() {
     this.eventAutoPlay = setInterval(() => {
@@ -17,7 +19,7 @@ export class CarrosselComponent {
     }, this.time);
   }
 
-  nextSlide() {
+  private nextSlide() {
     this.currentIndex = (this.currentIndex + 1) % this.images.length;
   }
 }

@@ -3,7 +3,6 @@ import { ServerService } from './server.service';
 import { Agendamento } from '../interface/Agendamento';
 import { DateService } from '../controller/date.service';
 import { Observable } from 'rxjs';
-import { Servicos } from '../interface/Servicos';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +10,7 @@ import { Servicos } from '../interface/Servicos';
 export class AgendamentoService {
   constructor(private Server: ServerService, private Date: DateService) {}
 
-  getTodosAgendamentosData(date: string): Observable<string[]> {
+  public getTodosAgendamentosData(date: string): Observable<string[]> {
     if (this.Date.isValideDate(date)) {
       const data = {
         route: 'Agendamento',
@@ -26,7 +25,7 @@ export class AgendamentoService {
     });
   }
 
-  getAgendamentosRealizados(): Observable<Agendamento[]> {
+  public getAgendamentosRealizados(): Observable<Agendamento[]> {
     const data = {
       route: 'Agendamento',
       action: 'getAgendamentosRealizados',
@@ -35,7 +34,7 @@ export class AgendamentoService {
     return this.Server.request(data);
   }
 
-  deleteAgendamento(idAgendamento: number | undefined) {
+  public deleteAgendamento(idAgendamento: number | undefined) {
     const data = {
       route: 'Agendamento',
       action: 'deleteAgendamentoComercio',
@@ -45,7 +44,7 @@ export class AgendamentoService {
     return this.Server.request(data);
   }
 
-  ehDataRestrita(dataString: string) {
+  public ehDataRestrita(dataString: string) {
     const data = {
       route: 'Agendamento',
       action: 'ehDataRestrita',
@@ -55,7 +54,7 @@ export class AgendamentoService {
     return this.Server.request(data);
   }
 
-  getAgendamentoInfos(dataString: string, horarioString: string): Observable<Agendamento> {
+  public getAgendamentoInfos(dataString: string, horarioString: string): Observable<Agendamento> {
     if (this.Date.isValideDate(dataString) && this.Date.isValidateHour(horarioString)) {
       const data = {
         route: 'Agendamento',

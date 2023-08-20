@@ -19,15 +19,15 @@ import {
 export class DateService {
   constructor() {}
 
-  getISOTodayDate(): string {
+  public getISOTodayDate(): string {
     return format(new Date(), 'yyyy-MM-dd');
   }
 
-  isValideDate(dateString: string): boolean {
+  public isValideDate(dateString: string): boolean {
     return isValid(parseISO(dateString));
   }
 
-  isPastDate(dateString: string, considerarHoras: boolean=false): boolean {
+  public isPastDate(dateString: string, considerarHoras: boolean=false): boolean {
     const now = new Date();
     const date = new Date(dateString);
 
@@ -38,12 +38,12 @@ export class DateService {
     return isBefore(date, now);
   }
 
-  getUltimaDataAgendamento(): string {
+  public getUltimaDataAgendamento(): string {
     const now = new Date();
     return format(addDays(now, 30), 'yyyy-MM-dd');
   }
 
-  estaIntervaloData(
+  public estaIntervaloData(
     date: Date,
     inicio: Date | null,
     fim: Date | null
@@ -53,14 +53,14 @@ export class DateService {
     );
   }
 
-  estaIntervaloHorario(horario: Date, inicio: Date, fim: Date | null): boolean {
+  private estaIntervaloHorario(horario: Date, inicio: Date, fim: Date | null): boolean {
     return (
       (isEqual(horario, inicio) || isAfter(horario, inicio)) &&
       (!fim || isEqual(horario, fim) || isBefore(horario, fim))
     );
   }
 
-  horaStringToDate(horario: string): Date {
+  public horaStringToDate(horario: string): Date {
     const [hora, minuto] = horario.split(':');
     return setMinutes(
       setHours(startOfDay(new Date()), parseInt(hora)),
@@ -68,11 +68,11 @@ export class DateService {
     );
   }
 
-  getQtddMaxHorarios(intervalo: number): number {
+  private getQtddMaxHorarios(intervalo: number): number {
     return (24 * 60) / intervalo;
   }
 
-  gerarHorarios(
+  public gerarHorarios(
     intervalo: number,
     restricoes: any,
     horasEspeciais: string[],
@@ -106,13 +106,13 @@ export class DateService {
     return horarios;
   }
 
-  formatarDataString(dateString: string | undefined, formatString: string): string {
+  public formatarDataString(dateString: string | undefined, formatString: string): string {
     if (typeof(dateString) === 'undefined')
       return 'errorToParse';
     return format(parseISO(dateString), formatString);
   }
 
-  ehDepois (date: Date, dateCompare: Date): boolean {
+  public ehDepois (date: Date, dateCompare: Date): boolean {
     return isAfter(date, dateCompare);
   }
 }

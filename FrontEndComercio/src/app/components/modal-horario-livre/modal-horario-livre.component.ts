@@ -12,9 +12,9 @@ export class ModalHorarioLivreComponent implements OnInit {
     private Restricao: RestricaoService,
     private Toast: ToastService
   ) {}
-  @Input() data?: string;
-  @Input() horario?: any;
-  @Input() isModalOpen?: boolean;
+  @Input() public data?: string;
+  @Input() public horario?: any;
+  @Input() public isModalOpen?: boolean;
   @Output() fechar = new EventEmitter();
 
   ngOnInit() {}
@@ -33,7 +33,7 @@ export class ModalHorarioLivreComponent implements OnInit {
     },
   ];
 
-  toggleRestringir() {
+  private toggleRestringir() {
     if (this.horario.restrito) {
       this.Restricao.tirarRestricaoHorario(
         this.data!,

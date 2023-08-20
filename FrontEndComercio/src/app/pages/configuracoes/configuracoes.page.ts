@@ -22,9 +22,9 @@ export class ConfiguracoesPage implements OnInit {
     });
   }
 
-  isModalDatasEspeciaisOpen: boolean = false;
-  isModalRestricoesDataOpen: boolean = false;
-  isModalRestricoesSemanaisOpen: boolean = false;
-  isModalRestricoesHorariosOpen: boolean = false;
-  isModalServicosOpen: boolean = false;
+  public isModalDatasEspeciaisOpen: boolean = false;
+  public isModalRestricoesDataOpen: boolean = false;
+  public isModalRestricoesSemanaisOpen: boolean = false;
+  public isModalRestricoesHorariosOpen: boolean = false;
+  public isModalServicosOpen: boolean = false;
 }

@@ -65,10 +65,10 @@ class UserController
       'SENHA_USER' => limparDados($this->SENHA_USER)
     ];
     if (temDadosVazios($data)) respostaHost('error', 'Verifique se todos os campos de login estão preenchidos');
-    $this->colocarDadosModel($data);
-    if (!ehTelefoneValido($data['TEL_USER'])) respostaHost('error', 'Formato de telefone de úsuario inválido');
     if (strlen($data['EMAIL_USER']) > 150) respostaHost('error', 'Email muito longo :(');
+    if (!ehTelefoneValido($data['TEL_USER'])) respostaHost('error', 'Formato de telefone de úsuario inválido');
     if (!ehEmailValido($data['EMAIL_USER'])) respostaHost('error', 'Formato de email de úsuario inválido');
+    $this->colocarDadosModel($data);
     if ($this->service->telDisponivel()) respostaHost('error', 'Telefone não cadastrado');
     if ($this->service->emailDisponivel()) respostaHost('error', 'Email não cadastrado');
 

@@ -8,12 +8,11 @@ import { ComercioService } from 'src/app/core/service/comercio.service';
   templateUrl: './modal-cliente.component.html',
   styleUrls: ['./modal-cliente.component.scss'],
 })
-export class ModalClienteComponent  implements OnInit {
+export class ModalClienteComponent implements OnInit {
+  constructor(private Comercio: ComercioService, private Toast: ToastService) {}
 
-  constructor(private Comercio: ComercioService, private Toast: ToastService) { }
-
-  @Input() cliente?: User;
-  @Input() isModalOpen?: boolean;
+  @Input() public cliente?: User;
+  @Input() public isModalOpen?: boolean;
   @Output() fechar = new EventEmitter();
 
   ngOnInit() {}
@@ -32,7 +31,7 @@ export class ModalClienteComponent  implements OnInit {
     },
   ];
 
-  deleteCliente() {
+  private deleteCliente() {
     this.Comercio.deleteCliente(this.cliente?.ID_USER!).subscribe(
       (response) => {
         const tempo = 1000;

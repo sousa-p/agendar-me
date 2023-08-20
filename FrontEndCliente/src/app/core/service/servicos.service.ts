@@ -9,7 +9,7 @@ import { Servicos } from '../interface/Servicos';
 export class ServicosService {
   constructor(private Server: ServerService) {}
 
-  getServicos(): Observable<Servicos[]> {
+  public getServicos(): Observable<Servicos[]> {
     const data = {
       route: 'Servicos',
       action: 'getServicos',
@@ -18,7 +18,7 @@ export class ServicosService {
     return this.Server.request(data);
   }
 
-  getServicosAgendamento(idAgendamento: number | undefined): Observable<Servicos[]> {
+  public getServicosAgendamento(idAgendamento: number | undefined): Observable<Servicos[]> {
     const data = {
       route: 'Servicos',
       action: 'getServicosAgendamento',

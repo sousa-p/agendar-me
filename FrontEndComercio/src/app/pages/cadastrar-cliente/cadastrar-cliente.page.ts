@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ServerService } from 'src/app/core/service/server.service';
 import { ToastService } from 'src/app/core/controller/toast.service';
+import { ComercioService } from 'src/app/core/service/comercio.service';
 
 @Component({
   selector: 'app-cadastrar-cliente',
@@ -13,7 +14,7 @@ import { ToastService } from 'src/app/core/controller/toast.service';
 export class CadastrarClientePage implements OnInit {
 
   constructor(
-    private Server: ServerService,
+    private Comercio: ComercioService,
     private Toast: ToastService,
     private router: Router
   ) {}
@@ -21,12 +22,10 @@ export class CadastrarClientePage implements OnInit {
 
   ngOnInit() {}
 
-  cadastrar() {
+  public cadastrar() {
     const data = this.cadastrarForm.form.value;
-    data['route'] = 'User';
-    data['action'] = 'cadastrar';
 
-    this.Server.request(data).subscribe(
+    this.Comercio.cadastrarCliente(data).subscribe(
       (response) => {
         if (response.retorno === 'success') {
           this.cadastrarForm.reset();

@@ -14,14 +14,14 @@ export class ModalRestricoesSemanaisComponent implements OnInit {
     private Toast: ToastService
   ) {}
 
-  @Input() isModalOpen?: boolean;
+  @Input() public isModalOpen?: boolean;
   @Output() fechar = new EventEmitter();
 
-  restricoesSemanais?: Restricao[];
+  public restricoesSemanais: Restricao[] = [];
 
-  diasRestantes: number[] = [0, 1, 2, 3, 4, 5, 6];
+  public diasRestantes: number[] = [0, 1, 2, 3, 4, 5, 6];
 
-  diasSemana: string[] = [
+  public diasSemana: string[] = [
     'Domingo',
     'Segunda',
     'Terça',
@@ -31,12 +31,15 @@ export class ModalRestricoesSemanaisComponent implements OnInit {
     'Sábado',
   ];
 
+  public loading: boolean = true;
+
   ngOnInit() {
     this.carregarPagina();
   }
 
-  carregarPagina() {
-    this.restricoesSemanais = undefined;
+  private carregarPagina() {
+    this.loading = true;
+    this.restricoesSemanais = [];
     this.diasRestantes = [0, 1, 2, 3, 4, 5, 6];
 
     this.Restricao.getRestricoesSemanais().subscribe(
@@ -49,6 +52,8 @@ export class ModalRestricoesSemanaisComponent implements OnInit {
         this.diasRestantes = this.diasRestantes.filter((dia: number) => {
           return !idsRestricoesSemanais.includes(dia);
         });
+
+        this.loading = false;
       },
       (error) => {
         console.error(error);
@@ -56,7 +61,7 @@ export class ModalRestricoesSemanaisComponent implements OnInit {
     );
   }
 
-  restringirDiaSemana(ev: any) {
+  public restringirDiaSemana(ev: any) {
     this.Restricao.retringirDiaSemana(Number(ev.detail.value)).subscribe(
       (response) => {
         this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);
@@ -70,7 +75,7 @@ export class ModalRestricoesSemanaisComponent implements OnInit {
     );
   }
 
-  tirarRestricaoDiaSemana(diaSemana: number) {
+  public tirarRestricaoDiaSemana(diaSemana: number) {
     this.Restricao.tirarRestricaoDiaSemana(diaSemana).subscribe(
       (response) => {
         this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);

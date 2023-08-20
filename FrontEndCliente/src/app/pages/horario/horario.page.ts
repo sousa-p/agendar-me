@@ -23,21 +23,22 @@ export class HorarioPage implements OnInit {
     private location: Location
   ) {}
 
-  intervalo: number = 30;
-  restricoes: any = [];
-  horasEspeciais: string[] = [];
-  agendamentos: any = [];
-  horariosLivres: string[] = [];
-  horariosLivresPagina: string[] = [];
-  horarioAtual: number = 0;
+  private intervalo: number = 30;
+  private restricoes: any = [];
+  private horasEspeciais: string[] = [];
+  private agendamentos: any = [];
+  
+  public horariosLivres: string[] = [];
+  public horariosLivresPagina: string[] = [];
+  public horarioAtual: number = 0;
 
-  date?: string;
-  horario?: string;
+  public date?: string;
+  public horario?: string;
 
-  isModalOpen: boolean = false;
-  loading: boolean = true;
+  public isModalOpen: boolean = false;
+  public loading: boolean = true;
 
-  setOpen(isOpen: boolean) {
+  public setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
 
@@ -74,7 +75,7 @@ export class HorarioPage implements OnInit {
     });
   }
 
-  carregarPagina() {
+  private carregarPagina() {
     this.loading = true;
     this.agendamentos = [];
     this.horasEspeciais = [];
@@ -108,7 +109,7 @@ export class HorarioPage implements OnInit {
     );
   }
 
-  mostrarItens() {
+  private mostrarItens() {
     this.horarioAtual += 15;
     this.horariosLivresPagina = this.horariosLivres?.slice(
       0,
@@ -116,7 +117,7 @@ export class HorarioPage implements OnInit {
     );
   }
 
-  onIonInfinite(ev: any) {
+  public onIonInfinite(ev: any) {
     this.mostrarItens();
     setTimeout(() => {
       (ev as InfiniteScrollCustomEvent).target.complete();

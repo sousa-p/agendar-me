@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {}
 
-  login() {
+  public login() {
     const data = this.loginForm.form.value;
     data['route'] = 'User';
     data['action'] = 'login';

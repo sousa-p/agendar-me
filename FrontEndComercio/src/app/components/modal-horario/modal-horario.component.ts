@@ -17,9 +17,9 @@ export class ModalHorarioComponent implements OnInit {
     private Whatsapp: WhatsappService
   ) {}
 
-  @Input() agendamento?: Agendamento;
+  @Input() public agendamento?: Agendamento;
 
-  @Input() isModalOpen?: boolean;
+  @Input() public isModalOpen?: boolean;
   @Output() fechar = new EventEmitter();
 
   ngOnInit() {}
@@ -38,18 +38,17 @@ export class ModalHorarioComponent implements OnInit {
     },
   ];
 
-  deleteAgendamento() {
+  private deleteAgendamento() {
     this.Agendamento.deleteAgendamento(
       this.agendamento?.ID_AGENDAMENTO
     ).subscribe(
       (response) => {
         const tempo = 1000;
-        const mensagem = this.gerarMensagemDeleteAgendamento  ();
         this.Toast.mostrarToast(response.retorno, tempo, response.mensagem);
         if (response.retorno === 'success') {
           setTimeout(() => {
             location.reload();
-            this.Whatsapp.mandarMensagem(mensagem, '55'+this.agendamento!.TEL_USER);
+            this.Whatsapp.mandarMensagem(this.gerarMensagemDeleteAgendamento(), '55'+this.agendamento!.TEL_USER);
           }, tempo);
         }
       },
@@ -59,16 +58,16 @@ export class ModalHorarioComponent implements OnInit {
     );
   }
   
-  gerarMensagemDeleteAgendamento(): string {
+  private gerarMensagemDeleteAgendamento(): string {
     return `🚫 *AGENDAMENTO CANCELADO*\n📆 Data: ${this.Date.formatarDataString(this.agendamento?.DATA_AGENDAMENTO, 'dd/MM/yyyy')}\n⏰ Horário: ${this.agendamento?.HORARIO_AGENDAMENTO.slice(0,5)}`;
   }
 
-  lembrarCliente() {
+  public lembrarCliente() {
     const mensagem = this.gerarMensagemLembrarCliente();
     this.Whatsapp.mandarMensagem(mensagem, '55'+this.agendamento!.TEL_USER);
   }
 
-  gerarMensagemLembrarCliente() {
+  private gerarMensagemLembrarCliente() {
     let total: number = 0;
     let mensagem = `*🚨 LEMBRETE 🚨*\nVocê tem um agendamento comigo 😉\n\n📆 Data: ${this.Date.formatarDataString(this.agendamento?.DATA_AGENDAMENTO,'dd/MM/yyyy')}\n⏰ Horário: ${this.agendamento?.HORARIO_AGENDAMENTO.slice(0,5)}\n\n💼 *SERVIÇOS*  \n`;
 

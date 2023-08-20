@@ -17,23 +17,33 @@ export class HomePage implements OnInit {
     private Restricao: RestricaoService
   ) {}
 
-  restricoes?: any;
+  public restricoes: any = [];
+  public loading = true;
 
   ngOnInit() {
+    this.carregarPagina();
+  }
+
+  private carregarPagina() {
+    this.loading = true;
+    this.restricoes = [];
+
     this.Restricao.getDiasRestricoes().subscribe(
       (response) => {
         this.restricoes = response;
+        this.loading = false;
       },
       (error) => {
         console.error(error);
       }
     );
   }
-  clicarDia(event: any) {
+
+  public clicarDia(event: any) {
     const date = event.detail.value.split('T')[0];
     this.router.navigate(['/horario', date]);
   }
-
+  
   ehRestrita = (dateString: string) => {
     const ehDiaEspecial = this.restricoes.DATAS_ESPECIAIS.includes(dateString);
     if (ehDiaEspecial) return true;

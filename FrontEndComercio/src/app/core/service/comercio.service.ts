@@ -4,32 +4,50 @@ import { CookieService } from 'ngx-cookie-service';
 import { ServerService } from './server.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ComercioService {
+  constructor(
+    private router: Router,
+    private Cookie: CookieService,
+    private Server: ServerService
+  ) {}
 
-  constructor(private router: Router, private Cookie: CookieService, private Server: ServerService) { }
-  
-  logout() {
+  public login(data: any) {
+    data['route'] = 'Comercio';
+    data['action'] = 'login';
+
+    return this.Server.request(data);
+  }
+
+  public logout() {
     this.Cookie.delete('token');
     this.router.navigate(['/login']);
     location.reload();
   }
 
-  getClientes() {
+  public getClientes() {
     const data = {
-      'route': 'Comercio',
-      'action': 'getClientes'
+      route: 'Comercio',
+      action: 'getClientes',
     };
-    
+
     return this.Server.request(data);
   }
 
-  deleteCliente(idUser: number) {
+  public cadastrarCliente (data: any) {
+    data['route'] = 'User';
+    data['action'] = 'cadastrar';
+
+    return this.Server.request(data);
+
+  }
+
+  public deleteCliente(idUser: number) {
     const data = {
-      'route': 'Comercio',
-      'action': 'deleteCliente',
-      'ID_USER': idUser,
+      route: 'Comercio',
+      action: 'deleteCliente',
+      ID_USER: idUser,
     };
 
     return this.Server.request(data);

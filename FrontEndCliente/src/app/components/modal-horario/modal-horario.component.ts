@@ -17,9 +17,9 @@ export class ModalHorarioComponent implements OnInit {
     private Whatsapp: WhatsappService
   ) {}
 
-  @Input() agendamento?: Agendamento;
+  @Input() public agendamento?: Agendamento;
 
-  @Input() isModalOpen?: boolean;
+  @Input() public isModalOpen?: boolean;
   @Output() fechar = new EventEmitter();
 
   ngOnInit() {}
@@ -38,20 +38,19 @@ export class ModalHorarioComponent implements OnInit {
     },
   ];
 
-  deleteAgendamento() {
+  private deleteAgendamento() {
     this.Agendamento.deleteAgendamento(
       this.agendamento?.ID_AGENDAMENTO
     ).subscribe(
       (response) => {
         const tempo = 1000;
-        const mensagem = this.gerarMensagem();
-        this.Toast.mostrarToast(response.retorno, tempo, response.mensagem);
         if (response.retorno === 'success') {
           setTimeout(() => {
             location.reload();
-            this.Whatsapp.mandarMensagem(mensagem);
+            this.Whatsapp.mandarMensagem(this.gerarMensagem());
           }, tempo);
         }
+        this.Toast.mostrarToast(response.retorno, tempo, response.mensagem);
       },
       (error) => {
         console.error(error);
@@ -59,7 +58,10 @@ export class ModalHorarioComponent implements OnInit {
     );
   }
 
-  gerarMensagem(): string {
-    return `🚫 *AGENDAMENTO CANCELADO*\n📆 Data: ${this.Date.formatarDataString(this.agendamento?.DATA_AGENDAMENTO, 'dd/MM/yyyy')}\n⏰ Horário: ${this.agendamento?.HORARIO_AGENDAMENTO}`;
+  private gerarMensagem(): string {
+    return `🚫 *AGENDAMENTO CANCELADO*\n📆 Data: ${this.Date.formatarDataString(
+      this.agendamento?.DATA_AGENDAMENTO,
+      'dd/MM/yyyy'
+    )}\n⏰ Horário: ${this.agendamento?.HORARIO_AGENDAMENTO}`;
   }
 }

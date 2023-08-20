@@ -9,7 +9,7 @@ import { Servicos } from '../interface/Servicos';
 export class ServicosService {
   constructor(private Server: ServerService) {}
 
-  getServicos(): Observable<Servicos[]> {
+  public getServicos(): Observable<Servicos[]> {
     const data = {
       route: 'Servicos',
       action: 'getServicos',
@@ -18,7 +18,7 @@ export class ServicosService {
     return this.Server.request(data);
   }
 
-  getServicosAgendamentoCliente(
+  public getServicosAgendamentoCliente(
     idAgendamento: number | undefined
   ): Observable<Servicos[]> {
     const data = {
@@ -30,7 +30,7 @@ export class ServicosService {
     return this.Server.request(data);
   }
 
-  deletarServico(idServico: number) {
+  public deletarServico(idServico: number) {
     const data = {
       route: 'Servicos',
       action: 'deletarServico',
@@ -40,19 +40,17 @@ export class ServicosService {
     return this.Server.request(data);
   }
 
-  adicionarServico(data: any) {
+  public adicionarServico(data: any) {
     data['route'] = 'Servicos';
     data['action'] = 'adicionarServico';
-
 
     return this.Server.request(data);
   }
 
-  editarServico(data: any, idServico: number) {
+  public editarServico(data: any, idServico: number) {
     data['route'] = 'Servicos';
     data['action'] = 'editarServico';
     data['ID_SERVICO'] = idServico;
-
 
     return this.Server.request(data);
   }

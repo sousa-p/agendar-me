@@ -22,25 +22,29 @@ export class ModalServicosComponent implements OnInit {
   @ViewChild('servicoForm') servicoForm!: NgForm;
   @ViewChild('servicoEditandoForm') servicoEditandoForm!: NgForm;
 
-
   @Input() isModalOpen?: boolean;
   @Output() fechar = new EventEmitter();
 
-  servicos?: Servicos[];
-  servicoSelecionado?: Servicos;
+  public servicos: Servicos[] = [];
+  public servicoSelecionado?: Servicos;
 
-  editando: boolean = false;
+  public editando: boolean = false;
+
+  public loading: boolean = true;
 
   ngOnInit() {
     this.carregarPagina();
   }
 
-  carregarPagina() {
-    this.servicos = undefined;
+  private carregarPagina() {
+    this.loading = true;
+    this.servicos = [];
+    this.servicoSelecionado = undefined;
 
     this.Servicos.getServicos().subscribe(
       (response) => {
         this.servicos = response;
+        this.loading = false;
       },
       (error) => {
         console.error(error);
@@ -48,7 +52,7 @@ export class ModalServicosComponent implements OnInit {
     );
   }
 
-  deletarServico(idServico: number) {
+  public deletarServico(idServico: number) {
     this.Servicos.deletarServico(idServico).subscribe(
       (response) => {
         this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);
@@ -62,7 +66,7 @@ export class ModalServicosComponent implements OnInit {
     );
   }
 
-  adicionarServico() {
+  public adicionarServico() {
     const data = this.servicoForm.form.value;
 
     this.Servicos.adicionarServico(data).subscribe(
@@ -79,12 +83,15 @@ export class ModalServicosComponent implements OnInit {
     );
   }
 
-  setEditando(open: boolean) {
+  public setEditando(open: boolean) {
     this.editando = open;
   }
 
-  editarServico() {
-    this.Servicos.editarServico(this.servicoEditandoForm.form.value, this.servicoSelecionado!.ID_SERVICO).subscribe(
+  public editarServico() {
+    this.Servicos.editarServico(
+      this.servicoEditandoForm.form.value,
+      this.servicoSelecionado!.ID_SERVICO
+    ).subscribe(
       (response) => {
         this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);
         if (response.retorno === 'success') {
@@ -96,6 +103,6 @@ export class ModalServicosComponent implements OnInit {
       (error) => {
         console.error(error);
       }
-    )
+    );
   }
 }

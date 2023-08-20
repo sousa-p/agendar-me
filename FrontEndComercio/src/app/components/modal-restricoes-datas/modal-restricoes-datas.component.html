@@ -12,7 +12,7 @@
     </ion-header>
 
     <ion-content class="ion-padding">
-      <ng-container *ngIf="this.restricoesDatas !== undefined">
+      <ng-container *ngIf="!this.loading">
         <ion-accordion-group>
           <ion-accordion value="first">
             <ion-item slot="header" color="light">
@@ -99,7 +99,7 @@
         </ion-row>
       </ng-container>
       <app-loading
-        [condicao]="this.restricoesDatas === undefined"
+        [condicao]="this.loading"
       ></app-loading>
     </ion-content>
   </ng-template>

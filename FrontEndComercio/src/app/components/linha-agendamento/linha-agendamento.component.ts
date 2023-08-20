@@ -8,7 +8,8 @@ import { DateService } from 'src/app/core/controller/date.service';
 })
 export class LinhaAgendamentoComponent implements OnInit {
   constructor(public Date: DateService) {}
-  @Input() horario?: string;
+
+  @Input() public horario?: string;
 
   ngOnInit() {
   }

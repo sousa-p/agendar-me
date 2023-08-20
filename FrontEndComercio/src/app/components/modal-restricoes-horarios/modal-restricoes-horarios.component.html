@@ -11,7 +11,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ng-container *ngIf="this.restricoesHorarios !== undefined">
+      <ng-container *ngIf="!this.loading">
         <ion-accordion-group>
           <ion-accordion value="first">
             <ion-item slot="header" color="light">
@@ -161,7 +161,7 @@
         </ng-container>
       </ng-container>
       <app-loading
-        [condicao]="this.restricoesHorarios === undefined"
+        [condicao]="this.loading"
       ></app-loading>
     </ion-content>
   </ng-template>

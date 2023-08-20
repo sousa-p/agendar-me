@@ -11,7 +11,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ng-container *ngIf="this.restricoesSemanais !== undefined">
+      <ng-container *ngIf="!this.loading">
         <ion-list>
           <ion-item *ngFor="let restricao of this.restricoesSemanais">
             <ion-toolbar>
@@ -54,7 +54,7 @@
         </ion-item>
       </ng-container>
       <app-loading
-        [condicao]="this.restricoesSemanais === undefined"
+        [condicao]="this.loading"
       ></app-loading>
     </ion-content>
   </ng-template>

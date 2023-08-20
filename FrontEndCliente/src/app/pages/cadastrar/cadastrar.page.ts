@@ -15,11 +15,12 @@ export class CadastrarPage implements OnInit {
     private Toast: ToastService,
     private router: Router
   ) {}
+  
   @ViewChild('cadastrarForm') cadastrarForm!: NgForm;
 
   ngOnInit() {}
 
-  cadastrar() {
+  public cadastrar() {
     const data = this.cadastrarForm.form.value;
     data['route'] = 'User';
     data['action'] = 'cadastrar';

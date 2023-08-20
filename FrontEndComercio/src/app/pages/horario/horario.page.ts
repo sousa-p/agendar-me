@@ -24,40 +24,39 @@ export class HorarioPage implements OnInit {
     private Servicos: ServicosService,
     private location: Location
   ) {}
-  
-    paginaEstaRestrita: boolean = false;
 
-  intervalo: number = 30;
-  restricoes: any = [];
-  horariosEspeciais: string[] = [];
-  horarios: string[] = [];
-  horariosPagina: string[] = [];
-  horarioAtual: number = 0;
+  private intervalo: number = 30;
+  public restricoes: any = [];
+  public horariosEspeciais: string[] = [];
+  public horarios: string[] = [];
+  public horariosPagina: string[] = [];
+  public horarioAtual: number = 0;
 
-  date?: string;
-  horarioSelecionado?: any;
+  public date?: string;
+  public horarioSelecionado?: any;
 
-  isModalHorarioOpen: boolean = false;
-  isModalAgendamentoOpen: boolean = false;
+  public isModalHorarioOpen: boolean = false;
+  public isModalAgendamentoOpen: boolean = false;
 
-  loading: boolean = true;
+  public loading: boolean = true;
 
-  agendamentosRealizados: string[] = [];
-  agendamentosRealizadosPagina?: string[] = [];
-  agendamentoSelecionado?: Agendamento;
-  agendamentoAtual: number = 0;
+  public agendamentosRealizados: string[] = [];
+  public agendamentosRealizadosPagina?: string[] = [];
+  public agendamentoSelecionado?: Agendamento;
+  public agendamentoAtual: number = 0;
 
-  setHorarioOpen(isOpen: boolean) {
+  public setHorarioOpen(isOpen: boolean) {
     this.isModalHorarioOpen = isOpen;
   }
 
-  setAgendamentoOpen(isOpen: boolean) {
+  public setAgendamentoOpen(isOpen: boolean) {
     this.isModalAgendamentoOpen = isOpen;
   }
 
   ngOnInit() {
     this.location.onUrlChange((url: string) => {
-      if (this.isModalHorarioOpen || this.isModalAgendamentoOpen) location.reload();
+      if (this.isModalHorarioOpen || this.isModalAgendamentoOpen)
+        location.reload();
     });
 
     this.route.params.subscribe((params) => {
@@ -67,14 +66,16 @@ export class HorarioPage implements OnInit {
         this.date === null ||
         !this.Date.isValideDate(this.date) ||
         this.Date.isPastDate(this.date) ||
-        this.Date.ehDepois(new Date(this.date), new Date(this.Date.getUltimaDataAgendamento()))
+        this.Date.ehDepois(
+          new Date(this.date),
+          new Date(this.Date.getUltimaDataAgendamento())
+        )
       )
         this.router.navigate(['/home']);
       else {
         this.Agendamento.ehDataRestrita(this.date).subscribe(
           (response) => {
             if (response.retorno === 'error') this.router.navigate(['/home']);
-            this.paginaEstaRestrita = true;
             this.carregarPagina();
           },
           (error) => {
@@ -85,7 +86,7 @@ export class HorarioPage implements OnInit {
     });
   }
 
-  carregarPagina() {
+  private carregarPagina() {
     this.loading = true;
     this.agendamentosRealizados = [];
     this.restricoes = [];
@@ -106,9 +107,9 @@ export class HorarioPage implements OnInit {
               this.horariosEspeciais,
               this.agendamentosRealizados
             );
-            this.loading = false;
             this.mostrarItensHorario();
             this.mostrarItensAgendamentos();
+            this.loading = false;
           },
           (error) => {
             console.error(error);
@@ -121,19 +122,26 @@ export class HorarioPage implements OnInit {
     );
   }
 
-  mostrarItensHorario() {
-    this.horarioAtual += 15;
-    this.horariosPagina = this.horarios?.slice(0, this.horarioAtual);
-  }
-
-  carregarHorarioPagina(ev: any) {
+  public carregarHorarioPagina(ev: any) {
     this.mostrarItensHorario();
     setTimeout(() => {
       (ev as InfiniteScrollCustomEvent).target.complete();
     }, 500);
   }
 
-  mostrarItensAgendamentos() {
+  private mostrarItensHorario() {
+    this.horarioAtual += 15;
+    this.horariosPagina = this.horarios?.slice(0, this.horarioAtual);
+  }
+
+  public carregarAgendamentosPagina(ev: any) {
+    this.mostrarItensAgendamentos();
+    setTimeout(() => {
+      (ev as InfiniteScrollCustomEvent).target.complete();
+    }, 500);
+  }
+
+  private mostrarItensAgendamentos() {
     this.agendamentoAtual += 15;
     this.agendamentosRealizadosPagina = this.agendamentosRealizados?.slice(
       0,
@@ -141,25 +149,13 @@ export class HorarioPage implements OnInit {
     );
   }
 
-  carregarAgendamentosPagina(ev: any) {
-    this.mostrarItensAgendamentos();
-    setTimeout(() => {
-      (ev as InfiniteScrollCustomEvent).target.complete();
-    }, 500);
-  }
-
-  clicarAgendamento(agendamento: string, horario: string) {
+  public clicarAgendamento(agendamento: string, horario: string) {
     this.setAgendamentoOpen(true);
 
-    this.Agendamento.getAgendamentoInfos(
-      agendamento,
-      horario.slice(0, 5)
-    ).subscribe(
+    this.Agendamento.getAgendamentoInfos(agendamento,horario.slice(0, 5)).subscribe(
       (response) => {
         this.agendamentoSelecionado = response;
-        this.Servicos.getServicosAgendamentoCliente(
-          response.ID_AGENDAMENTO
-        ).subscribe(
+        this.Servicos.getServicosAgendamentoCliente(response.ID_AGENDAMENTO).subscribe(
           (response) => {
             this.agendamentoSelecionado!.SERVICOS = response;
           },
@@ -174,7 +170,7 @@ export class HorarioPage implements OnInit {
     );
   }
 
-  clicarHorario(horario: any) {
+  public clicarHorario(horario: any) {
     this.horarioSelecionado = horario;
     this.setHorarioOpen(true);
   }

@@ -9,9 +9,10 @@ import { DateService } from 'src/app/core/controller/date.service';
 })
 export class LinhaAgendamentoComponent implements OnInit {
   constructor(public Date: DateService) {}
-  @Input() agendamento?: Agendamento;
+  
+  @Input() public agendamento?: Agendamento;
 
-  tipoAgendamento: string = '';
+  public tipoAgendamento: string = '';
 
   ngOnInit() {
     const ISOdataAgendamento = `${this.agendamento?.DATA_AGENDAMENTO}T${this.agendamento?.HORARIO_AGENDAMENTO}:00`;

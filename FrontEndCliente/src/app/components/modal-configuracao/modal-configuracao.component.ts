@@ -10,20 +10,25 @@ import { UserService } from 'src/app/core/service/user.service';
 export class ModalConfiguracaoComponent implements OnInit {
   constructor(private User: UserService, private Toast: ToastService) {}
 
-  @Input() isModalOpen?: boolean;
-  @Input() informacaoSelecionada?: string;
+  @Input() public isModalOpen?: boolean;
+  @Input() public informacaoSelecionada?: string;
 
   @Output() fechar = new EventEmitter();
 
-  infosUser?: any;
+  public infosUser?: any;
+
   ngOnInit() {
+    this.carregarPagina();
+  }
+
+  private carregarPagina() {
     this.User.getInfos().subscribe(
       (response) => {
         this.infosUser! = response;
         this.infosUser['SENHA_USER'] = {
-          'NOVA_SENHA_USER': '',
-          'ANTIGA_SENHA_USER': ''
-        }
+          NOVA_SENHA_USER: '',
+          ANTIGA_SENHA_USER: '',
+        };
       },
       (error) => {
         console.error(error);
@@ -31,7 +36,7 @@ export class ModalConfiguracaoComponent implements OnInit {
     );
   }
 
-  alterarInfo() {
+  public alterarInfo() {
     const informacao = this.informacaoSelecionada?.toUpperCase();
     const valor = this.infosUser[informacao + '_USER'];
     this.User.alterarInfo(informacao!, valor).subscribe(

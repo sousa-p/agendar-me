@@ -9,11 +9,11 @@ import { Component, OnInit } from '@angular/core';
 export class ConfiguracaoPage implements OnInit {
   constructor(private location: Location) {}
 
-  isModalOpen: boolean = false;
-  informacaoSelecionada?: string;
-  loading: boolean = true;
+  public isModalOpen: boolean = false;
+  public informacaoSelecionada?: string;
+  public loading: boolean = true;
 
-  setOpen(isOpen: boolean) {
+  public setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
 
@@ -23,7 +23,7 @@ export class ConfiguracaoPage implements OnInit {
     });
   }
 
-  clicarItem(attr: string) {
+  public clicarItem(attr: string) {
     this.informacaoSelecionada = attr;
     this.setOpen(true);
   }

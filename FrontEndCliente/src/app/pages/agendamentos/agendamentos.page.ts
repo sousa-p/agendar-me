@@ -19,19 +19,19 @@ export class AgendamentosPage implements OnInit {
     private location: Location
   ) {}
 
-  agendamentoSelecionado?: Agendamento;
-  agendamentosRealizados?: Agendamento[];
+  public agendamentoSelecionado?: Agendamento;
+  public agendamentosRealizados?: Agendamento[];
 
-  agendamentosRealizadosPagina?: Agendamento[] = [];
-  agendamentoAtual: number = 0;
+  public agendamentosRealizadosPagina?: Agendamento[] = [];
+  public agendamentoAtual: number = 0;
 
-  isModalOpen = false;
+  public isModalOpen = false;
 
-  setOpen(isOpen: boolean) {
+  public setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
 
-  clicarAgendamento(agendamento: Agendamento) {
+  public clicarAgendamento(agendamento: Agendamento) {
     this.setOpen(true);
     this.agendamentoSelecionado = agendamento;
 
@@ -62,7 +62,7 @@ export class AgendamentosPage implements OnInit {
     );
   }
 
-  mostrarItens() {
+  private mostrarItens() {
     this.agendamentoAtual += 15;
     this.agendamentosRealizadosPagina = this.agendamentosRealizados?.slice(
       0,
@@ -70,7 +70,7 @@ export class AgendamentosPage implements OnInit {
     );
   }
 
-  onIonInfinite(ev: any) {
+  public onIonInfinite(ev: any) {
     this.mostrarItens();
     setTimeout(() => {
       (ev as InfiniteScrollCustomEvent).target.complete();

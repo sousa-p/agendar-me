@@ -16,7 +16,7 @@
 </ion-header>
 <ion-content [fullscreen]="true">
   <app-refresher></app-refresher>
-  <ion-row class="section ion-justify-content-center" *ngIf="restricoes">
+  <ion-row class="section ion-justify-content-center" *ngIf="!this.loading">
     <ion-col>
       <ion-row id="slide">
         <ion-col size="12">
@@ -45,5 +45,5 @@
       </ion-row>
     </ion-col>
   </ion-row>
-  <app-loading [condicao]="!this.restricoes"></app-loading>
+  <app-loading [condicao]="this.loading"></app-loading>
 </ion-content>

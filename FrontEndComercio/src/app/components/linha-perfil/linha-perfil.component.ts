@@ -12,5 +12,5 @@ export class LinhaPerfilComponent  implements OnInit {
 
   ngOnInit() {}
   
-  @Input() perfil?: User;
+  @Input() public perfil?: User;
 }

@@ -28,7 +28,7 @@
               <ion-button
                 [disabled]="
                   this.dataSelecionada === undefined ||
-                  this.datasEspeciais?.includes(this.dataSelecionada)
+                  this.datasEspeciais.includes(this.dataSelecionada)
                 "
                 (click)="this.adicionarDataEspecial()"
                 class="adicionar__btn"
@@ -38,7 +38,7 @@
           </ion-row>
         </ion-col>
       </ion-row>
-      <ng-container *ngIf="this.datasEspeciais !== undefined">
+      <ng-container *ngIf="!this.loading">
         <ion-list>
           <h4 *ngIf="this.datasEspeciais.length">Datas Especiais</h4>
           <ion-item *ngFor="let dataEspecial of this.datasEspeciais">
@@ -64,7 +64,7 @@
           </ion-row>
         </ng-container>
       </ng-container>
-      <app-loading [condicao]="this.datasEspeciais === undefined"></app-loading>
+      <app-loading [condicao]="this.loading"></app-loading>
     </ion-content>
   </ng-template>
 </ion-modal>

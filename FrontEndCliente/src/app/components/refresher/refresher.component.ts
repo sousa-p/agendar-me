@@ -11,10 +11,12 @@ export class RefresherComponent  implements OnInit {
 
   ngOnInit() {}
 
-  handleRefresh(event: any) {
+  private tempo: number = 300;
+
+  public handleRefresh(event: any) {
     setTimeout(() => {
       location.reload();
       event.target.complete();
-    }, 300);
+    }, this.tempo);
   }
 }

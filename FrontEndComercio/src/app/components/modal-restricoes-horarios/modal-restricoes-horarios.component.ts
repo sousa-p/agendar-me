@@ -19,30 +19,40 @@ export class ModalRestricoesHorariosComponent implements OnInit {
   @Input() isModalOpen?: boolean;
   @Output() fechar = new EventEmitter();
 
+
+  public horas: number[] = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    21, 22, 23,
+  ];
+  public horasRestantes: number[] = this.horas;
+  
+  public minutos: any = [0, 30];
+  
+  public restricoesHorarios: Restricao[] = [];
+  
+  public horarioInicio: string = `00:${String(this.minutos.at(0)).padStart(2, '0')}`;
+  public horarioFim: string = `23:${String(this.minutos.at(-1)).padStart(2, '0')}`;
+  public dataInicio?: string;
+  public dataFim?: string;
+
+  public loading: boolean = true;
+  
+  private tempo: number = 1000;
+
   ngOnInit() {
     this.carregarPagina();
   }
 
-  
-  horas: number[] = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-    21, 22, 23,
-  ];
-  horasRestantes: number[] = this.horas;
-  
-  minutos: any = [0, 30];
-  
-  restricoesHorarios?: Restricao[];
-  
-  horarioInicio: string = `00:${String(this.minutos.at(0)).padStart(2, '0')}`;
-  horarioFim: string = `23:${String(this.minutos.at(-1)).padStart(2, '0')}`;
-  dataInicio?: string;
-  dataFim?: string;
+  private carregarPagina() {
+    this.loading = true;
+    this.restricoesHorarios = [];
+    this.horarioInicio = `00:${String(this.minutos.at(0)).padStart(2, '0')}`;
+    this.horarioFim = `23:${String(this.minutos.at(-1)).padStart(2, '0')}`;
 
-  carregarPagina() {
     this.Restricao.getTodasRestricoesDeHorarios().subscribe(
       (response) => {
         this.restricoesHorarios = response;
+        this.loading = false;
       },
       (error) => {
         console.error(error);
@@ -50,7 +60,7 @@ export class ModalRestricoesHorariosComponent implements OnInit {
     );
   }
 
-  adicionarRestricaoHorario() {
+  public adicionarRestricaoHorario() {
     this.Restricao.adicionarRestricaoHorario(
       this.dataInicio!,
       this.dataFim!,
@@ -58,15 +68,10 @@ export class ModalRestricoesHorariosComponent implements OnInit {
       this.horarioFim!
     ).subscribe(
       (response) => {
-        this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);
-        if (response.retorno === 'success') {
-          this.dataInicio = undefined;
-          this.dataFim = undefined;
-          this.horarioInicio = `00:${String(this.minutos.at(0)).padStart(2, '0')}`;
-          this.horarioFim = `23:${String(this.minutos.at(-1)).padStart(2, '0')}`;
-
+        if (response.retorno === 'success')
           this.carregarPagina();
-        }
+        
+        this.Toast.mostrarToast(response.retorno, this.tempo, response.mensagem);
       },
       (error) => {
         console.error(error);
@@ -74,10 +79,10 @@ export class ModalRestricoesHorariosComponent implements OnInit {
     );
   }
 
-  removerRestricao(idRestricao: number) {
+  public removerRestricao(idRestricao: number) {
     this.Restricao.removerRestricao(idRestricao).subscribe(
       (response) => {
-        this.Toast.mostrarToast(response.retorno, 1000, response.mensagem);
+        this.Toast.mostrarToast(response.retorno, this.tempo, response.mensagem);
         if (response.retorno === 'success') {
           this.carregarPagina();
         }
@@ -88,14 +93,14 @@ export class ModalRestricoesHorariosComponent implements OnInit {
     );
   }
 
-  marcarDataInicio(event: any) {
+  public marcarDataInicio(event: any) {
     this.dataInicio = this.Date.formatarDataString(
       event.detail.value,
       'yyyy-MM-dd'
     );
   }
 
-  marcarDataFim(event: any) {
+  public marcarDataFim(event: any) {
     this.dataFim = this.Date.formatarDataString(
       event.detail.value,
       'yyyy-MM-dd'
@@ -103,8 +108,7 @@ export class ModalRestricoesHorariosComponent implements OnInit {
 
   }
 
-  marcarHorarioInicio(event: any) {
-    console.log(event.detail.value)
+  public marcarHorarioInicio(event: any) {
     this.horarioInicio = this.Date.formatarDataString(
       event.detail.value,
       'HH:mm'
@@ -115,7 +119,7 @@ export class ModalRestricoesHorariosComponent implements OnInit {
     });
   }
 
-  marcarHorarioFim(event: any) {
+  public marcarHorarioFim(event: any) {
     this.horarioFim = this.Date.formatarDataString(event.detail.value, 'HH:mm');
   }
 }
