@@ -32,7 +32,7 @@ export class DateService {
     return regex.test(horaString);
   }
 
-  isPastDate(dateString: string, considerarHoras: boolean=false): boolean {
+  isPastDate(dateString: string, considerarHoras: boolean = false): boolean {
     const now = new Date();
     const date = new Date(dateString);
 
@@ -80,7 +80,8 @@ export class DateService {
   gerarHorarios(
     intervalo: number,
     restricoes: any,
-    agendamentos: any
+    horasEspeciais: string[],
+    agendamentos: string[]
   ): string[] {
     const horarios: any = [];
     let ultimoHorario = addMinutes(startOfDay(new Date()), -intervalo);
@@ -88,16 +89,17 @@ export class DateService {
     for (let i = 0; i < this.getQtddMaxHorarios(intervalo); i++) {
       const horario = addMinutes(ultimoHorario, intervalo);
 
-      const ehValido = restricoes.every((res: any) => {
-        const hInicio = res.HORARIO_INICIO;
-        const hFim = res.HORARIO_FIM;
+      const ehValido =
+        restricoes.every((res: any) => {
+          const hInicio = res.HORARIO_INICIO;
+          const hFim = res.HORARIO_FIM;
 
-        const inicio = this.horaStringToDate(hInicio);
-        const fim = hFim ? this.horaStringToDate(hFim) : null;
+          const inicio = this.horaStringToDate(hInicio);
+          const fim = hFim ? this.horaStringToDate(hFim) : null;
 
-        return !this.estaIntervaloHorario(horario, inicio, fim);
-      });
-      
+          return !this.estaIntervaloHorario(horario, inicio, fim);
+        }) || horasEspeciais.includes(format(horario, 'HH:mm') + ':00');
+
       const estaAgendado = agendamentos.includes(
         format(horario, 'HH:mm') + ':00'
       );
@@ -105,8 +107,8 @@ export class DateService {
       if (!estaAgendado) {
         horarios.push({
           horas: format(horario, 'HH:mm'),
-          restrito: !ehValido
-        })
+          restrito: !ehValido,
+        });
       }
 
       ultimoHorario = horario;
@@ -115,13 +117,15 @@ export class DateService {
     return horarios;
   }
 
-  formatarDataString(dateString: string | undefined, formatString: string): string {
-    if (typeof(dateString) === 'undefined')
-      return 'errorToParse';
+  formatarDataString(
+    dateString: string | undefined,
+    formatString: string
+  ): string {
+    if (typeof dateString === 'undefined') return 'errorToParse';
     return format(parseISO(dateString), formatString);
   }
 
-  ehDepois (date: Date, dateCompare: Date): boolean {
+  ehDepois(date: Date, dateCompare: Date): boolean {
     return isAfter(date, dateCompare);
   }
 }

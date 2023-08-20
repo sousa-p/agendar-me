@@ -10,7 +10,7 @@ export class ServerService {
 
   constructor(private http: HttpClient, private Cookie: CookieService) { }
 
-  url: string = 'https://teste-epa.000webhostapp.com/System/';
+  url: string = 'http://localhost/agendar/System/';
   
   request (data: any): Observable<any> {
     data['autor'] = 'Comercio';

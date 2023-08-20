@@ -3,13 +3,14 @@
 namespace System\Service;
 
 use PDO;
+use System\Model\ServicosModel;
 
 class ServicosService
 {
-  private $conn;
-  private $model;
+  private PDO $conn;
+  private ServicosModel $model;
 
-  public function __construct($conn, $model)
+  public function __construct(PDO $conn, ServicosModel $model)
   {
     $this->conn = $conn;
     $this->model = $model;

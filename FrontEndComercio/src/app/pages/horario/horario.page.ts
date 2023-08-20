@@ -29,6 +29,7 @@ export class HorarioPage implements OnInit {
 
   intervalo: number = 30;
   restricoes: any = [];
+  horariosEspeciais: string[] = [];
   horarios: string[] = [];
   horariosPagina: string[] = [];
   horarioAtual: number = 0;
@@ -41,7 +42,7 @@ export class HorarioPage implements OnInit {
 
   loading: boolean = true;
 
-  agendamentosRealizados?: string[];
+  agendamentosRealizados: string[] = [];
   agendamentosRealizadosPagina?: string[] = [];
   agendamentoSelecionado?: Agendamento;
   agendamentoAtual: number = 0;
@@ -85,15 +86,24 @@ export class HorarioPage implements OnInit {
   }
 
   carregarPagina() {
+    this.loading = true;
+    this.agendamentosRealizados = [];
+    this.restricoes = [];
+    this.horariosEspeciais = [];
+    this.horarios = [];
+
     this.Agendamento.getTodosAgendamentosData(this.date!).subscribe(
       (response: string[]) => {
         this.agendamentosRealizados = response;
         this.Restricao.getTodasRestricoesData(this.date!).subscribe(
-          (response: Restricao[]) => {
-            this.restricoes = response;
+          (response: any) => {
+            this.restricoes = response.RESTRICOES;
+            this.horariosEspeciais = response.HORARIOS_ESPECIAIS;
+
             this.horarios = this.Date.gerarHorarios(
               this.intervalo,
               this.restricoes,
+              this.horariosEspeciais,
               this.agendamentosRealizados
             );
             this.loading = false;

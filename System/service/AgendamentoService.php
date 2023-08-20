@@ -3,12 +3,14 @@
 namespace System\Service;
 
 use PDO;
+use System\Model\AgendamentoModel;
 
 class AgendamentoService
 {
-  private $conn;
-  private $model;
-  public function __construct($conn, $model)
+  private PDO $conn;
+  private AgendamentoModel $model;
+
+  public function __construct(PDO $conn, AgendamentoModel $model)
   {
     $this->conn = $conn;
     $this->model = $model;
@@ -41,8 +43,8 @@ class AgendamentoService
       AND
         (RESTRICAO.DIA_SEMANA = :DIA_SEMANA
       OR 
-        (RESTRICAO.DATA_INICIO <= :DATA_AGENDAMENTO AND RESTRICAO.DATA_FIM >= :DATA_AGENDAMENTO))';    
-  
+        (RESTRICAO.DATA_INICIO <= :DATA_AGENDAMENTO AND RESTRICAO.DATA_FIM >= :DATA_AGENDAMENTO))';
+
       $stmt = $this->conn->prepare($select);
       $stmt->bindValue(':DIA_SEMANA', $DIA_SEMANA);
       $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->__get('DATA_AGENDAMENTO'));
@@ -51,7 +53,7 @@ class AgendamentoService
     }
     return false;
   }
-  
+
   public function existeAgendamento()
   {
     $select = 'SELECT * FROM AGENDAMENTO WHERE DATA_AGENDAMENTO = :DATA_AGENDAMENTO AND HORARIO_AGENDAMENTO = :HORARIO_AGENDAMENTO';
@@ -112,7 +114,7 @@ class AgendamentoService
     $delete = 'DELETE FROM SERVICOS_AGENDAMENTO WHERE ID_AGENDAMENTO = :ID_AGENDAMENTO';
     $stmt = $this->conn->prepare($delete);
     $stmt->bindValue(':ID_AGENDAMENTO', (int)$this->model->__get('ID_AGENDAMENTO'));
-    $stmt->execute(); 
+    $stmt->execute();
 
     $delete = 'DELETE FROM AGENDAMENTO WHERE ID_USER = :ID_USER AND ID_AGENDAMENTO = :ID_AGENDAMENTO';
     $stmt = $this->conn->prepare($delete);

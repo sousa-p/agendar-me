@@ -3,13 +3,14 @@
 namespace System\Service;
 
 use PDO;
+use System\Model\RestricaoModel;
 
 class RestricaoService
 {
-  private $conn;
-  private $model;
+  private PDO $conn;
+  private RestricaoModel $model;
 
-  public function __construct($conn, $model)
+  public function __construct(PDO $conn, RestricaoModel $model)
   {
     $this->conn = $conn;
     $this->model = $model;
@@ -21,7 +22,20 @@ class RestricaoService
     $stmt = $this->conn->prepare($select);
     $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->DATA_AGENDAMENTO);
     $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_OBJ);
+
+    $restricoes = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+    $select = 'SELECT HORARIO_ESPECIAL FROM DATAS_ESPECIAIS WHERE HORARIO_ESPECIAL IS NOT NULL AND DATA_ESPECIAL = :DATA_AGENDAMENTO';
+    $stmt = $this->conn->prepare($select);
+    $stmt->bindValue(':DATA_AGENDAMENTO', $this->model->DATA_AGENDAMENTO);
+    $stmt->execute();
+    
+    $horariosEspeciais = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    return [
+      'RESTRICOES' => $restricoes,
+      'HORARIOS_ESPECIAIS' => $horariosEspeciais
+    ];
   }
 
   public function getTodosDiasSemana()

@@ -4,19 +4,19 @@ namespace System\Model;
 
 class UserModel
 {
-  private $ID_USER;
-  private $NOME_USER;
-  private $TEL_USER;
-  private $EMAIL_USER;
-  private $SENHA_USER;
-  private $SECRET_USER;
+  private int $ID_USER;
+  private String $NOME_USER;
+  private String $TEL_USER;
+  private String $EMAIL_USER;
+  private String | Array $SENHA_USER;
+  private String $SECRET_USER;
 
-  public function __get($atributo)
+  public function __get(String $atributo)
   {
     return $this->$atributo;
   }
 
-  public function __set($atributo, $valor)
+  public function __set(String $atributo, $valor)
   {
     $this->$atributo = $valor;
   }

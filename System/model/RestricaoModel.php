@@ -4,18 +4,18 @@ namespace System\Model;
 
 class RestricaoModel
 {
-  private $ID_RESTRICAO;
-  private $INTERVALO_TEMPO;
-  private $DIA_SEMANA;
-  private $DATA_INICIO;
-  private $DATA_FIM;
+  private int $ID_RESTRICAO;
+  private int $INTERVALO_TEMPO;
+  private int $DIA_SEMANA;
+  private String $DATA_INICIO;
+  private String $DATA_FIM;
 
-  public function __get($atributo)
+  public function __get(String $atributo)
   {
     return $this->$atributo;
   }
 
-  public function __set($atributo, $valor)
+  public function __set(String $atributo, $valor)
   {
     $this->$atributo = $valor;
   }

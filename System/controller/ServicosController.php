@@ -2,12 +2,15 @@
 
 namespace System\Controller;
 
+use System\Model\ServicosModel;
+use System\Service\ServicosService;
+
 class ServicosController
 {
   private $model;
   private $service;
 
-  public function __construct($data, $model, $service)
+  public function __construct(Array $data, ServicosModel $model, ServicosService $service)
   {
     foreach ($data as $chave => $value) {
       $this->$chave = $value;
@@ -16,7 +19,7 @@ class ServicosController
     $this->service = $service;
   }
 
-  public function colocarDadosModel($data)
+  private function colocarDadosModel($data)
   {
     foreach ($data as $chave => $valor) {
       $this->model->__set($chave, $valor);

@@ -4,20 +4,20 @@ namespace System\Model;
 
 class ComercioModel
 {
-  private $ID_COMERCIO;
-  private $NOME_COMERCIO;
-  private $TEL_COMERCIO;
-  private $CNPJ_COMERCIO;
-  private $ULTIMA_DATA_DOACAO;
-  private $SENHA_COMERCIO;
-  private $SECRET_COMERCIO;
+  private int $ID_COMERCIO;
+  private String $NOME_COMERCIO;
+  private String $TEL_COMERCIO;
+  private String $CNPJ_COMERCIO;
+  private String $ULTIMA_DATA_DOACAO;
+  private String $SENHA_COMERCIO;
+  private String $SECRET_COMERCIO;
 
-  public function __get($atributo)
+  public function __get(String $atributo)
   {
     return $this->$atributo;
   }
 
-  public function __set($atributo, $valor)
+  public function __set(String $atributo, $valor)
   {
     $this->$atributo = $valor;
   }

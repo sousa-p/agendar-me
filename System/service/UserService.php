@@ -3,13 +3,14 @@
 namespace System\Service;
 
 use PDO;
+use System\Model\UserModel;
 
 class UserService
 {
-  private $conn;
-  private $model;
+  private PDO $conn;
+  private UserModel $model;
 
-  public function __construct($conn, $model)
+  public function __construct(PDO $conn, UserModel $model)
   {
     $this->conn = $conn;
     $this->model = $model;

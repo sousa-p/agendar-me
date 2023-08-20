@@ -17,9 +17,9 @@ if (!isset($data['action']) || !ehDadoValido($data['action']))
 if (!isset($data['autor']) || !ehDadoValido($data['autor']))
   respostaHost('error', 'Autor inválido');
 
-$route = $data['route'];
-$action = $data['action'];
-$autor = $data['autor'];
+$route = (String)$data['route'];
+$action = (String)$data['action'];
+$autor = (String)$data['autor'];
 
 require_once './imports/RouteClassImports.php';
 require_once './imports/UserImports.php';
@@ -35,7 +35,7 @@ if ($action === 'cadastrar' || $action === 'login') {
 if (!isset($data['Authorization']) || !ehDadoValido($data['Authorization']))
   respostaHost('error', 'Algo deu errado :(');
 
-$bearer = explode(' ', $data['Authorization'])[1];
+$bearer = (String)explode(' ', $data['Authorization'])[1];
 
 if ($autor === 'User') {
   $userController->validarToken($bearer);

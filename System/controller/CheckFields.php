@@ -1,17 +1,17 @@
 <?php
 date_default_timezone_set('America/Sao_Paulo');
 
-function limparDados($data)
+function limparDados($data): String
 {
-  return strip_tags(stripcslashes(trim((string)$data)));
+  return strip_tags(stripcslashes(trim((String)$data)));
 }
 
-function ehDadoValido($data)
+function ehDadoValido($data): bool
 {
   return !empty($data) && !is_null($data) && $data !== 'null';
 }
 
-function ehTelefoneValido($tel)
+function ehTelefoneValido(String $tel): bool
 {
   $charsEspeciais = ['.', '/', '(', ')', '-', '+', ' '];
   $tel = str_replace($charsEspeciais, '', $tel);
@@ -19,18 +19,18 @@ function ehTelefoneValido($tel)
   return preg_match($regexTel, $tel) && strlen($tel) === 11;
 }
 
-function ehEmailValido($email)
+function ehEmailValido(String $email): bool
 {
   return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
-function ehStrValida($str)
+function ehStrValida($str): bool
 {
-  $regexStr = '/^[a-zA-Z 0-9 áéíóúÁÉÍÓÚãõÃÕâêîôûÂÊÎÔÛçÇ]*$/';
+  $regexStr = '/^[a-zA-Z 0-9 àáèéìíòóùúÀÁÈÉÌÍÒÓÙÚãõÃÕâêîôûÂÊÎÔÛçÇ]*$/';
   return is_string($str) && preg_match($regexStr, $str);
 }
 
-function respostaHost($tipo, $mensagem)
+function respostaHost(String $tipo, String $mensagem): void
 {
   echo json_encode([
     'retorno' => $tipo,
@@ -39,7 +39,7 @@ function respostaHost($tipo, $mensagem)
   exit();
 }
 
-function temDadosVazios($data)
+function temDadosVazios(Array $data): bool
 {
   foreach ($data as $valor) {
     if (!ehDadoValido($valor)) return true;
@@ -47,7 +47,7 @@ function temDadosVazios($data)
   return false;
 }
 
-function ehDataValida($data)
+function ehDataValida(String $data): bool
 {
   $explodedData = explode('-', $data);
   $mes = $explodedData[1];
@@ -56,40 +56,41 @@ function ehDataValida($data)
   return checkdate($mes, $dia, $ano);
 }
 
-function ehDataPassado($data)
+function ehDataPassado(String $data): bool
 {
   $now = date('Y-m-d');
   return strtotime($now) > strtotime($data);
 }
 
-function ehDataDepois($data, $dataCompare) {
+function ehDataDepois(String $data, String $dataCompare): bool
+{
   return strtotime($data) > strtotime($dataCompare);
 }
 
-function ehDataHoje($data)
+function ehDataHoje(String $data): bool
 {
   $now = date('Y-m-d');
   return strtotime($now) === strtotime($data);
 }
 
-function ehHoraPassado($hora, $dataMax)
+function ehHoraPassado(String $hora, int $dataMax): bool
 {
   return strtotime($hora) < $dataMax;
 }
 
-function ehHoraValida($hora)
+function ehHoraValida(String $hora): bool
 {
   return date('H:i', strtotime($hora)) === $hora;
 }
 
-function ehHoraPossivelIntervalo($hora, $intervaloMin)
+function ehHoraPossivelIntervalo(String $hora, int $intervaloMin): bool
 {
   $hora = strtotime($hora) / 60;
   $intervaloMin = (int)$intervaloMin;
   return ($hora % $intervaloMin) === 0;
 }
 
-function calcIntervaloData($data, $hora = '00:00:00', $formato = 'days')
+function calcIntervaloData(String $data, String $hora = '00:00:00', String $formato = 'days'): int
 {
   $now = new DateTime();
   $intervalo = $now->diff(new DateTime("$data $hora"));
@@ -97,7 +98,7 @@ function calcIntervaloData($data, $hora = '00:00:00', $formato = 'days')
   return $intervalo->$formato;
 }
 
-function ehCnpjValido($cnpj)
+function ehCnpjValido(String $cnpj): bool
 {
   $regexCnpj = "/^\d{14}$/";
   return preg_match($regexCnpj, $cnpj);

@@ -2,14 +2,17 @@
 
 namespace System\Controller;
 
+use System\Model\RestricaoModel;
+use System\Service\RestricaoService;
+
 require_once './controller/CheckFields.php';
 
 class RestricaoController
 {
-  private $model;
-  private $service;
+  private RestricaoModel $model;
+  private RestricaoService $service;
 
-  public function __construct($data, $model, $service)
+  public function __construct(Array $data, RestricaoModel $model, RestricaoService $service)
   {
     foreach ($data as $chave => $valor) {
       $this->$chave = $valor;
@@ -18,7 +21,7 @@ class RestricaoController
     $this->service = $service;
   }
 
-  public function colocarDadosModel($data)
+  private function colocarDadosModel($data)
   {
     foreach ($data as $chave => $valor) {
       $this->model->__set($chave, $valor);

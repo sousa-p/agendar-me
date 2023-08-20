@@ -75,6 +75,7 @@ export class DateService {
   gerarHorarios(
     intervalo: number,
     restricoes: any,
+    horasEspeciais: string[],
     agendamentos: any
   ): string[] {
     const horarios: string[] = [];
@@ -91,7 +92,7 @@ export class DateService {
         const fim = hFim ? this.horaStringToDate(hFim) : null;
 
         return !this.estaIntervaloHorario(horario, inicio, fim);
-      });
+      }) || horasEspeciais.includes(format(horario, 'HH:mm') + ':00');
       
       const estaAgendado = agendamentos.includes(
         format(horario, 'HH:mm') + ':00'

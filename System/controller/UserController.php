@@ -2,13 +2,16 @@
 
 namespace System\Controller;
 
+use System\Model\UserModel;
+use System\Service\UserService;
+
 require_once './controller/CheckFields.php';
 class UserController
 {
-  private $model;
-  private $service;
+  private UserModel $model;
+  private UserService $service;
 
-  public function __construct($data, $model, $service)
+  public function __construct(array $data, UserModel $model, UserService $service)
   {
     foreach ($data as $chave => $valor) {
       $this->$chave = $valor;
@@ -17,7 +20,7 @@ class UserController
     $this->service = $service;
   }
 
-  public function colocarDadosModel($data)
+  private function colocarDadosModel($data)
   {
     foreach ($data as $atributo => $valor) {
       $this->model->__set($atributo, $valor);
@@ -73,7 +76,7 @@ class UserController
     exit();
   }
 
-  public function validarToken($bearer)
+  public function validarToken(String $bearer)
   {
     $bearer = limparDados($bearer);
     if (!ehDadoValido($bearer))

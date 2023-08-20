@@ -1,13 +1,16 @@
 <?php
 namespace System\Controller;
 
+use System\Model\ComercioModel;
+use System\Service\ComercioService;
+
 require_once './controller/CheckFields.php';
 class ComercioController
 {
-  private $model;
-  private $service;
+  private ComercioModel $model;
+  private ComercioService $service;
 
-  public function __construct($data, $model, $service)
+  public function __construct(Array $data, ComercioModel $model, ComercioService $service)
   {
     foreach ($data as $chave => $valor) {
       $this->$chave = $valor;
@@ -16,7 +19,7 @@ class ComercioController
     $this->service = $service;
   }
 
-  public function colocarDadosModel($data)
+  private function colocarDadosModel($data)
   {
     foreach ($data as $atributo => $valor) {
       $this->model->__set($atributo, $valor);

@@ -3,13 +3,14 @@
 namespace System\Service;
 
 use PDO;
+use System\Model\ComercioModel;
 
 class ComercioService
 {
-  private $conn;
-  private $model;
+  private PDO $conn;
+  private ComercioModel $model;
 
-  public function __construct($conn, $model)
+  public function __construct(PDO $conn, ComercioModel $model)
   {
     $this->conn = $conn;
     $this->model = $model;
