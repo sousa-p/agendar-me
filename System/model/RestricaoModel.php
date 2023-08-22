@@ -8,7 +8,7 @@ class RestricaoModel
   private int $INTERVALO_TEMPO;
   private int $DIA_SEMANA;
   private String $DATA_INICIO;
-  private String $DATA_FIM;
+  private String | null $DATA_FIM;
 
   public function __get(String $atributo)
   {

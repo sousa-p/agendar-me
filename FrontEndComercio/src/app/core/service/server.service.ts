@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class ServerService {
   constructor(private http: HttpClient, private Cookie: CookieService) {}
 
-  private url: string = 'https://teste-epa.000webhostapp.com/System/';
+  private url: string = 'http://localhost/agendar/System/';
 
   request(data: any): Observable<any> {
     data['autor'] = 'Comercio';

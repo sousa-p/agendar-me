@@ -208,7 +208,7 @@ class RestricaoController
     $data = [
       'DATA_INICIO' => limparDados($this->DATA_INICIO),
       'HORARIO_INICIO' => limparDados($this->HORARIO_INICIO),
-      'HORARIO_FIM' => limparDados($this->HORARIO_FIM)
+      'HORARIO_FIM' => limparDados($this->HORARIO_FIM),
     ];
 
     if (temDadosVazios($data)) respostaHost('error', 'Dados inválidos');
@@ -219,6 +219,8 @@ class RestricaoController
       if (!ehDadoValido($data['DATA_FIM'])) respostaHost('error', 'Dados inválidos');
       if (!ehDataValida($data['DATA_FIM'])) respostaHost('error', 'Data de fim inválida');
       if (ehDataDepois($data['DATA_INICIO'], $data['DATA_FIM'])) respostaHost('error', 'Data início tem que ser anterior a de fim');
+    } else {
+      $data['DATA_FIM'] = null;
     }
 
     if (!ehHoraValida($data['HORARIO_INICIO'])) respostaHost('error', 'Hora de início inválida');

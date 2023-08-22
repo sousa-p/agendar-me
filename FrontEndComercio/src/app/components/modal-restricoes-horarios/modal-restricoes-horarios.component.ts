@@ -25,18 +25,18 @@ export class ModalRestricoesHorariosComponent implements OnInit {
     21, 22, 23,
   ];
   public horasRestantes: number[] = this.horas;
-  
+
   public minutos: any = [0, 30];
-  
+
   public restricoesHorarios: Restricao[] = [];
-  
+
   public horarioInicio: string = `00:${String(this.minutos.at(0)).padStart(2, '0')}`;
   public horarioFim: string = `23:${String(this.minutos.at(-1)).padStart(2, '0')}`;
   public dataInicio?: string;
   public dataFim?: string;
 
   public loading: boolean = true;
-  
+
   private tempo: number = 1000;
 
   ngOnInit() {
@@ -70,7 +70,7 @@ export class ModalRestricoesHorariosComponent implements OnInit {
       (response) => {
         if (response.retorno === 'success')
           this.carregarPagina();
-        
+
         this.Toast.mostrarToast(response.retorno, this.tempo, response.mensagem);
       },
       (error) => {
@@ -109,10 +109,8 @@ export class ModalRestricoesHorariosComponent implements OnInit {
   }
 
   public marcarHorarioInicio(event: any) {
-    this.horarioInicio = this.Date.formatarDataString(
-      event.detail.value,
-      'HH:mm'
-    );
+    console.log(event)
+    this.horarioInicio = event.detail.value;
 
     this.horasRestantes = this.horas.filter((n) => {
       return n >= Number(this.horarioInicio?.split(':')[0]);
@@ -120,6 +118,6 @@ export class ModalRestricoesHorariosComponent implements OnInit {
   }
 
   public marcarHorarioFim(event: any) {
-    this.horarioFim = this.Date.formatarDataString(event.detail.value, 'HH:mm');
+    this.horarioFim = event.detail.value;
   }
 }

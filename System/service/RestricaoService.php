@@ -215,9 +215,7 @@ class RestricaoService
     $stmt = $this->conn->prepare($insert);
     $stmt->bindValue(':DATA_INICIO', $this->model->__get('DATA_INICIO'));
 
-    $DATA_FIM = ($this->model->__get('DATA_FIM') !== null) ? $this->model->__get('DATA_FIM') : null;
-
-    $stmt->bindValue(':DATA_FIM', $DATA_FIM);
+    $stmt->bindValue(':DATA_FIM', $this->model->__get('DATA_FIM'));
     $stmt->bindValue(':HORARIO_INICIO', $this->model->__get('HORARIO_INICIO'));
     $stmt->bindValue(':HORARIO_FIM', $this->model->__get('HORARIO_FIM'));
 
