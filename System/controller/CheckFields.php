@@ -73,9 +73,9 @@ function ehDataHoje(String $data): bool
   return strtotime($now) === strtotime($data);
 }
 
-function ehHoraPassado(String $hora, int $dataMax): bool
+function ehHoraPassado(String $hora, String $dataMax): bool
 {
-  return strtotime($hora) < $dataMax;
+  return strtotime($hora) < strtotime($dataMax);
 }
 
 function ehHoraValida(String $hora): bool

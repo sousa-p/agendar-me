@@ -10,13 +10,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './core/auth/auth.guard';
 import { RedirectGuard } from './core/auth/redirect.guard';
 
+import { NgChartsModule } from 'ng2-charts';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgChartsModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

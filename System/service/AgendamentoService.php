@@ -121,6 +121,12 @@ class AgendamentoService
     $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
     $stmt->bindValue(':ID_AGENDAMENTO', (int)$this->model->__get('ID_AGENDAMENTO'));
     $stmt->execute();
+
+    $update = 'UPDATE USER SET CANCELAMENTOS = CANCELAMENTOS + 1 WHERE ID_USER = :ID_USER';
+    $stmt = $this->conn->prepare($update);
+    $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
+    $stmt->execute();
+
     return [
       'retorno' => 'success',
       'mensagem' => 'Agendamento removido com sucesso!'

@@ -38,6 +38,31 @@
             <p>{{ this.cliente?.EMAIL_USER }}</p>
           </ion-text>
         </ion-item>
+
+        <ion-text class="ion-margin">
+          <h3>Dados do cliente:</h3>
+        </ion-text>
+        <ion-row
+          class="ion-align-items-center ion-justify-content-center ion-margin"
+        >
+          <ng-container *ngIf="this.cliente?.AGENDAMENTOS || this.cliente?.CANCELAMENTOS">
+            <div style="display: block">
+              <canvas
+                baseChart
+                [type]="'doughnut'"
+                [data]="this.chart"
+                [options]="this.charOptions"
+              >
+              </canvas>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!(this.cliente?.AGENDAMENTOS && this.cliente?.CANCELAMENTOS)">
+            <ion-text color="primary" class="ion-text-center">
+              <h3>Cliente não possue dados</h3>
+            </ion-text>
+          </ng-container>
+        </ion-row>
+
         <ion-row class="ion-align-items-center ion-justify-content-center">
           <ion-col size="auto">
             <ion-button

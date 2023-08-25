@@ -83,7 +83,20 @@ class ComercioService
 
   public function getClientes()
   {
-    $select = 'SELECT ID_USER, NOME_USER,  EMAIL_USER, TEL_USER FROM USER';
+    $select = 'SELECT
+        USER.ID_USER,
+        NOME_USER,
+        EMAIL_USER,
+        TEL_USER,
+        CANCELAMENTOS,
+        (SELECT COUNT(ID_AGENDAMENTO)
+            FROM AGENDAMENTO
+            WHERE AGENDAMENTO.ID_USER = USER.ID_USER
+              AND (DATA_AGENDAMENTO < CURDATE()
+              OR ( DATA_AGENDAMENTO = CURDATE() AND HORARIO_AGENDAMENTO <= CURTIME()))
+        ) AS AGENDAMENTOS
+    FROM
+        USER';
     $stmt = $this->conn->query($select);
     return $stmt->fetchAll(PDO::FETCH_OBJ);
   }
@@ -116,3 +129,4 @@ class ComercioService
     ];
   }
 }
+
