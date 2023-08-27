@@ -1,0 +1,108 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        color="primary"
+        defaultHref="#"
+        routerLink="/home"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <app-refresher></app-refresher>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Dashboard</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-row>
+    <ion-col class="section" size="12">
+      <ng-container *ngIf="!this.loading">
+        <ion-text class="ion-text-center" color="primary" *ngIf="!this.haDados">
+          <h1>Não há dados!</h1>
+        </ion-text>
+
+        <ion-row
+          class="ion-align-items-center ion-justify-content-around ion-margin"
+        >
+          <ng-container
+            *ngIf="this.dashboard?.AGENDAMENTOS || this.dashboard?.CANCELAMENTOS"
+          >
+            <ion-col class="wrapper__chart ion-margin">
+              <ion-list class="ion-margin">
+                <ion-item>
+                  <ion-text color="primary">
+                    <h3>Total: R$ {{this.dashboard.MES.TOTAL}}</h3>
+                  </ion-text>
+                </ion-item>
+              </ion-list>
+              <canvas
+                baseChart
+                width="280"
+                height="320"
+                [type]="'line'"
+                [data]="this.chartMes"
+                [options]="this.chartOptionsMes"
+              >
+              </canvas>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+        <ion-row
+          class="ion-align-items-center ion-justify-content-around ion-margin"
+        >
+          <ng-container
+            *ngIf="this.dashboard?.AGENDAMENTOS || this.dashboard?.CANCELAMENTOS"
+          >
+            <ion-col class="wrapper__chart ion-margin ion-padding">
+              <canvas
+                baseChart
+                width="280"
+                height="320"
+                [type]="'bar'"
+                [data]="this.chartMensal"
+                [options]="this.chartOptionsMensal"
+              >
+              </canvas>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+        <ion-row
+          class="ion-align-items-center ion-justify-content-around ion-margin"
+        >
+          <ng-container
+            *ngIf="this.dashboard?.AGENDAMENTOS || this.dashboard?.CANCELAMENTOS"
+          >
+            <ion-col class="wrapper__chart ion-margin">
+              <canvas
+                baseChart
+                [type]="'doughnut'"
+                [data]="this.chartCancelamentos"
+                [options]="this.chartOptionsCancelamentos"
+              >
+              </canvas>
+            </ion-col>
+          </ng-container>
+          <ng-container *ngIf="this.dashboard.SERVICOS.length">
+            <ion-col class="wrapper__chart ion-margin">
+              <canvas
+                baseChart
+                width="280"
+                height="320"
+                [type]="'bar'"
+                [data]="this.chartServicos"
+                [options]="this.chartOptionsServicos"
+              >
+              </canvas>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+      </ng-container>
+      <app-loading [condicao]="this.loading"></app-loading>
+    </ion-col>
+  </ion-row>
+</ion-content>

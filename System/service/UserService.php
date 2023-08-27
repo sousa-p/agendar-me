@@ -62,7 +62,7 @@ class UserService
     $stmt = $this->conn->prepare($select);
     $stmt->bindValue(':ID_USER', (int)$this->model->__get('ID_USER'));
     $stmt->execute();
-    return $stmt->fetch()->SECRET_USER;
+    return ($stmt->rowCount() > 0) ? $stmt->fetch()->SECRET_USER : '';
   }
 
   public function checarInfosLogin()

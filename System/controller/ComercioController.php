@@ -107,4 +107,11 @@ class ComercioController
     echo json_encode($this->service->deleteCliente());
     exit();
   }
+
+  public function getDashboardInfos() {
+    if ($this->model->__get('AUTOR') !== 'Comercio') respostaHost('error', 'Sem permissão');
+    
+    echo json_encode($this->service->getDashboardInfos());
+    exit();
+  }
 }

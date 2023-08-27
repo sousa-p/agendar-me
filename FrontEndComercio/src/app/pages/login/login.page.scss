@@ -1,9 +1,6 @@
-ion-content {
-  max-height: 100%;
-  overflow-y: hidden;
-}
-.section {
-  min-height: calc(100vh - 68px);
+
+.ion-page {
+  min-height: 600px;
   background-image: url("../../../assets/images/blob_scene.svg");
   background-size: cover;
   background-position: center;

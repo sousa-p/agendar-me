@@ -1,4 +1,5 @@
 .ion-page {
+  min-height: 650px;
   background-image: url('../../../assets/images/blob_scene.svg');
   background-size: cover;
   background-position: center;
@@ -11,7 +12,7 @@
 }
 
 #wrapper_cadastrar {
-  margin-top: 34px; 
+  margin-top: 34px;
 
   h1 {
     font-size: 2.15em;

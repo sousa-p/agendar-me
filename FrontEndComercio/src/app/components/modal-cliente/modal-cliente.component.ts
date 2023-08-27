@@ -36,7 +36,7 @@ export class ModalClienteComponent implements OnInit {
   }
 
   public chart?: ChartConfiguration<'doughnut'>['data'];
-  public charOptions: ChartOptions<'doughnut'> = {
+  public chartOptions: ChartOptions<'doughnut'> = {
     responsive: false
   };
 

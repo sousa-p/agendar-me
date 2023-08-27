@@ -128,5 +128,46 @@ class ComercioService
       'mensagem' => 'Cliente removido com sucesso!'
     ];
   }
-}
 
+  public function getDashboardInfos()
+  {
+    $select = 'SELECT * FROM RELATORIO_SERVICOS';
+    $stmt = $this->conn->query($select);
+    $stmt->execute();
+    $servicos = $stmt->fetchAll();
+
+    $select = 'SELECT * FROM RELATORIO_CANCELAMENTOS_AGENDAMENTOS';
+    $stmt = $this->conn->query($select);
+    $stmt->execute();
+    $data = $stmt->fetch();
+
+    $cancelamentos = (int)$data->CANCELAMENTOS;
+    $agendamentos = (int)$data->AGENDAMENTOS;
+
+    $select = 'SELECT * FROM RELATORIO_MES';
+    $stmt = $this->conn->query($select);
+    $stmt->execute();
+    $mes = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+    $select = 'SELECT COALESCE(SUM(TOTAL), 0.00) AS TOTAL_MES FROM RELATORIO_MENSAL';
+    $stmt = $this->conn->query($select);
+    $stmt->execute();
+    $totalMes = $stmt->fetch(PDO::FETCH_COLUMN);
+
+    $select = 'SELECT * FROM RELATORIO_MENSAL';
+    $stmt = $this->conn->query($select);
+    $stmt->execute();
+    $mensal = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+    return [
+      'SERVICOS' => $servicos,
+      'CANCELAMENTOS' => $cancelamentos,
+      'AGENDAMENTOS' => $agendamentos,
+      'MES' => [
+        'TOTAL' => $totalMes,
+        'DADOS' => $mes
+      ],
+      'MENSAL' => array_reverse($mensal),
+    ];
+  }
+}

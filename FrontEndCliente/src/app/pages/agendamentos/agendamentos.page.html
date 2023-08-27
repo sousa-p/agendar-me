@@ -27,13 +27,13 @@
           [isModalOpen]="this.isModalOpen"
           (fechar)="this.setOpen(false);"
         ></app-modal-horario>
+        <ion-infinite-scroll
+          (ionInfinite)="onIonInfinite($event)"
+          [disabled]="this.agendamentosRealizados && this.agendamentoAtual >= this.agendamentosRealizados!.length"
+        >
+          <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
       </ng-container>
-      <ion-infinite-scroll
-        (ionInfinite)="onIonInfinite($event)"
-        [disabled]="this.agendamentosRealizados && this.agendamentoAtual >= this.agendamentosRealizados!.length"
-      >
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-      </ion-infinite-scroll>
       <ng-container *ngIf="this.agendamentosRealizados?.length === 0">
         <ion-text color="primary" class="ion-text-center">
           <h2>Não há agendamentos...</h2>

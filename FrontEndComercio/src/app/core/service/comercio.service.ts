@@ -52,4 +52,13 @@ export class ComercioService {
 
     return this.Server.request(data);
   }
+
+  public getDashboardInfos() {
+    const data = {
+      route: 'Comercio',
+      action: 'getDashboardInfos',
+    };
+
+    return this.Server.request(data);
+  }
 }
