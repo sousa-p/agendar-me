@@ -56,7 +56,7 @@
               </canvas>
             </div>
           </ng-container>
-          <ng-container *ngIf="!(this.cliente?.AGENDAMENTOS && this.cliente?.CANCELAMENTOS)">
+          <ng-container *ngIf="!(this.cliente?.AGENDAMENTOS || this.cliente?.CANCELAMENTOS)">
             <ion-text color="primary" class="ion-text-center">
               <h3>Cliente não possue dados</h3>
             </ion-text>
