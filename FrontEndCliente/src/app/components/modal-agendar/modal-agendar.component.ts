@@ -21,7 +21,6 @@ import { WhatsappService } from 'src/app/core/service/whatsapp.service';
 })
 export class ModalAgendarComponent implements OnInit {
   constructor(
-    private Servicos: ServicosService,
     private Agendamento: AgendamentoService,
     private Toast: ToastService,
     private Date: DateService,

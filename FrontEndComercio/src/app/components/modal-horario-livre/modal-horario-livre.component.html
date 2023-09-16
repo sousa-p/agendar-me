@@ -3,8 +3,16 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>
-          <ion-icon *ngIf="this.horario.restrito" name="lock-closed" size="large"></ion-icon>
-          <ion-icon *ngIf="!this.horario.restrito" name="lock-open" size="large"></ion-icon>
+          <ion-icon
+            *ngIf="this.horario.restrito"
+            name="lock-closed"
+            size="large"
+          ></ion-icon>
+          <ion-icon
+            *ngIf="!this.horario.restrito"
+            name="lock-open"
+            size="large"
+          ></ion-icon>
         </ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="this.fechar.emit('fechar')">
@@ -22,15 +30,18 @@
           </ion-text>
         </ion-item>
       </ion-list>
-      <ion-row class="ion-align-items-center ion-justify-content-center ion-margin">
+      <ion-row
+        class="ion-align-items-center ion-justify-content-center ion-margin"
+        *ngIf="!this.agendando"
+      >
         <ion-col size="auto" *ngIf="!this.horario.restrito">
-          <ion-button id="toggle-restringir">
+          <ion-button class="btn" id="agendar" (click)="this.agendando = true">
             Agendar
           </ion-button>
         </ion-col>
         <ion-col size="auto">
-          <ion-button id="toggle-restringir" fill="outline">
-            {{ (this.horario.restrito)  ? 'Tirar Restrição' : 'Restringir'}}
+          <ion-button class="btn" id="toggle-restringir" fill="outline">
+            {{ this.horario.restrito ? "Tirar Restrição" : "Restringir" }}
           </ion-button>
           <ion-alert
             mode="md"
@@ -41,6 +52,126 @@
           ></ion-alert>
         </ion-col>
       </ion-row>
+
+      <!-- Agendar em nome do cliente -->
+      <ng-container *ngIf="this.agendando">
+        <form
+          #agendarForm="ngForm"
+          *ngIf="this.servicos"
+          (ngSubmit)="agendar()"
+        >
+          <ion-text color="primary">
+            <h3>Clientes</h3>
+          </ion-text>
+          <ion-row>
+            <ion-col size="12">
+              <ng-container *ngIf="this.clientes.length">
+                <ion-searchbar
+                  mode="ios"
+                  placeholder="Pesquisar Cliente"
+                  [debounce]="150"
+                  (ionInput)="this.filtrar($event)"
+                ></ion-searchbar>
+                <ion-radio-group>
+                  <ng-container *ngFor="let cliente of this.clientesPagina">
+                    <ion-item>
+                      <ion-radio>
+                        <app-linha-perfil
+                          [noLine]="true"
+                          [perfil]="cliente"
+                        ></app-linha-perfil>
+                      </ion-radio>
+                    </ion-item>
+                  </ng-container>
+                  <ion-infinite-scroll
+                    (ionInfinite)="carregarClientesPagina($event)"
+                    [disabled]="
+                      this.clienteAtual >= this.clientesFiltrados!.length
+                    "
+                  ></ion-infinite-scroll>
+                </ion-radio-group>
+              </ng-container>
+              <ng-container *ngIf="!this.clientes?.length">
+                <ion-row class="ion-justify-content-center ion-align-items-center">
+                  <ion-col size="auto">
+                    <ion-text color="primary">
+                      <h2>Não há clientes cadastrados</h2>
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+              </ng-container>
+              <ng-container
+                *ngIf="this.clientes?.length && !this.clientesFiltrados?.length"
+              >
+                <ion-row class="ion-justify-content-center ion-align-items-center">
+                  <ion-col size="auto">
+                    <ion-text color="primary">
+                      <h3>Nenhum Cliente Encontrado!</h3>
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+              </ng-container>
+            </ion-col>
+          </ion-row>
+
+          <ion-text color="primary">
+            <h3>Serviços</h3>
+          </ion-text>
+          <ion-list>
+            <ion-item *ngFor="let servico of this.servicos!">
+              <ion-checkbox
+                (ionChange)="attServicosSelecionados($event)"
+                [value]="servico"
+              >
+                <ion-text>
+                  <p>{{ servico.NOME_SERVICO }}</p>
+                </ion-text>
+                <ion-text color="primary">
+                  <p class="preco">R$ {{ servico.PRECO_SERVICO }}</p>
+                </ion-text>
+              </ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-label class="ion-padding">Total:</ion-label>
+              <ion-label slot="end" class="preco ion-padding"
+                >R$ {{ this.total.toFixed(2).replace("-", "") }}</ion-label
+              >
+            </ion-item>
+          </ion-list>
+          <ion-row class="ion-align-items-center ion-justify-content-center">
+            <ion-col size="auto">
+              <ion-button
+                class="btn"
+                id="agendar"
+                size="default"
+                type="submit"
+                [disabled]="
+                  !this.servicosSelecionados.length || !this.clienteSelecionado
+                "
+              >
+                FINALIZAR
+              </ion-button>
+            </ion-col>
+            <ion-col size="auto">
+              <ion-button
+                class="btn"
+                id="cancelar"
+                size="default"
+                fill="outline"
+              >
+                CANCELAR
+              </ion-button>
+              <ion-alert
+                mode="md"
+                trigger="cancelar"
+                header="Alerta!"
+                subHeader="Deseja mesmo cancelar o agendamento?"
+                [buttons]="this.alertButtonsCancelar"
+              ></ion-alert>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ng-container>
     </ion-content>
   </ng-template>
 </ion-modal>

@@ -11,6 +11,8 @@ export class LinhaPerfilComponent  implements OnInit {
   constructor() { }
 
   ngOnInit() {}
-  
+
   @Input() public perfil?: User;
+  @Input() public noLine: boolean = false;
+
 }

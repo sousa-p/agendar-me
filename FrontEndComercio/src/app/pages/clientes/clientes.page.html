@@ -28,36 +28,47 @@
       <ng-container *ngIf="!this.loading">
         <ng-container *ngIf="this.clientes.length">
           <ion-searchbar
-          mode="ios"
-          placeholder="Pesquisar Cliente"
-          [debounce]="150"
-          (ionInput)="this.filtrar($event)"
+            mode="ios"
+            placeholder="Pesquisar Cliente"
+            [debounce]="150"
+            (ionInput)="this.filtrar($event)"
           ></ion-searchbar>
           <ion-text class="ion-text-center" color="primary">
             <p>Total de clientes: {{ this.clientes.length }}</p>
           </ion-text>
-          <ng-container *ngFor="let perfil of this.clientesPagina">
-            <app-linha-perfil
-              [perfil]="perfil"
-              (click)="this.clicarCliente(perfil)"
-            ></app-linha-perfil>
-          </ng-container>
-          <ion-infinite-scroll
-            (ionInfinite)="carregarClientesPagina($event)"
-            [disabled]="this.clienteAtual >= this.clientesFiltrados!.length"
-          >
-            <ion-infinite-scroll-content></ion-infinite-scroll-content>
-          </ion-infinite-scroll>
         </ng-container>
-        <ng-container *ngIf="this.clientes?.length === 0">
-          <ion-row class="ion-justify-content-center ion-align-items-center">
-            <ion-col size="auto">
-              <ion-text color="primary">
-                <h2>Não há clientes cadastrados</h2>
-              </ion-text>
-            </ion-col>
-          </ion-row>
+        <ng-container *ngFor="let perfil of this.clientesPagina">
+          <app-linha-perfil
+            [perfil]="perfil"
+            (click)="this.clicarCliente(perfil)"
+          ></app-linha-perfil>
         </ng-container>
+        <ion-infinite-scroll
+          (ionInfinite)="carregarClientesPagina($event)"
+          [disabled]="this.clienteAtual >= this.clientesFiltrados!.length"
+        >
+          <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </ng-container>
+      <ng-container *ngIf="!this.clientes?.length">
+        <ion-row class="ion-justify-content-center ion-align-items-center">
+          <ion-col size="auto">
+            <ion-text color="primary">
+              <h2>Não há clientes cadastrados</h2>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ng-container>
+      <ng-container
+        *ngIf="this.clientes?.length && !this.clientesFiltrados?.length"
+      >
+        <ion-row class="ion-justify-content-center ion-align-items-center">
+          <ion-col size="auto">
+            <ion-text color="primary">
+              <h3>Nenhum Cliente Encontrado!</h3>
+            </ion-text>
+          </ion-col>
+        </ion-row>
       </ng-container>
       <app-loading [condicao]="this.loading"></app-loading>
     </ion-col>
