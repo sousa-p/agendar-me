@@ -11,6 +11,7 @@ import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import { ToastService } from 'src/app/core/controller/toast.service';
 import { Servicos } from 'src/app/core/interface/Servicos';
 import { User } from 'src/app/core/interface/User';
+import { AgendamentoService } from 'src/app/core/service/agendamento.service';
 import { ComercioService } from 'src/app/core/service/comercio.service';
 import { RestricaoService } from 'src/app/core/service/restricao.service';
 import { ServicosService } from 'src/app/core/service/servicos.service';
@@ -25,7 +26,8 @@ export class ModalHorarioLivreComponent implements OnInit {
     private Restricao: RestricaoService,
     private Toast: ToastService,
     private Servicos: ServicosService,
-    private Comercio: ComercioService
+    private Comercio: ComercioService,
+    private Agendamento: AgendamentoService
   ) {}
 
   @ViewChild('agendarForm') private agendarForm!: NgForm;
@@ -67,10 +69,10 @@ export class ModalHorarioLivreComponent implements OnInit {
         this.servicos = response;
         this.Comercio.getClientes().subscribe(
           (response) => {
-            console.log(response)
             this.clientes = response;
             this.clientesFiltrados = response;
             this.mostrarItensClientes();
+            this.loading = false;
           },
           (error) => {
             console.error(error);
@@ -149,7 +151,28 @@ export class ModalHorarioLivreComponent implements OnInit {
     }
   }
 
-  public agendar() {}
+  agendar() {
+    this.Agendamento.realizarAgendamentoEmNomeCliente(
+      this.data!,
+      this.horario.horas!,
+      this.clienteSelecionado!,
+      this.servicosSelecionados
+    ).subscribe(
+      (response) => {
+        const tempo = 1000;
+        this.Toast.mostrarToast(response.retorno, tempo, response.mensagem);
+        if (response.retorno === 'success') {
+          setTimeout(() => {
+            location.reload();
+          }, tempo);
+        }
+        this.servicosSelecionados = [];
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
 
   public alertButtonsCancelar = [
     {

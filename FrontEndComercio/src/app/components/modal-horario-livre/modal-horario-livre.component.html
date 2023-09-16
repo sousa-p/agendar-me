@@ -52,9 +52,8 @@
           ></ion-alert>
         </ion-col>
       </ion-row>
-
       <!--AGENDAR NO NOME DO CLIENTE -->
-      <ng-container *ngIf="this.agendando">
+      <ng-container *ngIf="this.agendando && !this.loading">
         <form
           #agendarForm="ngForm"
           *ngIf="this.servicos"
@@ -178,6 +177,9 @@
           </ion-row>
         </form>
       </ng-container>
+      <app-loading
+        [condicao]="this.agendando && this.loading"
+      ></app-loading>
     </ion-content>
   </ng-template>
 </ion-modal>

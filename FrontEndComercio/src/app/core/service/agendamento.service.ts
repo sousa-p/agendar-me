@@ -3,6 +3,7 @@ import { ServerService } from './server.service';
 import { Agendamento } from '../interface/Agendamento';
 import { DateService } from '../controller/date.service';
 import { Observable } from 'rxjs';
+import { Servicos } from '../interface/Servicos';
 
 @Injectable({
   providedIn: 'root',
@@ -68,5 +69,23 @@ export class AgendamentoService {
       observer.next();
       observer.complete();
     });
+  }
+
+  public realizarAgendamentoEmNomeCliente(
+    dataAgendamento: string,
+    horarioAgendamento: string,
+    idCliente: number,
+    servicosAgendamento: Servicos[]
+  ) {
+    const data = {
+      route: 'Agendamento',
+      action: 'realizarAgendamentoEmNomeCliente',
+      DATA_AGENDAMENTO: dataAgendamento,
+      HORARIO_AGENDAMENTO: horarioAgendamento,
+      ID_USER: idCliente,
+      SERVICOS_AGENDAMENTO: JSON.stringify(servicosAgendamento),
+    };
+
+    return this.Server.request(data);
   }
 }

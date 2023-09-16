@@ -24,7 +24,8 @@ export class ModalAgendarComponent implements OnInit {
     private Agendamento: AgendamentoService,
     private Toast: ToastService,
     private Date: DateService,
-    private Whatsapp: WhatsappService
+    private Whatsapp: WhatsappService,
+    private Servicos: ServicosService
   ) {}
 
   @Input() public isModalOpen: boolean = false;

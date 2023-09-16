@@ -63,6 +63,7 @@ class AgendamentoService
     $stmt->execute();
     return $stmt->rowCount() > 0;
   }
+
   public function save()
   {
     $insert = 'INSERT INTO AGENDAMENTO (ID_USER, DATA_AGENDAMENTO, HORARIO_AGENDAMENTO) VALUES (:ID_USER, :DATA_AGENDAMENTO, :HORARIO_AGENDAMENTO)';
