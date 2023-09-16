@@ -25,10 +25,7 @@
               class="modal__tel"
               href="https://wa.me/55{{ this.cliente!.TEL_USER }}"
               target="_blank"
-              ><h4>
-                +55 {{ this.cliente!.TEL_USER }}
-                <ion-icon name="logo-whatsapp" size="large"></ion-icon>
-              </h4>
+              ><h4>+55 {{ this.cliente!.TEL_USER }}</h4>
             </a>
           </ion-text>
         </ion-item>
@@ -39,46 +36,54 @@
           </ion-text>
         </ion-item>
 
-        <ion-text class="ion-margin">
-          <h3>Dados do cliente:</h3>
-        </ion-text>
-        <ion-row
-          class="ion-align-items-center ion-justify-content-center ion-margin"
-        >
-          <ng-container *ngIf="this.cliente?.AGENDAMENTOS || this.cliente?.CANCELAMENTOS">
-            <div style="display: block">
-              <canvas
-                baseChart
-                [type]="'doughnut'"
-                [data]="this.chart"
-                [options]="this.chartOptions"
-              >
-              </canvas>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="!(this.cliente?.AGENDAMENTOS || this.cliente?.CANCELAMENTOS)">
-            <ion-text color="primary" class="ion-text-center">
-              <h3>Cliente não possue dados</h3>
+        <ion-row class="ion-margin">
+          <ion-col size="12">
+            <ion-text class="ion-margin">
+              <h3>Dados do cliente:</h3>
             </ion-text>
-          </ng-container>
-        </ion-row>
-
-        <ion-row class="ion-align-items-center ion-justify-content-center">
-          <ion-col size="auto">
-            <ion-button
-              class="modal__btn ion-margin"
-              id="excluir-cliente"
-              color="danger"
+            <ion-row
+              class="ion-align-items-center ion-justify-content-center ion-margin"
             >
-              Excluir Cliente
-            </ion-button>
-            <ion-alert
-              mode="md"
-              trigger="excluir-cliente"
-              header="Alerta!"
-              subHeader="Você tem certeza que gostaria de excluir este cliente?"
-              [buttons]="this.alertButtons"
-            ></ion-alert>
+              <ng-container
+                *ngIf="this.cliente?.AGENDAMENTOS || this.cliente?.CANCELAMENTOS"
+              >
+                <div style="display: block">
+                  <canvas
+                    baseChart
+                    [type]="'doughnut'"
+                    [data]="this.chart"
+                    [options]="this.chartOptions"
+                  >
+                  </canvas>
+                </div>
+              </ng-container>
+              <ng-container
+                *ngIf="!(this.cliente?.AGENDAMENTOS || this.cliente?.CANCELAMENTOS)"
+              >
+                <ion-text color="primary" class="ion-text-center">
+                  <h3>Cliente não possue dados</h3>
+                </ion-text>
+              </ng-container>
+            </ion-row>
+
+            <ion-row class="ion-align-items-center ion-justify-content-center">
+              <ion-col size="auto">
+                <ion-button
+                  class="modal__btn ion-margin"
+                  id="excluir-cliente"
+                  color="danger"
+                >
+                  Excluir Cliente
+                </ion-button>
+                <ion-alert
+                  mode="md"
+                  trigger="excluir-cliente"
+                  header="Alerta!"
+                  subHeader="Você tem certeza que gostaria de excluir este cliente?"
+                  [buttons]="this.alertButtons"
+                ></ion-alert>
+              </ion-col>
+            </ion-row>
           </ion-col>
         </ion-row>
       </ion-list>

@@ -58,8 +58,10 @@
             <ion-button class="adicionar__btn" (click)="this.adicionarRestricaoData()" [disabled]="!(this.dataInicio && this.dataFim)">Adicionar</ion-button>
           </ion-col>
         </ion-row>
-        <ion-list>
-          <h4 *ngIf="this.restricoesDatas.length">Restrições</h4>
+        <ion-list class="ion-margin">
+          <ion-text class="ion-text-center" *ngIf="this.restricoesDatas.length">
+            <h4>Restrições</h4>
+          </ion-text>
           <ion-item *ngFor="let restricao of this.restricoesDatas">
             <ion-toolbar>
               <ion-text>
@@ -71,7 +73,7 @@
                       "dd/MM/yyyy"
                     )
                   }}
-                  Termina no dia 
+                  Termina no dia
                   {{
                     this.Date.formatarDataString(restricao.DATA_FIM, "dd/MM/yyyy")
                   }}

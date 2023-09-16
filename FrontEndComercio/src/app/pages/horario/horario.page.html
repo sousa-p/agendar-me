@@ -21,7 +21,7 @@
   <ion-row class="section">
     <!-- AGENDAMENTOS REALIZADOS  -->
     <ion-col size="12" *ngIf="!loading && this.agendamentosRealizados!.length">
-      <ion-text>
+      <ion-text class="ion-text-center">
         <h3>Horários Ocupados</h3>
       </ion-text>
       <ng-container
@@ -50,7 +50,7 @@
 
     <!-- HORÁRIOS LIVRES -->
     <ion-col size="12">
-      <ion-text *ngIf="!loading">
+      <ion-text *ngIf="!loading" class="ion-text-center">
         <h3>Horários Livres</h3>
       </ion-text>
 

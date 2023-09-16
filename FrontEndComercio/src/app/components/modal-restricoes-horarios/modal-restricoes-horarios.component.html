@@ -109,8 +109,10 @@
           </ion-col>
         </ion-row>
 
-        <ion-list>
-          <h4 *ngIf="this.restricoesHorarios.length">Restrições</h4>
+        <ion-list class="ion-margin">
+          <ion-text class="ion-text-center" *ngIf="this.restricoesHorarios.length">
+            <h4>Restrições</h4>
+          </ion-text>
           <ion-item *ngFor="let restricao of this.restricoesHorarios">
             <ion-toolbar>
               <ion-text>
@@ -122,7 +124,7 @@
                       "dd/MM/yyyy"
                     )
                   }}
-                  Termina no dia 
+                  Termina no dia
                   {{
                     restricao.DATA_FIM
                       ? this.Date.formatarDataString(

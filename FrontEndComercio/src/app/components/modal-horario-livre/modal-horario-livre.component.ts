@@ -41,10 +41,11 @@ export class ModalHorarioLivreComponent implements OnInit {
   public agendando: boolean = false;
   public servicos: Servicos[] = [];
   public servicosSelecionados: Servicos[] = [];
+
   public clientes: User[] = [];
   public clientesFiltrados: User[] = [];
   public clientesPagina: any = [];
-  public clienteSelecionado = undefined;
+  public clienteSelecionado?: number;
   public clienteAtual = 0;
 
   public total: number = 0;
@@ -66,6 +67,7 @@ export class ModalHorarioLivreComponent implements OnInit {
         this.servicos = response;
         this.Comercio.getClientes().subscribe(
           (response) => {
+            console.log(response)
             this.clientes = response;
             this.clientesFiltrados = response;
             this.mostrarItensClientes();
@@ -199,5 +201,9 @@ export class ModalHorarioLivreComponent implements OnInit {
     });
     this.clienteAtual = 0;
     this.mostrarItensClientes();
+  }
+
+  public selecionarCliente(event: any) {
+    this.clienteSelecionado = event.detail.value;
   }
 }

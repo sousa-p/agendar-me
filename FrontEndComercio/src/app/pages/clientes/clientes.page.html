@@ -34,7 +34,7 @@
             (ionInput)="this.filtrar($event)"
           ></ion-searchbar>
           <ion-text class="ion-text-center" color="primary">
-            <p>Total de clientes: {{ this.clientes.length }}</p>
+            <p>Total de clientes: {{ this.clientesFiltrados.length }}</p>
           </ion-text>
         </ng-container>
         <ng-container *ngFor="let perfil of this.clientesPagina">
@@ -55,17 +55,6 @@
           <ion-col size="auto">
             <ion-text color="primary">
               <h2>Não há clientes cadastrados</h2>
-            </ion-text>
-          </ion-col>
-        </ion-row>
-      </ng-container>
-      <ng-container
-        *ngIf="this.clientes?.length && !this.clientesFiltrados?.length"
-      >
-        <ion-row class="ion-justify-content-center ion-align-items-center">
-          <ion-col size="auto">
-            <ion-text color="primary">
-              <h3>Nenhum Cliente Encontrado!</h3>
             </ion-text>
           </ion-col>
         </ion-row>

@@ -39,8 +39,10 @@
         </ion-col>
       </ion-row>
       <ng-container *ngIf="!this.loading">
-        <ion-list>
-          <h4 *ngIf="this.datasEspeciais.length">Datas Especiais</h4>
+        <ion-list class="ion-margin">
+          <ion-text class="ion-text-center" *ngIf="this.datasEspeciais.length">
+            <h4>Datas Especiais</h4>
+          </ion-text>
           <ion-item *ngFor="let dataEspecial of this.datasEspeciais">
             <ion-toolbar>
               <p>

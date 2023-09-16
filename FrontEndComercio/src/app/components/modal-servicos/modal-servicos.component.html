@@ -107,6 +107,9 @@
 
       <ng-container *ngIf="!this.loading">
         <ion-list>
+          <ion-text class="ion-text-center" *ngIf="this.servicos.length">
+            <h4>Serviços</h4>
+          </ion-text>
           <ion-item *ngFor="let servico of this.servicos">
             <ion-toolbar>
               <ion-buttons slot="start">
@@ -136,7 +139,7 @@
           <ion-row class="ion-justify-content-center">
             <ion-col size="auto">
               <ion-text color="primary">
-                <h3>Não há restrições semanais</h3>
+                <h3>Não há serviços cadastrados</h3>
               </ion-text>
             </ion-col>
           </ion-row>
